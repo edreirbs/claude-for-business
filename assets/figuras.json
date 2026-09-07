@@ -1,9 +1,156 @@
 {
+ "ficha-0-el-modelo": [
+  {
+   "src": "assets/img/ficha-0-el-modelo.png",
+   "alt": "Menú de Claude con Opus 5 seleccionado y el esfuerzo en Extra. «Más modelos» despliega la lista completa: Fable 5.1, Sonnet 5, Haiku 4.5, Fable 5, Opus 4.8, Opus 4.7, Opus 4.6, Opus 3 y Sonnet 4.6. Un globo advierte que Fable es el modelo más capaz y agota los límites de uso mucho más rápido que Opus.",
+   "cap": "El selector vive dentro de la conversación: arriba el modelo activo, y «Más modelos» abre el resto. El globo dice lo que cuesta el más capaz."
+  }
+ ],
+ "ficha-0-el-nivel-de-esfuerzo": [
+  {
+   "src": "assets/img/ficha-0-el-nivel-de-esfuerzo.png",
+   "alt": "Control «Esfuerzo: Extra» con un deslizador de cinco posiciones entre «Más rápido» y «Más inteligente».",
+   "cap": "El esfuerzo es un control aparte del modelo: no cambia de modelo, cambia cuánto piensa antes de responder."
+  }
+ ],
+ "ficha-0-el-modo-de-permisos": [
+  {
+   "src": "assets/img/ficha-0-el-modo-de-permisos.png",
+   "alt": "Menú «Modo» con tres opciones numeradas: Auto —Claude gestiona las decisiones de permisos—, Aceptar ediciones —marcada con una palomita— y Plan —crear un plan antes de hacer cambios.",
+   "cap": "Los modos se eligen sin salir de la conversación y van numerados para el atajo de teclado. Aquí está activo «Aceptar ediciones»."
+  }
+ ],
+ "ficha-0-la-ventana-de-contexto": [
+  {
+   "src": "assets/img/ficha-0-la-ventana-de-contexto.png",
+   "alt": "Indicador «Ventana de contexto» en 776.6k de 1M, un 78%, con una barra dividida en tramos de color según lo que ocupa el espacio.",
+   "cap": "El indicador dice cuánto queda del cuaderno de esta conversación. A esta altura conviene pedirle que guarde lo importante en un archivo antes de seguir."
+  }
+ ],
+ "ficha-0-las-instrucciones-de-perfil": [
+  {
+   "src": "assets/img/ficha-0-las-instrucciones-de-perfil.png",
+   "alt": "Campo «Instrucciones para Claude», vacío, con el ejemplo «p. ej. mantener las explicaciones breves y precisas». El texto de arriba avisa que Claude lo tendrá en cuenta en los chats y en Cowork.",
+   "cap": "Se escriben una vez en la cuenta y aplican a los chats y a Cowork, no a un proyecto en particular."
+  }
+ ],
+ "ficha-0-la-privacidad": [
+  {
+   "src": "assets/img/ficha-0-la-privacidad.png",
+   "alt": "Ajustes de privacidad. En Preferencias, «Metadatos de ubicación» aparece encendido y «Ayuda a mejorar nuestros modelos de IA» —permitir el uso de tus chats para entrenar— aparece apagado.",
+   "cap": "Aquí está el interruptor que decide si tus conversaciones se usan para entrenar. En esta cuenta está apagado: es un ajuste que conviene revisar, no suponer."
+  }
+ ],
+ "ficha-0-la-instalacion-de-cada-componente": [
+  {
+   "src": "assets/img/ficha-0-la-instalacion-de-cada-componente.png",
+   "alt": "Página «Haz más con Claude, en cualquier lugar donde trabajes», con botones Instalar para Excel, PowerPoint, Word y Outlook —este último marcado Beta—, y tarjetas de Claude Design y de Chrome con su propio botón.",
+   "cap": "Cada componente se instala por separado, desde una sola página. Que exista no significa que ya esté puesto en tu equipo."
+  }
+ ],
+
  "ficha-1": [
   {
    "src": "assets/img/alcance-por-componente.svg",
    "alt": "Gráfica de barras. De los 24 elementos: CLAUDE CODE 17, COWORK 16, DESIGN 12, CHAT 10, OFFICE 9, CHROME 8.",
    "cap": "Contado sobre la matriz de inicio: de los 24 elementos, CLAUDE CODE alcanza 17 y CHROME 8. No todos los componentes llegan a lo mismo, y por eso el mismo encargo sale distinto según dónde lo pidas."
+  }
+ ],
+ "ficha-1-chat": [
+  {
+   "src": "assets/img/ficha-1-chat.png",
+   "alt": "Conversación en Chat: la pregunta del usuario arriba y, debajo, la respuesta de Claude en una frase, con los botones de copiar, escuchar, calificar y reintentar.",
+   "cap": "Chat: se pregunta, se responde en pantalla, y ahí se queda. La respuesta no toca ningún archivo."
+  }
+ ],
+ "ficha-1-cowork": [
+  {
+   "src": "assets/img/ficha-1-cowork.png",
+   "alt": "Cowork con el panel «Contexto» a la derecha, donde aparecen la carpeta demo-curso y un documento leído. En la respuesta, la nota «Se usaron 2 herramientas», el contenido de la carpeta y la aclaración de que no modificó nada.",
+   "cap": "Cowork trabaja sobre una carpeta y declara qué herramientas usó. El panel de contexto muestra exactamente qué está viendo."
+  }
+ ],
+ "ficha-1-office": [
+  {
+   "src": "assets/img/ficha-1-office.png",
+   "alt": "Word con el documento a la izquierda y el panel de Claude a la derecha, que ofrece skills para empezar: /check-doc, /copy-edit, /summarize-contract, /flag-issues, /industry-overview y /storylining.",
+   "cap": "Office mete a Claude dentro del programa, junto al documento y con las skills de la cuenta a la mano."
+  }
+ ],
+ "ficha-1-chrome": [
+  {
+   "src": "assets/img/ficha-1-chrome.png",
+   "alt": "Navegador con una página abierta a la izquierda y el panel lateral de Claude a la derecha, con la caja de mensaje lista.",
+   "cap": "Chrome añade el panel al navegador: Claude tiene enfrente la misma pestaña que tú."
+  }
+ ],
+
+ "ficha-2-archivos-adjuntos": [
+  {
+   "src": "assets/img/ficha-2-archivos-adjuntos.png",
+   "alt": "Caja de mensaje con el archivo ejemplo-curso.txt adjunto: una tarjeta con el nombre, la etiqueta TXT y la nota «5 líneas».",
+   "cap": "El adjunto se ve antes de enviar, con su tipo y su tamaño. Si no aparece esa tarjeta, Claude no tiene el archivo."
+  }
+ ],
+ "ficha-2-documento-abierto": [
+  {
+   "src": "assets/img/ficha-2-documento-abierto.png",
+   "alt": "Word con el documento a la izquierda y Claude a la derecha. La instrucción pide leer el documento abierto y resumirlo sin editarlo; la respuesta lo resume y aclara que no hubo cambios.",
+   "cap": "Claude lee el documento que ya está abierto, sin que haya que adjuntarlo. Aquí se le pidió resumir sin editar, y eso hizo."
+  }
+ ],
+ "ficha-2-pestana-del-navegador": [
+  {
+   "src": "assets/img/ficha-2-pestana-del-navegador.png",
+   "alt": "Panel de Claude en el navegador. Sobre la respuesta aparece la marca «Texto de la página leído», y la respuesta explica en español de qué trata la pestaña abierta.",
+   "cap": "«Texto de la página leído» es la comprobación: dice que la respuesta salió de la pestaña que tienes abierta y no de una búsqueda."
+  }
+ ],
+
+ "ficha-3-conectores": [
+  {
+   "src": "assets/img/ficha-3-conectores.png",
+   "alt": "Directorio de conectores. Google Drive, Gmail, Canva, Notion y Figma aparecen con palomita verde —ya conectados—; Google Calendar, Microsoft 365, Slack, Atlassian Rovo y HubSpot aparecen con un botón de más. Arriba, la liga «Mostrar todos 2427».",
+   "cap": "Los conectores se agregan uno por uno. La palomita verde distingue lo que ya está conectado de lo que solo está disponible."
+  }
+ ],
+
+ "ficha-4-proyecto-del-chat": [
+  {
+   "src": "assets/img/ficha-4-proyecto-del-chat.png",
+   "alt": "Proyecto «Demo del curso» con tres bloques a la derecha: Instrucciones, Memoria del proyecto —marcada «Solo tú»— y Contexto, con la barra de capacidad al 1% y un archivo llamado «Material de prueba».",
+   "cap": "El proyecto guarda instrucciones y archivos que valen para todas sus conversaciones. La barra dice cuánta capacidad llevas usada."
+  }
+ ],
+ "ficha-4-instrucciones-del-complemento": [
+  {
+   "src": "assets/img/ficha-4-instrucciones-del-complemento.png",
+   "alt": "Ajustes del complemento de Word: el campo «Instructions», para decirle a Claude cómo debe trabajar dentro de Word, y el interruptor «Let Claude suggest improvements» encendido.",
+   "cap": "El complemento tiene instrucciones propias, distintas de las del perfil y de las del proyecto: valen solo dentro de ese programa."
+  }
+ ],
+
+ "ficha-5-la-memoria": [
+  {
+   "src": "assets/img/ficha-5-la-memoria.png",
+   "alt": "Ajustes de memoria con tres interruptores: «Buscar y referenciar conversaciones» encendido, «Generar memoria a partir de chats» encendido e «Incluir temas sensibles en la memoria» apagado. Abajo, la opción de importar memoria de otro proveedor de IA.",
+   "cap": "Los tres interruptores de la ficha, en pantalla. Se prenden por separado, y el de temas sensibles viene apagado a propósito."
+  }
+ ],
+
+ "ficha-6-skill": [
+  {
+   "src": "assets/img/ficha-6-skill.png",
+   "alt": "Al escribir «/check» en la caja de mensaje aparece la lista de skills que coinciden: /check-doc, con su descripción, y /engineering/deploy-checklist, agrupada bajo la carpeta engineering.",
+   "cap": "Las skills se llaman con una diagonal. Lo que se ve bajo cada nombre es su descripción: de ahí decide Claude cuándo usarla."
+  }
+ ],
+
+ "ficha-7-edicion-del-documento-abierto": [
+  {
+   "src": "assets/img/ficha-7-edicion-del-documento-abierto.png",
+   "alt": "Word con Control de cambios activo. En el párrafo, las palabras sustituidas aparecen tachadas y las nuevas subrayadas en rojo; en el panel, Claude confirma que el cambio quedó como marca de revisión y que no tocó ningún otro documento.",
+   "cap": "Con Control de cambios encendido, la edición llega como marca de revisión y no como texto ya sustituido: se ve qué cambió y se puede rechazar."
   }
  ]
 }

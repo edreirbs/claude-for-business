@@ -52,12 +52,17 @@ abre en grande.
   o un nombre de archivo puede filtrar algo que no querías publicar: el
   repositorio es público.
 
-## Por qué no hay capturas del producto todavía
+## De dónde salieron las capturas
 
-Se generan tomándolas de una sesión de Claude ya iniciada. El entorno donde se
-construyó este sitio no tiene acceso a esa sesión —`claude.ai` responde 403 y no
-hay navegador con cookies—, así que las capturas las tiene que tomar una persona
-con su sesión abierta y dejarlas en esta carpeta.
+Las tomó una persona desde su propia sesión de Claude, sobre material inventado
+para el curso: un proyecto «Demo del curso», un `ejemplo-curso.txt` y un
+documento de prueba que dice de sí mismo que no contiene datos personales. Nada
+de lo que se ve pertenece a un cliente ni a un trabajo real, que es la condición
+para publicarlas en un repositorio abierto.
+
+No se pueden generar desde el entorno donde se construye este sitio: `claude.ai`
+responde 403 y no hay navegador con sesión iniciada. Para agregar una más, hay
+que tomarla igual y dejarla en esta carpeta.
 
 Lo que sí sale solo, sin capturas, son los tableros que el sitio dibuja a partir
 de las tablas «Dónde funciona» de las propias fichas.

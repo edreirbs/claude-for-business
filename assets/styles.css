@@ -634,6 +634,17 @@ html:not(.unlocked) body{overflow:hidden}
 }
 .shot-open:hover{border-color:var(--gold);box-shadow:var(--shadow-1)}
 .shot-open img{display:block;width:100%;height:auto}
+/* En una pantalla táctil no hay `cursor: zoom-in` que anuncie la caja de luz, y
+   varias capturas traen letra chica: la marca lo dice sin tapar la imagen. */
+.shot-open{position:relative}
+.shot-open::after{
+  content:"Ampliar";position:absolute;right:10px;bottom:10px;
+  padding:5px 10px;border-radius:999px;
+  font:600 11px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:rgba(23,20,16,.66);opacity:.9;
+  transition:opacity .25s,background-color .25s;
+}
+.shot-open:hover::after{opacity:1;background:var(--gold-deep)}
 /* Una imagen no puede seguir el interruptor de tema del sitio —un SVG con su
    propia consulta ve el modo del sistema, y una captura no ve nada—, así que
    en oscuro se le baja el brillo para que no deslumbre. */
@@ -820,6 +831,8 @@ html:not(.unlocked) body{overflow:hidden}
   /* Al imprimir no hay scroll que dispare la aparición: se muestra todo. */
   .reveal{opacity:1!important;translate:none!important}
   .topbar,.pager,.toc,.scrim,.next-card,.turn-veil,.copy{display:none!important}
+  .shot-open::after{display:none}
+  .shot-open img{filter:none!important}
   .app{padding:0}
   .stage{padding:0}
   .sheet{box-shadow:none;border:0;max-width:none}

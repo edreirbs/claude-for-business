@@ -145,12 +145,23 @@ siguiente sincronización. Por eso el manifiesto vive en `assets/`, fuera de esa
 carpeta. El Markdown también acepta imágenes, para quien prefiera escribirlas en
 su propia copia de las fichas, que sí sobrevive porque es el origen del espejo.
 
-### Sobre las capturas del producto
+### Las capturas del producto
 
-No las hay todavía, y no se pueden generar desde el entorno donde se construyó
-este sitio: `claude.ai` responde 403 y no hay navegador con sesión iniciada. Las
-tiene que tomar una persona con su sesión abierta y dejarlas en `assets/img/`.
-El armazón para mostrarlas ya está puesto.
+Veinte capturas repartidas en las hojas de los elementos: los controles de la
+Ficha 0 —modelo, esfuerzo, permisos, ventana de contexto, instrucciones de
+perfil, privacidad, instalación—, cuatro de los seis componentes, las tres
+fuentes que da el usuario, el directorio de conectores, el proyecto del chat y
+las instrucciones del complemento, los tres interruptores de la memoria, la
+lista de skills y una edición con control de cambios.
+
+Están tomadas sobre material inventado para el curso —un proyecto «Demo del
+curso», un `ejemplo-curso.txt`, un documento de prueba— porque el repositorio es
+público. No se pueden generar desde el entorno donde se construye el sitio:
+`claude.ai` responde 403 y no hay navegador con sesión iniciada, así que para
+agregar una más hay que tomarla a mano y dejarla en `assets/img/`.
+
+Cada figura se abre en grande al hacer clic —la marca «Ampliar» lo dice, porque
+en una pantalla táctil no hay cursor que lo anuncie— y se cierra con Escape.
 
 ### La matriz de inicio
 
