@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cuadernillo de repaso · Claude for Business</title>
+<meta name="description" content="Cuadernillo de repaso del curso Claude for Business — Universidad Panamericana Aguascalientes.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#14120f">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='13' fill='%2314120f'/><path d='M20 13h24a2 2 0 0 1 2 2v36l-14-8-14 8V15a2 2 0 0 1 2-2z' fill='%23ba9357'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+<script>
+/* Antes de pintar: aplica el tema guardado y evita que la portada con candado
+   parpadee para quien ya la abrió en este navegador. */
+(function () {
+  try {
+    var t = localStorage.getItem('cfb.theme');
+    if (t) document.documentElement.dataset.theme = t;
+    if (localStorage.getItem('cfb.key') === '1') document.documentElement.classList.add('unlocked');
+  } catch (e) {}
+})();
+</script>
+</head>
+<body>
+
+<!-- ─────────────────────────  PORTADA CON CANDADO  ───────────────────────── -->
+<div class="gate" id="gate">
+  <div class="gate-cover" id="gateCover">
+    <div class="gate-foil" aria-hidden="true"></div>
+    <div class="gate-inner">
+      <p class="gate-school">Universidad Panamericana<span>Aguascalientes</span></p>
+      <div class="gate-rule" aria-hidden="true"></div>
+      <h1 class="gate-title">Claude<br><em>for Business</em></h1>
+      <p class="gate-sub">Cuadernillo de repaso · nueve fichas</p>
+
+      <form class="gate-form" id="gateForm" autocomplete="off">
+        <label class="gate-label" for="pw">Contraseña del curso</label>
+        <div class="gate-field">
+          <input id="pw" name="pw" type="password" inputmode="text" spellcheck="false"
+                 autocapitalize="none" autocomplete="current-password" placeholder="••••••••••••" aria-describedby="gateMsg">
+          <button type="submit" id="gateBtn" aria-label="Abrir el cuadernillo">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+        <p class="gate-msg" id="gateMsg" role="status"></p>
+      </form>
+
+      <p class="gate-foot">Material didáctico de uso interno del curso.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────  CUADERNILLO  ───────────────────────────── -->
+<div class="app" id="app" hidden>
+
+  <header class="topbar">
+    <button class="icon-btn" id="btnToc" aria-label="Abrir el índice" aria-expanded="false" aria-controls="toc">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+    </button>
+
+    <a class="brand" href="#indice">
+      <span class="brand-mark" aria-hidden="true">UP</span>
+      <span class="brand-txt">
+        <b>Claude for Business</b>
+        <small>Cuadernillo de repaso</small>
+      </span>
+    </a>
+
+    <div class="search" id="search">
+      <svg class="search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.3-4.3"/></svg>
+      <input id="q" type="search" placeholder="Buscar en las fichas…" aria-label="Buscar en las fichas" autocomplete="off" spellcheck="false">
+      <div class="results" id="results" hidden></div>
+    </div>
+
+    <button class="icon-btn" id="btnTheme" aria-label="Cambiar entre claro y oscuro">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+    </button>
+    <button class="icon-btn" id="btnLock" aria-label="Cerrar el cuadernillo">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="9.5" rx="2"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/></svg>
+    </button>
+
+    <div class="readbar" id="readbar" aria-hidden="true"></div>
+  </header>
+
+  <aside class="toc" id="toc">
+    <div class="toc-scroll">
+      <p class="toc-eyebrow">Contenido</p>
+      <ol class="toc-list" id="tocList"></ol>
+      <p class="toc-foot">Ocho fichas y un índice. Se leen en orden, pero cada una se sostiene sola.</p>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <main class="stage" id="stage">
+    <div class="sheet-wrap" id="sheetWrap">
+      <article class="sheet" id="sheet" tabindex="-1"></article>
+      <div class="turn-veil" id="turnVeil" aria-hidden="true"></div>
+    </div>
+  </main>
+
+  <nav class="pager" id="pager" aria-label="Navegación del cuadernillo">
+    <button class="pg-btn" id="prev" aria-label="Página anterior">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <div class="pg-mid">
+      <span class="pg-count" id="pgCount">1 / 10</span>
+      <div class="dots" id="dots"></div>
+    </div>
+    <button class="pg-btn" id="next" aria-label="Página siguiente">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+  </nav>
+
+</div>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>

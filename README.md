@@ -51,6 +51,73 @@ El contenido se cruzó además con las transcripciones de las siete sesiones del
 
 ---
 
+## El cuadernillo en web
+
+Las mismas fichas, publicadas como GitHub Page: un cuadernillo que se hojea, con paso de página animado, buscador sobre las nueve fichas y botón para copiar cada prompt.
+
+| Archivo | Qué hace |
+|---|---|
+| `index.html` | La página. Portada con contraseña y el armazón del cuadernillo. |
+| `assets/styles.css` | Todo el diseño: paleta de la UP, hoja, animaciones, modo claro y oscuro, tablas apiladas en móvil e impresión. |
+| `assets/app.js` | Lee los `.md` de `Repaso/`, los convierte a HTML y maneja navegación, índice, buscador y candado. |
+| `.nojekyll` | Le pide a GitHub Pages que sirva los archivos tal cual, sin procesarlos con Jekyll. |
+
+Sin dependencias, sin paso de compilación y sin marco de trabajo: tres archivos y las fuentes de Google. Las fichas siguen siendo los `.md` de `Repaso/` — son la única fuente de la verdad, y la web se actualiza sola cuando cambian.
+
+### Cómo se publica
+
+Hay un paso que se hace una sola vez y que solo puede dar quien administra el repositorio, porque encender Pages requiere permisos de administrador:
+
+**Settings → Pages → Source → Deploy from a branch**, rama `main`, carpeta `/ (root)`, y *Save*.
+
+En un par de minutos GitHub entrega la liga, y de ahí en adelante cada push a `main` republica el sitio solo. Editar una ficha de `Repaso/` y hacer push basta para actualizarlo: no hay compilación de por medio.
+
+No hay flujo de GitHub Actions a propósito. Se probó uno con `actions/configure-pages` y `enablement: true`, pero el `GITHUB_TOKEN` de Actions puede desplegar a un sitio de Pages ya existente y no puede crearlo (`Resource not accessible by integration`), así que el paso manual es inevitable de todos modos y un flujo solo agregaría algo que se puede poner en rojo.
+
+### Cómo se ve en local
+
+Necesita un servidor, porque el cuadernillo lee los `.md` con `fetch`; abrir `index.html` con doble clic no funciona.
+
+```
+python3 -m http.server 8000
+```
+
+Y abrir `http://localhost:8000`.
+
+### La contraseña
+
+El cuadernillo pide una contraseña antes de abrirse. En el código no está la contraseña sino su huella SHA-256, y la comprobación ocurre en el navegador de quien entra.
+
+Eso conviene tenerlo claro: **es una cortesía, no una cerradura**. Sirve para que el material no quede a la vista de cualquiera que llegue a la liga, pero los `.md` de `Repaso/` siguen siendo públicos en el repositorio, igual que el resto del código. Para material que de verdad no pueda salir, hace falta un repositorio privado o un servidor que autentique.
+
+Para cambiar la contraseña, calcular la huella nueva y sustituir `PASS_HASH` en `assets/app.js`:
+
+```
+printf 'la-nueva-contrasena' | sha256sum
+```
+
+### Cómo se agrega o quita una ficha
+
+Editar el arreglo `FILES` al principio de `assets/app.js`. Todo lo demás —el título, el número, el índice, el corte en hojas— sale del propio Markdown, así que no hay nada más que tocar.
+
+### Cómo se corta el material en hojas
+
+Cada ficha se abre en una portadilla más una hoja por elemento, para que una vuelta de página quepa en una o dos pantallas en vez de pedir diez de scroll. El corte se hace en los encabezados `##`, respetando los bloques de código: la Ficha 4 trae un `CLAUDE.md` de ejemplo cuyas líneas empiezan con `##` y no son encabezados.
+
+Una ficha sin campos `###` —el índice— se queda entera en una sola hoja.
+
+Dentro de cada hoja, los campos (`### Qué es`, `### Cuándo se usa`…) se acomodan en tarjetas de dos columnas. Las que llevan tabla o prompt ocupan el ancho completo, porque lo necesitan.
+
+### Cómo se hojea
+
+Con las flechas de abajo, con `←` y `→`, o deslizando el dedo. `/` abre el buscador, `Inicio` y `Fin` van a la primera y la última hoja.
+
+El índice de la izquierda lista las nueve fichas y despliega los elementos de la que esté abierta. El paginador dice en qué ficha se está y en cuál de sus hojas.
+
+Cada hoja tiene su propia liga para mandarla directa: `#ficha-3` es la portadilla de la Ficha 3 y `#ficha-3-conectores` es su elemento «Conectores».
+
+---
+
 ## Licencia de uso
 
 Material didáctico de uso interno del curso.
