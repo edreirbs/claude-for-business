@@ -101,6 +101,30 @@
     return t.split('|').map(function (c) { return c.trim(); });
   }
 
+  /* Una imagen sola en su renglón. La misma expresión decide que ese renglón no
+     es un párrafo: si un `![…]` no coincide aquí —un pie escrito después, un
+     nombre de archivo con espacios— tiene que seguir viéndose como texto. */
+  var IMG_SOLA = /^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)$/;
+
+  /**
+   * Una figura del cuadernillo. La usan las dos vías —el manifiesto y la
+   * imagen escrita en el Markdown—, para que no puedan separarse.
+   * `capHTML` llega ya escapado por quien llama: uno pasa texto plano y el
+   * otro, formato en línea. `attr` es el atributo `class` de la figura.
+   */
+  function shotHTML(src, alt, capHTML, attr) {
+    alt = alt || '';
+    return '<figure' + (attr || ' class="shot"') + '>' +
+      /* El nombre accesible del botón lleva la descripción: un `aria-label`
+         suelto ganaría sobre el `alt` y las figuras se anunciarían todas
+         iguales, «Ver en grande», sin decir qué se ve. */
+      '<button class="shot-open" type="button" aria-label="' +
+        escA(alt ? 'Ver en grande: ' + alt : 'Ver la figura en grande') + '">' +
+      '<img src="' + escA(src) + '" alt="' + escA(alt) +
+      '" loading="lazy" decoding="async"></button>' +
+      (capHTML ? '<figcaption>' + capHTML + '</figcaption>' : '') +
+    '</figure>';
+  }
   function renderBody(md, opts) {
     var lines = md.replace(/\r\n?/g, '\n').split('\n');
     var out = '', sec = null, cards = null, card = null, i = 0;
@@ -166,14 +190,12 @@
         continue;
       }
 
-      /* imagen sola en su renglón: se muestra como figura con pie */
-      var img = L.trim().match(/^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)$/);
+      /* imagen sola en su renglón: se muestra como figura con pie. El pie es
+         el título entre comillas; el texto alternativo no sirve de pie, porque
+         está escrito para quien no puede ver la imagen, no para acompañarla. */
+      var img = IMG_SOLA.exec(L.trim());
       if (img) {
-        push('<figure' + cls('shot') + '><button class="shot-open" type="button" ' +
-          'aria-label="Ver en grande"><img src="' + escA(img[2]) + '" alt="' + escA(img[1]) +
-          '" loading="lazy" decoding="async"></button>' +
-          (img[3] || img[1] ? '<figcaption>' + inline(img[3] || img[1]) + '</figcaption>' : '') +
-          '</figure>');
+        push(shotHTML(img[2], img[1], img[3] ? inline(img[3]) : '', cls('shot')));
         i++;
         continue;
       }
@@ -259,7 +281,8 @@
       /* párrafo */
       var p = [];
       while (i < lines.length && lines[i].trim() &&
-             !/^\s*(#{1,6}\s|>|```|\||!\[|[-*+]\s|\d+\.\s|(-{3,}|\*{3,}|_{3,})\s*$)/.test(lines[i])) {
+             !IMG_SOLA.test(lines[i].trim()) &&
+             !/^\s*(#{1,6}\s|>|```|\||[-*+]\s|\d+\.\s|(-{3,}|\*{3,}|_{3,})\s*$)/.test(lines[i])) {
         p.push(lines[i].trim());
         i++;
       }
@@ -430,6 +453,20 @@
   ];
   var REACH = { yes: 'Sí', cond: 'Con condición', undoc: 'No documentado', no: 'No', none: 'No listado' };
 
+  /**
+   * Los componentes que nombra una celda. Varias tablas juntan los que se
+   * comportan igual en un solo renglón —«Design, Office, Chrome»—: si eso no se
+   * separa, la ficha dice una cosa y el tablero de arriba dice otra.
+   */
+  function compsDe(celda) {
+    return String(celda == null ? '' : celda).split(/\s*(?:,|\/|·| y )\s*/)
+      .map(function (nombre) {
+        var hit = null;
+        COMPS.forEach(function (x) { if (fold(x.t) === fold(nombre)) hit = x; });
+        return hit;
+      }).filter(Boolean);
+  }
+
   function reachState(v) {
     var f = fold(v);
     if (f === 'si') return 'yes';
@@ -453,13 +490,11 @@
 
       var map = {}, n = 0, ok = true;
       for (var j = i + 2; j < lines.length && lines[j].trim().charAt(0) === '|'; j++) {
-        var c = splitRow(lines[j]), comp = null;
-        COMPS.forEach(function (x) { if (fold(x.t) === fold(c[0])) comp = x; });
-        if (!comp) continue;
+        var c = splitRow(lines[j]), comps = compsDe(c[0]);
+        if (!comps.length) continue;
         var st = reachState(c[1] || '');
         if (!st) { ok = false; break; }
-        map[comp.k] = st;
-        n++;
+        comps.forEach(function (comp) { map[comp.k] = st; n++; });
       }
       /* Basta un renglón: varias tablas listan solo los componentes donde el
          elemento sí funciona, y omiten el resto en vez de escribir «No». */
@@ -500,9 +535,12 @@
     var body = rows.map(function (r) {
       return '<button class="board-row" data-go="' + r.page + '">' + esc(r.t) + '</button>' +
         COMPS.map(function (c) {
-          var s = r.m[c.k] || 'none';
-          return '<span class="board-dot is-' + s + '" title="' +
-            escA(c.t + ': ' + REACH[s]) + '"><i></i></span>';
+          /* El punto no puede ser solo color y `title`: en el celular no hay
+             globo y un `<span>` vacío no se lee. La palabra va escrita, oculta
+             a la vista pero no al lector de pantalla. */
+          var s = r.m[c.k] || 'none', dice = c.t + ': ' + REACH[s];
+          return '<span class="board-dot is-' + s + '" title="' + escA(dice) + '">' +
+            '<i aria-hidden="true"></i><span class="vh">' + esc(dice) + '</span></span>';
         }).join('');
     }).join('');
 
@@ -606,10 +644,14 @@
     var list = figuras[id];
     if (!list || !list.length) return '';
     return list.map(function (f) {
-      return '<figure class="shot reveal"><button class="shot-open" type="button" ' +
-        'aria-label="Ver en grande"><img src="' + escA(f.src) + '" alt="' + escA(f.alt || '') +
-        '" loading="lazy" decoding="async"></button>' +
-        (f.cap ? '<figcaption>' + esc(f.cap) + '</figcaption>' : '') + '</figure>';
+      /* `gen` pide una figura que el sitio dibuja con los datos que ya tiene,
+         en vez de un archivo: así no puede quedarse vieja. */
+      if (f.gen) {
+        var svg = GENERADAS[f.gen] ? GENERADAS[f.gen]() : '';
+        return svg ? '<figure class="shot reveal">' + svg +
+          (f.cap ? '<figcaption>' + esc(f.cap) + '</figcaption>' : '') + '</figure>' : '';
+      }
+      return shotHTML(f.src, f.alt, f.cap ? esc(f.cap) : '', ' class="shot reveal"');
     }).join('');
   }
 
@@ -628,15 +670,30 @@
         '<div class="mx-tip" role="status" aria-live="polite"></div></div>';
   }
 
-  /** Abre una figura a pantalla completa. Se cierra al hacer clic o con Escape. */
+  /**
+   * Abre una figura a pantalla completa. Se cierra al hacer clic o con Escape,
+   * y mientras está abierta la página de abajo no se mueve ni se hojea.
+   */
   function openShot(img) {
-    if (!img) return;
+    if (!img || $('.lightbox')) return;
+    var vuelve = document.activeElement;
     var box = document.createElement('div');
     box.className = 'lightbox';
+    box.tabIndex = -1;
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-label', img.getAttribute('alt') || 'Figura');
     box.innerHTML = '<img src="' + escA(img.getAttribute('src')) + '" alt="' +
       escA(img.getAttribute('alt') || '') + '">';
-    box.addEventListener('click', function () { box.remove(); });
+    box.cierra = function () {
+      box.remove();
+      document.body.classList.remove('is-zoom');
+      if (vuelve && vuelve.focus) vuelve.focus();
+    };
+    box.addEventListener('click', box.cierra);
+    document.body.classList.add('is-zoom');
     document.body.appendChild(box);
+    box.focus();
   }
 
   function mxHide() {
@@ -712,7 +769,7 @@
     if (p.html !== null) return p.html;
     var f = p.ficha;
     if (p.kind === 'matrix') {
-      p.html = matrixHTML(f.data);
+      p.html = matrixHTML(f.data) + figurasHTML(p.id);
     } else if (p.kind === 'part') {
       /* «Parte 1 · Los controles…» se recorta a «Parte 1» para el antetítulo. */
       var eyebrow = f.title + (p.group ? ' · ' + p.group.title.split(' · ')[0] : '');
@@ -722,7 +779,7 @@
       p.html = head(f.sub, f.title) + renderBody(p.md) + figurasHTML(p.id) +
         partCards(f) + boardHTML(f);
     } else {
-      p.html = head(f.sub, f.title) + renderBody(p.md);
+      p.html = head(f.sub, f.title) + figurasHTML(p.id) + renderBody(p.md);
     }
     return p.html;
   }
@@ -902,6 +959,13 @@
           text: t.replace(/[*`>]/g, '').replace(/^\s*[-+]\s+/, '').trim()
         });
       });
+      /* Las figuras traen prosa que está en pantalla y no en el Markdown: el
+         pie y la descripción entran al buscador como cualquier otro renglón. */
+      (figuras[p.id] || []).forEach(function (f) {
+        [f.alt, f.cap].forEach(function (t) {
+          if (t) index.push({ page: n, section: p.label, anchor: '', text: String(t) });
+        });
+      });
     });
   }
 
@@ -964,8 +1028,56 @@
 
   /* ------------------------------------------------------------- carga --- */
 
+  /* Los datos de la matriz, guardados para las figuras que se derivan de ella. */
+  var matriz = null;
+
+  /**
+   * Cuántos de los elementos alcanza cada componente. Se cuenta sobre
+   * `matriz.json` en el momento de pintar: agregar un renglón a la matriz
+   * mueve esta gráfica sola, sin recalcular anchos a mano.
+   */
+  function alcanceSVG() {
+    if (!matriz) return '';
+    var filas = [];
+    matriz.groups.forEach(function (g) { filas = filas.concat(g.rows); });
+    var total = filas.length;
+    var datos = matriz.cols.map(function (c) {
+      var n = 0;
+      filas.forEach(function (r) { if (r.c && r.c[c.k]) n++; });
+      return { t: c.t, s: c.s, n: n };
+    }).sort(function (a, b) { return b.n - a.n; });
+
+    var G = { x: 22, lbl: 176, fin: 654, y0: 76, alto: 22, paso: 44 },
+        tope = datos[0].n || 1,
+        H = G.y0 + datos.length * G.paso - (G.paso - G.alto) + 18,
+        W = 720;
+
+    var barras = datos.map(function (d, i) {
+      var y = G.y0 + i * G.paso,
+          w = Math.round((d.n / tope) * (G.fin - G.lbl) * 10) / 10;
+      return '<text class="lbl" x="' + G.x + '" y="' + (y + 12) + '">' + esc(d.t) + '</text>' +
+        '<text class="sub" x="' + G.x + '" y="' + (y + 27) + '">' + esc(d.s) + '</text>' +
+        '<rect class="track" x="' + G.lbl + '" y="' + y + '" width="' + (G.fin - G.lbl) +
+          '" height="' + G.alto + '" rx="6"/>' +
+        '<rect class="bar" x="' + G.lbl + '" y="' + y + '" width="' + w +
+          '" height="' + G.alto + '" rx="6"/>' +
+        '<text class="val" x="' + (G.fin + 10) + '" y="' + (y + 16) + '">' + d.n + '</text>';
+    }).join('');
+
+    var titulo = 'Cuántos de los ' + total + ' elementos alcanza cada componente';
+    return '<div class="gen-scroll"><svg class="gen-svg" viewBox="0 0 ' + W + ' ' + H +
+      '" role="img" aria-label="' + escA('De los ' + total + ' elementos: ' +
+        datos.map(function (d) { return d.t + ' ' + d.n; }).join(', ') + '.') + '">' +
+      '<text class="ttl" x="' + G.x + '" y="34">' + esc(titulo) + '</text>' +
+      '<line class="rule" x1="' + G.x + '" y1="52" x2="698" y2="52"/>' +
+      barras + '</svg></div>';
+  }
+
+  var GENERADAS = { alcance: alcanceSVG };
+
   /** La matriz es la hoja de inicio: una ficha de una sola página. */
   function matrixFicha(data) {
+    matriz = data;
     var texto = [];
     data.groups.forEach(function (g) {
       g.rows.forEach(function (r) {
@@ -981,6 +1093,21 @@
     };
   }
 
+  /**
+   * Una clave mal escrita en el manifiesto no rompe nada: simplemente la figura
+   * no sale, y quien la agregó se queda buscando el error en la ruta del
+   * archivo. Se dice en la consola, con los nombres que sí existen.
+   */
+  function avisaFigurasHuerfanas() {
+    var vivas = {};
+    pages.forEach(function (p) { vivas[p.id] = true; });
+    var sueltas = Object.keys(figuras).filter(function (k) { return !vivas[k]; });
+    if (sueltas.length && window.console) {
+      console.warn('figuras.json: estas claves no corresponden a ninguna hoja y no se ven: ' +
+        sueltas.join(', '));
+    }
+  }
+
   function load() {
     sheet.innerHTML = '<div class="loading"><div class="spinner"></div><p>Abriendo el cuadernillo…</p></div>';
     /* El manifiesto se espera junto con las fichas: el HTML de cada hoja se
@@ -991,7 +1118,7 @@
       .then(function (r) { return r.ok ? r.json() : {}; })
       .then(function (f) { figuras = f || {}; })['catch'](function () { figuras = {}; });
 
-    var jobs = [figs, fetch(MATRIZ, { cache: 'no-cache' }).then(function (r) {
+    var contenido = [fetch(MATRIZ, { cache: 'no-cache' }).then(function (r) {
       if (!r.ok) throw new Error(MATRIZ + ' → HTTP ' + r.status);
       return r.json();
     }).then(matrixFicha)].concat(FILES.map(function (f) {
@@ -1000,9 +1127,13 @@
         return r.text();
       }).then(function (t) { return parseFicha(f, t); });
     }));
-    return Promise.all(jobs).then(function (parsed) {
-      fichas = parsed.slice(1);   // el primero del arreglo es el manifiesto de figuras
+    /* El manifiesto va en su propia rama de la espera, no mezclado con las
+       fichas: así no hay un hueco en el arreglo que haya que recortar por
+       posición, que se rompería en cuanto se sumara otra carga. */
+    return Promise.all([figs, Promise.all(contenido)]).then(function (r) {
+      fichas = r[1];
       pages = buildPages(fichas);
+      avisaFigurasHuerfanas();
       buildIndex();
       var want = pageIndexById((location.hash || '').replace(/^#/, ''));
       cur = want >= 0 ? want : 0;
@@ -1162,10 +1293,18 @@
 
     document.addEventListener('keydown', function (e) {
       var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+      /* Con la figura abierta el teclado le pertenece a ella: si no, una flecha
+         hojearía la página de abajo y quedaría a la vista una figura que ya no
+         es de esa hoja. */
+      var lb = $('.lightbox');
+      if (lb) {
+        if (e.key === 'Escape') { e.preventDefault(); lb.cierra(); }
+        else if (/^(Arrow|Page)/.test(e.key) || e.key === 'Home' || e.key === 'End' ||
+                 e.key === ' ') { e.preventDefault(); }
+        return;
+      }
       if (e.key === '/' && !typing) { e.preventDefault(); q.focus(); return; }
       if (e.key === 'Escape') {
-        var lb = $('.lightbox');
-        if (lb) { lb.remove(); return; }
         toggleToc(false); mxHide(); $('#results').hidden = true; return;
       }
       if (typing || e.metaKey || e.ctrlKey || e.altKey || app.hidden) return;
@@ -1178,7 +1317,10 @@
     var x0 = 0, y0 = 0, swipeable = false, stage = $('#stage');
     stage.addEventListener('touchstart', function (e) {
       var t0 = e.touches[0];
-      swipeable = !(e.target.closest && e.target.closest('.table-wrap, pre, .mx-canvas'));
+      /* Todo lo que se desplaza a lo ancho queda fuera del gesto de hojear: si
+         no, arrastrar el tablero de la portadilla voltea la página. */
+      swipeable = !(e.target.closest &&
+        e.target.closest('.table-wrap, pre, .mx-canvas, .board-wrap, .gen-scroll, .lightbox'));
       x0 = t0.clientX;
       y0 = t0.clientY;
     }, { passive: true });

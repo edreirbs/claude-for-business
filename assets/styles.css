@@ -566,8 +566,8 @@ html:not(.unlocked) body{overflow:hidden}
 }
 /* Flexible: hay elementos cuya tabla nombra dos componentes y otros los seis. */
 .reach-row{display:flex;flex-wrap:wrap;gap:8px}
-.reach-cell{flex:1 1 132px}
 .reach-cell{
+  flex:1 1 132px;
   display:flex;flex-direction:column;gap:3px;min-width:0;
   padding:10px 12px;border-radius:10px;border:1px solid var(--line-2);
   background:var(--paper);border-left-width:3px;
@@ -580,7 +580,7 @@ html:not(.unlocked) body{overflow:hidden}
 .reach-cell.is-cond .reach-v{color:var(--gold-deep)}
 .reach-cell.is-no{border-left-color:var(--wine);background:color-mix(in srgb,var(--wine) 5%,var(--paper))}
 .reach-cell.is-no .reach-v{color:var(--wine)}
-.reach-cell.is-undoc,.reach-cell.is-none{border-left-color:var(--line);opacity:.72}
+.reach-cell.is-undoc{border-left-color:var(--line);opacity:.72}
 
 /* Tablero de la ficha entera, en su portadilla. */
 .board{margin:34px 0 0}
@@ -617,6 +617,12 @@ html:not(.unlocked) body{overflow:hidden}
 .board-dot.is-undoc i{background:none;border:1.5px solid var(--ink-3);opacity:.55;width:8px;height:8px}
 /* Sin marca cuando la tabla no nombra ese componente: no se inventa un «no». */
 .board-dot.is-none i{display:none}
+/* Oculto a la vista, no al lector de pantalla: es donde el punto dice su
+   palabra. Nada de `display:none`, que también lo callaría. */
+.vh{
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
+}
 .board-key{
   display:flex;flex-wrap:wrap;gap:6px 18px;margin:14px 0 0!important;
   font-family:var(--sans)!important;font-size:12px!important;color:var(--ink-3);max-width:none;
@@ -628,6 +634,7 @@ html:not(.unlocked) body{overflow:hidden}
 /* Figuras: capturas y diagramas dentro de una ficha. */
 .shot{margin:0 0 24px}
 .shot-open{
+  position:relative;
   display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:12px;
   background:var(--paper-3);cursor:zoom-in;overflow:hidden;
   transition:border-color .25s,box-shadow .25s;
@@ -636,7 +643,6 @@ html:not(.unlocked) body{overflow:hidden}
 .shot-open img{display:block;width:100%;height:auto}
 /* En una pantalla táctil no hay `cursor: zoom-in` que anuncie la caja de luz, y
    varias capturas traen letra chica: la marca lo dice sin tapar la imagen. */
-.shot-open{position:relative}
 .shot-open::after{
   content:"Ampliar";position:absolute;right:10px;bottom:10px;
   padding:5px 10px;border-radius:999px;
@@ -652,7 +658,27 @@ html:not(.unlocked) body{overflow:hidden}
 @media (prefers-color-scheme: dark){
   :root[data-theme="auto"] .shot-open img{filter:brightness(.86) contrast(1.03)}
 }
-.lightbox img{filter:none!important}
+
+/* Figuras que el sitio dibuja con sus propios datos. A diferencia de una
+   captura, éstas sí siguen el interruptor de tema: son SVG en la página y
+   toman los colores de las mismas variables que el resto. La regla global
+   `svg{}` de los iconos se anula aquí, o su trazo heredado contornearía cada
+   texto de la gráfica. */
+.gen-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px}
+.gen-svg{
+  display:block;width:100%;height:auto;min-width:520px;
+  fill:none;stroke:none;stroke-width:1;
+  background:var(--paper-3);border:1px solid var(--line);border-radius:12px;
+}
+.gen-svg text{stroke:none;font-family:var(--sans)}
+.gen-svg .ttl{fill:var(--ink);font-size:16px;font-weight:700}
+.gen-svg .lbl{fill:var(--ink);font-size:14px;font-weight:700}
+.gen-svg .sub{fill:var(--ink-3);font-size:11.5px}
+.gen-svg .val{fill:var(--gold-deep);font-size:14px;font-weight:700}
+.gen-svg .track{fill:var(--line-2)}
+.gen-svg .bar{fill:var(--gold)}
+.gen-svg .rule{stroke:var(--line)}
+
 .shot figcaption{
   margin-top:9px;font-family:var(--sans);font-size:13px;line-height:1.5;color:var(--ink-3);
 }
@@ -660,6 +686,10 @@ html:not(.unlocked) body{overflow:hidden}
   position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:24px;
   background:rgba(12,11,9,.88);cursor:zoom-out;animation:fade .2s;
 }
+.lightbox:focus{outline:none}
+/* Con la figura abierta, la página de abajo se queda quieta: si no, el dedo la
+   desplaza detrás de un fondo que no se mueve. */
+body.is-zoom{overflow:hidden}
 .lightbox img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px -20px rgba(0,0,0,.8)}
 
 /* --------------------------------------------------- 10b. La matriz ------ */

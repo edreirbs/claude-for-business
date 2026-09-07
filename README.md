@@ -71,7 +71,7 @@ El sitio publica las Fichas 0 a 8. `00_Indice_de_las_fichas.md` se queda en el r
 | `assets/img/` | Las imágenes. Su `LEEME.md` explica cómo se agrega una. |
 | `.nojekyll` | Le pide a GitHub Pages que sirva los archivos tal cual, sin procesarlos con Jekyll. |
 
-Sin dependencias, sin paso de compilación y sin marco de trabajo: tres archivos y las fuentes de Google. Las fichas siguen siendo los `.md` de `Repaso/` — son la única fuente de la verdad, y la web se actualiza sola cuando cambian.
+Sin dependencias, sin paso de compilación y sin marco de trabajo: una página, su hoja de estilo, su archivo de comportamiento, dos manifiestos de datos y las fuentes de Google. Las fichas siguen siendo los `.md` de `Repaso/` — son la única fuente de la verdad, y la web se actualiza sola cuando cambian.
 
 ### Cómo se publica
 
@@ -134,16 +134,23 @@ Tres cosas, y ninguna se escribe a mano:
   componentes, con las mismas marcas. Un elemento cuya ficha describe el alcance
   en prosa —«en los seis componentes»— no tiene renglón, porque no hay tabla de
   dónde leerlo.
-- **Las figuras**, declaradas en `assets/figuras.json` y guardadas en
-  `assets/img/`.
+- **Las figuras**, declaradas en `assets/figuras.json`: unas son archivos de
+  `assets/img/` y otra, la gráfica de alcance de la Ficha 1, la dibuja el sitio
+  contando sobre `matriz.json` en el momento de pintarla. Esa última es la única
+  figura que sigue el interruptor de tema, porque es un SVG de la página y no
+  una imagen.
 
 ### Por qué las figuras no van dentro del Markdown
 
 `sync.sh` espeja la carpeta del curso sobre `Repaso/` con `rsync --delete`:
 cualquier `![imagen]()` escrito en un `.md` de este repositorio se pierde en la
 siguiente sincronización. Por eso el manifiesto vive en `assets/`, fuera de esa
-carpeta. El Markdown también acepta imágenes, para quien prefiera escribirlas en
-su propia copia de las fichas, que sí sobrevive porque es el origen del espejo.
+carpeta.
+
+El Markdown también acepta imágenes, para quien prefiera escribirlas en su
+propia copia de las fichas, que sí sobrevive porque es el origen del espejo. En
+ese caso la ruta empieza en `Repaso/`, que es la única carpeta que el espejo
+copia: un `.png` guardado junto al `.md` llega a `Repaso/` y no a `assets/img/`.
 
 ### Las capturas del producto
 
