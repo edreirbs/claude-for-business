@@ -165,7 +165,8 @@ html:not(.unlocked) body{overflow:hidden}
 .gate-field button:active{transform:scale(.94)}
 .gate-msg{min-height:20px;margin:11px 0 0;font-size:13.5px;color:#d2879a}
 .gate-msg.ok{color:var(--gold)}
-.gate-foot{margin:22px 0 0;font-size:12px;color:#6b6355;border-top:1px solid rgba(186,147,87,.14);padding-top:16px}
+.gate-foot{margin:22px 0 0;font-size:12px;line-height:1.7;color:#6b6355;border-top:1px solid rgba(186,147,87,.14);padding-top:16px}
+.gate-foot span{color:#8c8271}
 
 @keyframes cover-drop{from{opacity:0;transform:translateY(22px) scale(.98)}to{opacity:1;transform:none}}
 @keyframes cover-open{
@@ -276,13 +277,17 @@ html:not(.unlocked) body{overflow:hidden}
 }
 .toc-sub-item:hover{background:var(--paper-3);color:var(--ink);transform:translateX(2px)}
 .toc-sub-item[aria-current="true"]{color:var(--gold-deep);font-weight:700;background:var(--gold-tint)}
+.toc-group{
+  padding:9px 10px 3px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  font-weight:700;color:var(--gold-deep);
+}
 .toc-foot{margin:22px 4px 0;padding-top:16px;border-top:1px solid var(--line-2);font-size:12.5px;color:var(--ink-3);line-height:1.5}
 .scrim{position:fixed;inset:0;z-index:44;background:rgba(20,18,15,.44);backdrop-filter:blur(2px);animation:fade .25s}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 
 /* ------------------------------------------------------------ 6. Hoja ---- */
 .stage{
-  padding:calc(var(--topbar-h) + 26px) 18px 130px;
+  padding:calc(var(--topbar-h) + 26px) 18px 0;
   display:flex;justify-content:center;
   overflow-x:clip;
 }
@@ -327,6 +332,15 @@ html:not(.unlocked) body{overflow:hidden}
 @keyframes turn-out-back{from{transform:rotateY(0)}to{transform:rotateY(88deg);box-shadow:none}}
 @keyframes turn-in-back {from{transform:rotateY(-88deg);box-shadow:none}to{transform:rotateY(0)}}
 @keyframes veil{0%{opacity:0}42%{opacity:1}100%{opacity:0}}
+
+/* ------------------------------------------------------------ 6b. Pie ---- */
+/* Va al fondo del documento, debajo de la hoja, con hueco para el paginador. */
+.colofon{
+  padding:26px 18px calc(104px + env(safe-area-inset-bottom));
+  text-align:center;
+  font-size:12.5px;letter-spacing:.03em;color:var(--ink-3);
+}
+.colofon p{margin:0}
 
 /* ------------------------------------------------------------- 7. Pager -- */
 .pager{
@@ -456,8 +470,19 @@ html:not(.unlocked) body{overflow:hidden}
    para que no griten, pero no se transforman (CLAUDE.md perdería su forma). */
 .page-head.is-part h1{font-size:clamp(25px,3.9vw,37px);letter-spacing:.004em}
 
+/* Divisor de parte, cuando una ficha viene partida (la Ficha 0, en dos). */
+.group{margin:38px 0 18px;max-width:82ch}
+.group-head{
+  font-family:var(--serif)!important;font-size:clamp(21px,3vw,27px)!important;
+  font-weight:600!important;letter-spacing:-.01em!important;text-transform:none!important;
+  color:var(--ink)!important;margin:0 0 10px!important;
+}
+.group-head::after{background:var(--gold)!important;opacity:.35}
+.group>p:last-child{margin-bottom:0}
+
 /* Portadilla: los elementos de la ficha, para verlos todos antes de entrar. */
 .part-map{margin-top:30px}
+.group + .part-map{margin-top:16px}
 .part-card{
   display:flex;flex-direction:column;align-items:flex-start;gap:7px;
   text-align:left;font:inherit;color:var(--ink);cursor:pointer;
@@ -572,7 +597,8 @@ html:not(.unlocked) body{overflow:hidden}
   body{font-size:16px}
   .brand-txt{display:none}
   .search{max-width:none}
-  .stage{padding:calc(var(--topbar-h) + 14px) 12px 118px}
+  .stage{padding:calc(var(--topbar-h) + 14px) 12px 0}
+  .colofon{padding:22px 12px calc(96px + env(safe-area-inset-bottom))}
   .sheet-wrap::before,.sheet-wrap::after{display:none}
   .sheet::before{display:none}
   .sheet{border-radius:12px}
