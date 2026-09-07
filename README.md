@@ -67,9 +67,11 @@ El sitio publica las Fichas 0 a 8. `00_Indice_de_las_fichas.md` se queda en el r
 | `assets/styles.css` | Todo el diseño: paleta de la UP, hoja, animaciones, modo claro y oscuro, tablas apiladas en móvil e impresión. |
 | `assets/app.js` | Lee los `.md` de `Repaso/`, los convierte a HTML y maneja navegación, índice, buscador y candado. |
 | `assets/matriz.json` | Los datos de la matriz de inicio: columnas, renglones y qué hace cada pieza en cada componente. |
+| `assets/figuras.json` | Qué figura se muestra en qué hoja. Va fuera de `Repaso/` a propósito. |
+| `assets/img/` | Las imágenes. Su `LEEME.md` explica cómo se agrega una. |
 | `.nojekyll` | Le pide a GitHub Pages que sirva los archivos tal cual, sin procesarlos con Jekyll. |
 
-Sin dependencias, sin paso de compilación y sin marco de trabajo: tres archivos y las fuentes de Google. Las fichas siguen siendo los `.md` de `Repaso/` — son la única fuente de la verdad, y la web se actualiza sola cuando cambian.
+Sin dependencias, sin paso de compilación y sin marco de trabajo: una página, su hoja de estilo, su archivo de comportamiento, dos manifiestos de datos y las fuentes de Google. Las fichas siguen siendo los `.md` de `Repaso/` — son la única fuente de la verdad, y la web se actualiza sola cuando cambian.
 
 ### Cómo se publica
 
@@ -118,6 +120,55 @@ Todo el corte respeta los bloques de código: la Ficha 4 trae un `CLAUDE.md` de 
 Una ficha sin campos `###` se queda entera en una sola hoja.
 
 Dentro de cada hoja, los campos (`### Qué es`, `### Cuándo se usa`…) se acomodan en tarjetas de dos columnas. Las que llevan tabla o prompt ocupan el ancho completo, porque lo necesitan.
+
+### Lo visual de las fichas
+
+Tres cosas, y ninguna se escribe a mano:
+
+- **La franja de alcance**, bajo el título de cada elemento. Se lee de la tabla
+  «Dónde funciona» que ese mismo elemento ya trae, así que no puede contradecir
+  al texto de abajo. Muestra **solo** los componentes que la tabla nombra: varias
+  tablas listan únicamente donde el elemento sí funciona, y la franja no inventa
+  un «no» donde la ficha calla.
+- **El tablero de la ficha**, en su portadilla: sus elementos contra los seis
+  componentes, con las mismas marcas. Un elemento cuya ficha describe el alcance
+  en prosa —«en los seis componentes»— no tiene renglón, porque no hay tabla de
+  dónde leerlo.
+- **Las figuras**, declaradas en `assets/figuras.json`: unas son archivos de
+  `assets/img/` y otra, la gráfica de alcance de la Ficha 1, la dibuja el sitio
+  contando sobre `matriz.json` en el momento de pintarla. Esa última es la única
+  figura que sigue el interruptor de tema, porque es un SVG de la página y no
+  una imagen.
+
+### Por qué las figuras no van dentro del Markdown
+
+`sync.sh` espeja la carpeta del curso sobre `Repaso/` con `rsync --delete`:
+cualquier `![imagen]()` escrito en un `.md` de este repositorio se pierde en la
+siguiente sincronización. Por eso el manifiesto vive en `assets/`, fuera de esa
+carpeta.
+
+El Markdown también acepta imágenes, para quien prefiera escribirlas en su
+propia copia de las fichas, que sí sobrevive porque es el origen del espejo. En
+ese caso la ruta empieza en `Repaso/`, que es la única carpeta que el espejo
+copia: un `.png` guardado junto al `.md` llega a `Repaso/` y no a `assets/img/`.
+
+### Las capturas del producto
+
+Veinte capturas repartidas en las hojas de los elementos: los controles de la
+Ficha 0 —modelo, esfuerzo, permisos, ventana de contexto, instrucciones de
+perfil, privacidad, instalación—, cuatro de los seis componentes, las tres
+fuentes que da el usuario, el directorio de conectores, el proyecto del chat y
+las instrucciones del complemento, los tres interruptores de la memoria, la
+lista de skills y una edición con control de cambios.
+
+Están tomadas sobre material inventado para el curso —un proyecto «Demo del
+curso», un `ejemplo-curso.txt`, un documento de prueba— porque el repositorio es
+público. No se pueden generar desde el entorno donde se construye el sitio:
+`claude.ai` responde 403 y no hay navegador con sesión iniciada, así que para
+agregar una más hay que tomarla a mano y dejarla en `assets/img/`.
+
+Cada figura se abre en grande al hacer clic —la marca «Ampliar» lo dice, porque
+en una pantalla táctil no hay cursor que lo anuncie— y se cierra con Escape.
 
 ### La matriz de inicio
 
