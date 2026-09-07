@@ -56,17 +56,18 @@ Las mismas fichas, publicadas como GitHub Page: un cuadernillo que se hojea, con
 | `assets/styles.css` | Todo el diseño: paleta de la UP, hoja, animaciones, modo claro y oscuro, tablas apiladas en móvil e impresión. |
 | `assets/app.js` | Lee los `.md` de `Repaso/`, los convierte a HTML y maneja navegación, índice, buscador y candado. |
 | `.nojekyll` | Le pide a GitHub Pages que sirva los archivos tal cual, sin procesarlos con Jekyll. |
-| `.github/workflows/pages.yml` | Publica el sitio en cada push a `main`. |
 
 Sin dependencias, sin paso de compilación y sin marco de trabajo: tres archivos y las fuentes de Google. Las fichas siguen siendo los `.md` de `Repaso/` — son la única fuente de la verdad, y la web se actualiza sola cuando cambian.
 
 ### Cómo se publica
 
-Solo. Cada push a `main` dispara el flujo de `.github/workflows/pages.yml`, que sube el repositorio tal cual a GitHub Pages. La primera corrida además enciende Pages por su cuenta, así que no hay que configurar nada en *Settings*.
+Hay un paso que se hace una sola vez y que solo puede dar quien administra el repositorio, porque encender Pages requiere permisos de administrador:
 
-Editar una ficha de `Repaso/` y hacer push basta para actualizar el sitio.
+**Settings → Pages → Source → Deploy from a branch**, rama `main`, carpeta `/ (root)`, y *Save*.
 
-La liga aparece en **Settings → Pages** y también al final del flujo, en la pestaña *Actions*.
+En un par de minutos GitHub entrega la liga, y de ahí en adelante cada push a `main` republica el sitio solo. Editar una ficha de `Repaso/` y hacer push basta para actualizarlo: no hay compilación de por medio.
+
+No hay flujo de GitHub Actions a propósito. Se probó uno con `actions/configure-pages` y `enablement: true`, pero el `GITHUB_TOKEN` de Actions puede desplegar a un sitio de Pages ya existente y no puede crearlo (`Resource not accessible by integration`), así que el paso manual es inevitable de todos modos y un flujo solo agregaría algo que se puede poner en rojo.
 
 ### Cómo se ve en local
 
