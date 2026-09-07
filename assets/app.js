@@ -32,6 +32,14 @@
   // La página de inicio: la matriz de componentes contra elementos.
   var MATRIZ = 'assets/matriz.json';
 
+  /* Figuras por hoja. Van en un manifiesto aparte y no dentro del Markdown
+     porque `sync.sh` espeja la carpeta del curso sobre `Repaso/` con
+     `rsync --delete`: cualquier `![imagen]()` escrito ahí se perdería en la
+     siguiente sincronización. La clave es el id de la hoja («ficha-1»,
+     «ficha-0-el-modelo»). El Markdown también acepta imágenes, para quien
+     prefiera escribirlas en su propia copia de las fichas. */
+  var FIGURAS = 'assets/figuras.json';
+
   // SHA-256 de la contraseña del curso: la contraseña no vive en el código.
   var PASS_HASH = '5a5d14a76d3c8e7326bfc10545ee01170d06758d87f87aa96ac7193d065e696f';
 
@@ -158,6 +166,18 @@
         continue;
       }
 
+      /* imagen sola en su renglón: se muestra como figura con pie */
+      var img = L.trim().match(/^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)$/);
+      if (img) {
+        push('<figure' + cls('shot') + '><button class="shot-open" type="button" ' +
+          'aria-label="Ver en grande"><img src="' + escA(img[2]) + '" alt="' + escA(img[1]) +
+          '" loading="lazy" decoding="async"></button>' +
+          (img[3] || img[1] ? '<figcaption>' + inline(img[3] || img[1]) + '</figcaption>' : '') +
+          '</figure>');
+        i++;
+        continue;
+      }
+
       /* tabla */
       if (L.trim().charAt(0) === '|' && /^\s*\|?[\s:|-]*-[\s:|-]*\|/.test(lines[i + 1] || '')) {
         var rows = [];
@@ -239,7 +259,7 @@
       /* párrafo */
       var p = [];
       while (i < lines.length && lines[i].trim() &&
-             !/^\s*(#{1,6}\s|>|```|\||[-*+]\s|\d+\.\s|(-{3,}|\*{3,}|_{3,})\s*$)/.test(lines[i])) {
+             !/^\s*(#{1,6}\s|>|```|\||!\[|[-*+]\s|\d+\.\s|(-{3,}|\*{3,}|_{3,})\s*$)/.test(lines[i])) {
         p.push(lines[i].trim());
         i++;
       }
@@ -398,6 +418,107 @@
     return -1;
   }
 
+  /* ------------------------------------------- tableros «dónde funciona» -- */
+
+  /* Estos tableros no se escriben: se leen de la tabla «Dónde funciona» que ya
+     trae cada elemento. Así no pueden contradecir al texto que tienen debajo,
+     y se actualizan solos cuando alguien edita la ficha. */
+
+  var COMPS = [
+    { k: 'chat', t: 'Chat' }, { k: 'design', t: 'Design' }, { k: 'cowork', t: 'Cowork' },
+    { k: 'office', t: 'Office' }, { k: 'chrome', t: 'Chrome' }, { k: 'code', t: 'Claude Code' }
+  ];
+  var REACH = { yes: 'Sí', cond: 'Con condición', undoc: 'No documentado', no: 'No', none: 'No listado' };
+
+  function reachState(v) {
+    var f = fold(v);
+    if (f === 'si') return 'yes';
+    if (f.indexOf('si,') === 0) return 'cond';
+    if (f.indexOf('no documentado') === 0) return 'undoc';
+    if (f === 'no') return 'no';
+    return null;
+  }
+
+  /**
+   * Busca la tabla «Componente · Funciona» de un elemento y la clasifica.
+   * Devuelve null si no encuentra ninguna o si alguna celda no es un sí/no:
+   * hay tablas con esa cabecera cuyo contenido es prosa —los modos de permisos
+   * de la Ficha 0— y de ésas no se puede sacar un tablero.
+   */
+  function reachOf(md) {
+    var lines = md.split('\n'), fence = false;
+    for (var i = 0; i < lines.length; i++) {
+      if (/^\s*```/.test(lines[i])) { fence = !fence; continue; }
+      if (fence || !/^\|\s*Componente\s*\|\s*Funciona\s*\|/i.test(lines[i])) continue;
+
+      var map = {}, n = 0, ok = true;
+      for (var j = i + 2; j < lines.length && lines[j].trim().charAt(0) === '|'; j++) {
+        var c = splitRow(lines[j]), comp = null;
+        COMPS.forEach(function (x) { if (fold(x.t) === fold(c[0])) comp = x; });
+        if (!comp) continue;
+        var st = reachState(c[1] || '');
+        if (!st) { ok = false; break; }
+        map[comp.k] = st;
+        n++;
+      }
+      /* Basta un renglón: varias tablas listan solo los componentes donde el
+         elemento sí funciona, y omiten el resto en vez de escribir «No». */
+      if (ok && n >= 1) return map;
+    }
+    return null;
+  }
+
+  /**
+   * Franja bajo el título de un elemento. Muestra **solo** los componentes que
+   * la tabla nombra: si la ficha no menciona uno, la franja tampoco lo inventa
+   * —ni como «sí» ni como «no»—.
+   */
+  function reachHTML(map) {
+    if (!map) return '';
+    var cells = COMPS.filter(function (c) { return map[c.k]; }).map(function (c) {
+      return '<div class="reach-cell is-' + map[c.k] + '">' +
+        '<span class="reach-k">' + esc(c.t) + '</span>' +
+        '<span class="reach-v">' + esc(REACH[map[c.k]]) + '</span></div>';
+    }).join('');
+    if (!cells) return '';
+    return '<div class="reach reveal" role="group" aria-label="Dónde funciona este elemento">' +
+      '<p class="reach-h">Dónde funciona</p><div class="reach-row">' + cells + '</div></div>';
+  }
+
+  /** Tablero de la ficha completa, en su portadilla: elementos por componente. */
+  function boardHTML(f) {
+    var rows = [];
+    f.parts.forEach(function (p) {
+      var m = reachOf(p.md);
+      if (m) rows.push({ t: p.title, m: m, page: p.page });
+    });
+    if (rows.length < 2) return '';
+
+    var head = COMPS.map(function (c) {
+      return '<div class="board-col"><span>' + esc(c.t) + '</span></div>';
+    }).join('');
+    var body = rows.map(function (r) {
+      return '<button class="board-row" data-go="' + r.page + '">' + esc(r.t) + '</button>' +
+        COMPS.map(function (c) {
+          var s = r.m[c.k] || 'none';
+          return '<span class="board-dot is-' + s + '" title="' +
+            escA(c.t + ': ' + REACH[s]) + '"><i></i></span>';
+        }).join('');
+    }).join('');
+
+    return '<div class="board reveal">' +
+      '<p class="board-h">Dónde funciona · según la tabla de cada elemento</p>' +
+      '<div class="board-wrap"><div class="board-grid">' +
+        '<div class="board-corner"></div>' + head + body +
+      '</div></div>' +
+      '<p class="board-key">' + ['yes', 'cond', 'undoc', 'no'].map(function (s) {
+        return '<span class="board-legend"><span class="board-dot is-' + s + '"><i></i></span>' +
+          esc(REACH[s]) + '</span>';
+      }).join('') +
+        '<span class="board-legend board-legend-none">sin marca · no aparece en esa tabla</span>' +
+      '</p></div>';
+  }
+
   /* -------------------------------------------------------------- matriz -- */
 
   /* La matriz se dibuja desde `assets/matriz.json`, no como SVG escrito a mano:
@@ -478,6 +599,20 @@
       '">' + pre + body + lines + '<g>' + hits + '</g></svg>';
   }
 
+  var figuras = {};
+
+  /** Figuras enganchadas a una hoja desde el manifiesto. */
+  function figurasHTML(id) {
+    var list = figuras[id];
+    if (!list || !list.length) return '';
+    return list.map(function (f) {
+      return '<figure class="shot reveal"><button class="shot-open" type="button" ' +
+        'aria-label="Ver en grande"><img src="' + escA(f.src) + '" alt="' + escA(f.alt || '') +
+        '" loading="lazy" decoding="async"></button>' +
+        (f.cap ? '<figcaption>' + esc(f.cap) + '</figcaption>' : '') + '</figure>';
+    }).join('');
+  }
+
   function matrixHTML(m) {
     /* `sub` y los textos de `lee` traen <b> y <code> a propósito: son contenido
        autorizado del repositorio, no algo que escriba quien visita la página. */
@@ -491,6 +626,17 @@
          a `overflow-y:auto`, y ahí dentro se le cortaría la parte de arriba. */
       '<div class="mx-canvas reveal"><div class="mx-scroll">' + matrixSVG(m) + '</div>' +
         '<div class="mx-tip" role="status" aria-live="polite"></div></div>';
+  }
+
+  /** Abre una figura a pantalla completa. Se cierra al hacer clic o con Escape. */
+  function openShot(img) {
+    if (!img) return;
+    var box = document.createElement('div');
+    box.className = 'lightbox';
+    box.innerHTML = '<img src="' + escA(img.getAttribute('src')) + '" alt="' +
+      escA(img.getAttribute('alt') || '') + '">';
+    box.addEventListener('click', function () { box.remove(); });
+    document.body.appendChild(box);
   }
 
   function mxHide() {
@@ -570,9 +716,11 @@
     } else if (p.kind === 'part') {
       /* «Parte 1 · Los controles…» se recorta a «Parte 1» para el antetítulo. */
       var eyebrow = f.title + (p.group ? ' · ' + p.group.title.split(' · ')[0] : '');
-      p.html = head(eyebrow, p.label, ' is-part') + renderBody(p.md, { section: true });
+      p.html = head(eyebrow, p.label, ' is-part') + reachHTML(reachOf(p.md)) +
+        figurasHTML(p.id) + renderBody(p.md, { section: true });
     } else if (p.kind === 'intro') {
-      p.html = head(f.sub, f.title) + renderBody(p.md) + partCards(f);
+      p.html = head(f.sub, f.title) + renderBody(p.md) + figurasHTML(p.id) +
+        partCards(f) + boardHTML(f);
     } else {
       p.html = head(f.sub, f.title) + renderBody(p.md);
     }
@@ -835,7 +983,15 @@
 
   function load() {
     sheet.innerHTML = '<div class="loading"><div class="spinner"></div><p>Abriendo el cuadernillo…</p></div>';
-    var jobs = [fetch(MATRIZ, { cache: 'no-cache' }).then(function (r) {
+    /* El manifiesto se espera junto con las fichas: el HTML de cada hoja se
+       guarda en caché la primera vez que se pinta, así que si llegara tarde
+       la figura no aparecería nunca. Si falta o está roto, el cuadernillo
+       abre igual, sin figuras. */
+    var figs = fetch(FIGURAS, { cache: 'no-cache' })
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .then(function (f) { figuras = f || {}; })['catch'](function () { figuras = {}; });
+
+    var jobs = [figs, fetch(MATRIZ, { cache: 'no-cache' }).then(function (r) {
       if (!r.ok) throw new Error(MATRIZ + ' → HTTP ' + r.status);
       return r.json();
     }).then(matrixFicha)].concat(FILES.map(function (f) {
@@ -845,7 +1001,7 @@
       }).then(function (t) { return parseFicha(f, t); });
     }));
     return Promise.all(jobs).then(function (parsed) {
-      fichas = parsed;
+      fichas = parsed.slice(1);   // el primero del arreglo es el manifiesto de figuras
       pages = buildPages(fichas);
       buildIndex();
       var want = pageIndexById((location.hash || '').replace(/^#/, ''));
@@ -956,6 +1112,9 @@
       if (hit) { mxShow(hit); e.stopPropagation(); return; }
       if (!(t.closest && t.closest('.mx-tip'))) mxHide();
 
+      var shot = t.closest && t.closest('.shot-open');
+      if (shot) { openShot(shot.querySelector('img')); return; }
+
       var copy = t.closest && t.closest('.copy');
       if (copy) {
         var code = copy.closest('.prompt').querySelector('code').textContent;
@@ -1004,7 +1163,11 @@
     document.addEventListener('keydown', function (e) {
       var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
       if (e.key === '/' && !typing) { e.preventDefault(); q.focus(); return; }
-      if (e.key === 'Escape') { toggleToc(false); mxHide(); $('#results').hidden = true; return; }
+      if (e.key === 'Escape') {
+        var lb = $('.lightbox');
+        if (lb) { lb.remove(); return; }
+        toggleToc(false); mxHide(); $('#results').hidden = true; return;
+      }
       if (typing || e.metaKey || e.ctrlKey || e.altKey || app.hidden) return;
       if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); goTo(cur + 1); }
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(cur - 1); }

@@ -556,6 +556,101 @@ html:not(.unlocked) body{overflow:hidden}
 }
 .prompt pre code{background:none;border:0;padding:0;font-size:inherit}
 
+/* ------------------------------------------ 10a. Tableros e imágenes ----- */
+/* Los estados se leen de la tabla «Dónde funciona» de la propia ficha.
+   Nunca es solo color: cada casilla lleva su palabra escrita. */
+.reach{margin:0 0 28px}
+.reach-h{
+  margin:0 0 9px;font-family:var(--sans)!important;font-size:11px!important;
+  letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:var(--ink-3);max-width:none;
+}
+/* Flexible: hay elementos cuya tabla nombra dos componentes y otros los seis. */
+.reach-row{display:flex;flex-wrap:wrap;gap:8px}
+.reach-cell{flex:1 1 132px}
+.reach-cell{
+  display:flex;flex-direction:column;gap:3px;min-width:0;
+  padding:10px 12px;border-radius:10px;border:1px solid var(--line-2);
+  background:var(--paper);border-left-width:3px;
+}
+.reach-k{font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.25}
+.reach-v{font-size:11.5px;color:var(--ink-3);line-height:1.25}
+.reach-cell.is-yes{border-left-color:var(--green);background:color-mix(in srgb,var(--green) 6%,var(--paper))}
+.reach-cell.is-yes .reach-v{color:var(--green)}
+.reach-cell.is-cond{border-left-color:var(--gold);background:color-mix(in srgb,var(--gold) 8%,var(--paper))}
+.reach-cell.is-cond .reach-v{color:var(--gold-deep)}
+.reach-cell.is-no{border-left-color:var(--wine);background:color-mix(in srgb,var(--wine) 5%,var(--paper))}
+.reach-cell.is-no .reach-v{color:var(--wine)}
+.reach-cell.is-undoc,.reach-cell.is-none{border-left-color:var(--line);opacity:.72}
+
+/* Tablero de la ficha entera, en su portadilla. */
+.board{margin:34px 0 0}
+.board-h{
+  margin:0 0 12px;font-family:var(--sans)!important;font-size:11px!important;
+  letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:var(--gold-deep);max-width:none;
+}
+.board-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.board-grid{
+  display:grid;grid-template-columns:minmax(190px,1fr) repeat(6,64px);
+  align-items:center;gap:2px 0;min-width:590px;
+}
+.board-col{
+  padding:0 0 8px;text-align:center;font-size:9.5px;letter-spacing:.04em;
+  text-transform:uppercase;font-weight:700;color:var(--ink-3);line-height:1.25;
+}
+/* Sin partir palabras: «Claude Code» baja por su espacio, «Cowork» no se rompe. */
+.board-col span{display:inline-block;overflow-wrap:normal;word-break:keep-all;hyphens:none}
+.board-corner{padding-bottom:8px}
+.board-row{
+  text-align:left;border:0;background:none;cursor:pointer;font:inherit;
+  font-size:14px;font-weight:600;color:var(--ink);padding:9px 10px 9px 0;
+  border-top:1px solid var(--line-2);transition:color .18s;
+}
+.board-row:hover{color:var(--gold-deep)}
+.board-dot{
+  display:grid;place-items:center;height:100%;padding:9px 0;
+  border-top:1px solid var(--line-2);
+}
+.board-dot i{display:block;width:9px;height:9px;border-radius:999px;background:var(--line)}
+.board-dot.is-yes i{background:var(--green)}
+.board-dot.is-cond i{background:var(--gold);width:9px;height:9px;border-radius:2px;transform:rotate(45deg)}
+.board-dot.is-no i{background:var(--wine);width:9px;height:2px;border-radius:1px}
+.board-dot.is-undoc i{background:none;border:1.5px solid var(--ink-3);opacity:.55;width:8px;height:8px}
+/* Sin marca cuando la tabla no nombra ese componente: no se inventa un «no». */
+.board-dot.is-none i{display:none}
+.board-key{
+  display:flex;flex-wrap:wrap;gap:6px 18px;margin:14px 0 0!important;
+  font-family:var(--sans)!important;font-size:12px!important;color:var(--ink-3);max-width:none;
+}
+.board-legend{display:inline-flex;align-items:center;gap:7px}
+.board-legend-none{opacity:.8}
+.board-legend .board-dot{height:auto;padding:0;border:0}
+
+/* Figuras: capturas y diagramas dentro de una ficha. */
+.shot{margin:0 0 24px}
+.shot-open{
+  display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:12px;
+  background:var(--paper-3);cursor:zoom-in;overflow:hidden;
+  transition:border-color .25s,box-shadow .25s;
+}
+.shot-open:hover{border-color:var(--gold);box-shadow:var(--shadow-1)}
+.shot-open img{display:block;width:100%;height:auto}
+/* Una imagen no puede seguir el interruptor de tema del sitio —un SVG con su
+   propia consulta ve el modo del sistema, y una captura no ve nada—, así que
+   en oscuro se le baja el brillo para que no deslumbre. */
+:root[data-theme="dark"] .shot-open img{filter:brightness(.86) contrast(1.03)}
+@media (prefers-color-scheme: dark){
+  :root[data-theme="auto"] .shot-open img{filter:brightness(.86) contrast(1.03)}
+}
+.lightbox img{filter:none!important}
+.shot figcaption{
+  margin-top:9px;font-family:var(--sans);font-size:13px;line-height:1.5;color:var(--ink-3);
+}
+.lightbox{
+  position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:24px;
+  background:rgba(12,11,9,.88);cursor:zoom-out;animation:fade .2s;
+}
+.lightbox img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px -20px rgba(0,0,0,.8)}
+
 /* --------------------------------------------------- 10b. La matriz ------ */
 /* Los colores son los de la UP que ya usa el sitio: azul de Preparatoria para
    los inputs, vino de Licenciatura para las configuraciones, verde de Posgrados
@@ -683,6 +778,10 @@ html:not(.unlocked) body{overflow:hidden}
   .fields{gap:11px}
   .field{padding:18px 18px 20px}
   .element{margin-bottom:30px}
+  /* Seis casillas no caben a lo ancho de un teléfono: dos renglones de tres. */
+  .reach-row{gap:7px}
+  .reach-cell{flex:1 1 96px;padding:8px 10px}
+  .board-grid{grid-template-columns:minmax(140px,1fr) repeat(6,54px);min-width:500px}
 
   /* tablas apiladas */
   .table-wrap{border:0;background:none;overflow:visible}

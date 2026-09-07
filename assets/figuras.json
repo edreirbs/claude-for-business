@@ -1,0 +1,9 @@
+{
+ "ficha-1": [
+  {
+   "src": "assets/img/alcance-por-componente.svg",
+   "alt": "Gráfica de barras. De los 24 elementos: CLAUDE CODE 17, COWORK 16, DESIGN 12, CHAT 10, OFFICE 9, CHROME 8.",
+   "cap": "Contado sobre la matriz de inicio: de los 24 elementos, CLAUDE CODE alcanza 17 y CHROME 8. No todos los componentes llegan a lo mismo, y por eso el mismo encargo sale distinto según dónde lo pidas."
+  }
+ ]
+}
