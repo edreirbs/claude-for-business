@@ -93,11 +93,23 @@ printf 'la-nueva-contrasena' | sha256sum
 
 ### Cómo se agrega o quita una ficha
 
-Editar el arreglo `FILES` al principio de `assets/app.js`. El título, el número, el resumen de la portada y las entradas del índice se leen del propio Markdown, así que no hay nada más que tocar.
+Editar el arreglo `FILES` al principio de `assets/app.js`. Todo lo demás —el título, el número, el índice, el corte en hojas— sale del propio Markdown, así que no hay nada más que tocar.
+
+### Cómo se corta el material en hojas
+
+Cada ficha se abre en una portadilla más una hoja por elemento, para que una vuelta de página quepa en una o dos pantallas en vez de pedir diez de scroll. El corte se hace en los encabezados `##`, respetando los bloques de código: la Ficha 4 trae un `CLAUDE.md` de ejemplo cuyas líneas empiezan con `##` y no son encabezados.
+
+Una ficha sin campos `###` —el índice— se queda entera en una sola hoja.
+
+Dentro de cada hoja, los campos (`### Qué es`, `### Cuándo se usa`…) se acomodan en tarjetas de dos columnas. Las que llevan tabla o prompt ocupan el ancho completo, porque lo necesitan.
 
 ### Cómo se hojea
 
-Con las flechas de abajo, con `←` y `→`, o deslizando el dedo. `/` abre el buscador, `Inicio` y `Fin` van a la primera y la última página, y cada ficha tiene su propia liga (`#ficha-3`) para mandarla directa.
+Con las flechas de abajo, con `←` y `→`, o deslizando el dedo. `/` abre el buscador, `Inicio` y `Fin` van a la primera y la última hoja.
+
+El índice de la izquierda lista las nueve fichas y despliega los elementos de la que esté abierta. El paginador dice en qué ficha se está y en cuál de sus hojas.
+
+Cada hoja tiene su propia liga para mandarla directa: `#ficha-3` es la portadilla de la Ficha 3 y `#ficha-3-conectores` es su elemento «Conectores».
 
 ---
 
