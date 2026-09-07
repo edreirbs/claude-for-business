@@ -46,6 +46,60 @@ Las tablas de "dónde funciona" se verificaron una por una contra la documentaci
 
 ---
 
+## El cuadernillo en web
+
+Las mismas fichas, publicadas como GitHub Page: un cuadernillo que se hojea, con paso de página animado, buscador sobre las nueve fichas y botón para copiar cada prompt.
+
+| Archivo | Qué hace |
+|---|---|
+| `index.html` | La página. Portada con contraseña y el armazón del cuadernillo. |
+| `assets/styles.css` | Todo el diseño: paleta de la UP, hoja, animaciones, modo claro y oscuro, tablas apiladas en móvil e impresión. |
+| `assets/app.js` | Lee los `.md` de `Repaso/`, los convierte a HTML y maneja navegación, índice, buscador y candado. |
+| `.nojekyll` | Le pide a GitHub Pages que sirva los archivos tal cual, sin procesarlos con Jekyll. |
+| `.github/workflows/pages.yml` | Publica el sitio en cada push a `main`. |
+
+Sin dependencias, sin paso de compilación y sin marco de trabajo: tres archivos y las fuentes de Google. Las fichas siguen siendo los `.md` de `Repaso/` — son la única fuente de la verdad, y la web se actualiza sola cuando cambian.
+
+### Cómo se publica
+
+Solo. Cada push a `main` dispara el flujo de `.github/workflows/pages.yml`, que sube el repositorio tal cual a GitHub Pages. La primera corrida además enciende Pages por su cuenta, así que no hay que configurar nada en *Settings*.
+
+Editar una ficha de `Repaso/` y hacer push basta para actualizar el sitio.
+
+La liga aparece en **Settings → Pages** y también al final del flujo, en la pestaña *Actions*.
+
+### Cómo se ve en local
+
+Necesita un servidor, porque el cuadernillo lee los `.md` con `fetch`; abrir `index.html` con doble clic no funciona.
+
+```
+python3 -m http.server 8000
+```
+
+Y abrir `http://localhost:8000`.
+
+### La contraseña
+
+El cuadernillo pide una contraseña antes de abrirse. En el código no está la contraseña sino su huella SHA-256, y la comprobación ocurre en el navegador de quien entra.
+
+Eso conviene tenerlo claro: **es una cortesía, no una cerradura**. Sirve para que el material no quede a la vista de cualquiera que llegue a la liga, pero los `.md` de `Repaso/` siguen siendo públicos en el repositorio, igual que el resto del código. Para material que de verdad no pueda salir, hace falta un repositorio privado o un servidor que autentique.
+
+Para cambiar la contraseña, calcular la huella nueva y sustituir `PASS_HASH` en `assets/app.js`:
+
+```
+printf 'la-nueva-contrasena' | sha256sum
+```
+
+### Cómo se agrega o quita una ficha
+
+Editar el arreglo `FILES` al principio de `assets/app.js`. El título, el número, el resumen de la portada y las entradas del índice se leen del propio Markdown, así que no hay nada más que tocar.
+
+### Cómo se hojea
+
+Con las flechas de abajo, con `←` y `→`, o deslizando el dedo. `/` abre el buscador, `Inicio` y `Fin` van a la primera y la última página, y cada ficha tiene su propia liga (`#ficha-3`) para mandarla directa.
+
+---
+
 ## Licencia de uso
 
 Material didáctico de uso interno del curso.
