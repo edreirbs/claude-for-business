@@ -1,6 +1,6 @@
 # Ficha 7 · Salidas que solo abre quien las produjo
 
-**Repaso · Claude for Business** — Universidad Panamericana Aguascalientes
+**Repaso · Claude for Business** — Universidad Panamericana
 
 > **Para qué sirve esta ficha.** Todo trabajo termina en algún lado, y ese "algún lado" decide quién va a poder verlo. Las salidas de esta ficha se quedan contigo: viven en tu pantalla, en tu disco o dentro de tu archivo. Para que otra persona las vea, tú tienes que mandárselas. Las de la Ficha 8 son distintas: llevan una liga que otro abre por su cuenta. Elegir mal entre las dos es lo que obliga a rehacer trabajo, y casi siempre se descubre tarde, cuando alguien pide "pásame eso" y resulta que no se puede pasar.
 
@@ -89,6 +89,10 @@ Abre la carpeta en tu computadora y confirma que el archivo está donde dice. De
 
 No se comparte solo. Es un archivo: para que alguien lo vea, se lo mandas.
 
+**No queda versionado.** Cuando Claude modifica un archivo, lo borra y lo genera de nuevo: no deja historial como el de OneDrive o SharePoint. Si quieres rastro de los cambios, hay que pedir una bitácora, explicada en la Ficha 5.
+
+**Puede preguntarte si sobrescribe o crea uno nuevo.** Conviene contestar con criterio: sobrescribir es cómodo y borra la versión anterior para siempre.
+
 ### Plan
 
 De pago.
@@ -171,15 +175,37 @@ Por qué está escrito así: el texto que se sale de su caja es el defecto más 
 
 Abrir el archivo exportado. Exportar no es terminar: abrirlo es terminar. Un PDF que no se abrió no está revisado.
 
+### Los formatos que salen de Design
+
+Además de PDF, PowerPoint editable, HTML y video, Claude Design exporta **PNG** para imágenes sueltas, **GLB u OBJ** cuando lo que hiciste es un objeto en tres dimensiones —esos archivos se abren en programas de modelado y se pueden mandar a imprimir en 3D—, y un **paquete de proyecto comprimido**, que es la salida de rescate cuando alguna de las otras falla.
+
+También puede mandar el diseño a servicios conectados, como herramientas de presentación o de publicación, y a **Claude Code**, para que lo que diseñaste se convierta en algo funcional.
+
+### El modo de edición: cambiar sin volver a pedir
+
+Es la diferencia más grande entre Design y el chat, y conviene tenerla presente antes de elegir dónde trabajar.
+
+En Design puedes entrar a **modo de edición** y cambiar el texto y el tamaño de los elementos directamente, con el cursor, como en un procesador de texto. Al salir te pregunta si conservas los cambios.
+
+Y están los **tweaks**: controles rápidos que quedan incrustados en la pieza —el color del título, la tipografía, el fondo— y que puedes mover sin escribir nada. A veces Claude los propone solo; también se pueden pedir:
+
+```
+Agrega un tweak para modificar el color de fondo de las láminas.
+```
+
+En el chat no existe nada de esto: cualquier cambio implica volver a pedirlo y que rehaga la pieza completa.
+
 ### Lo que no hace
 
 No exporta hacia Figma. Figma aparece para importar un sistema de diseño, no como destino.
 
 No genera fotografías ni ilustraciones: lo que exporta está hecho con formas, tipografía y color.
 
+**El enlace para compartir que genera Design es interno de tu organización**, no una página abierta a internet.
+
 ### Plan
 
-De pago.
+De pago. Los comentarios sobre un diseño solo existen en Team y Enterprise.
 
 ---
 
@@ -214,9 +240,21 @@ Todavía no lo voy a compartir con nadie.
 
 Que abra en su panel y que puedas navegar entre versiones.
 
+### Lo que todo artifact hace, se comparta o no
+
+**Guarda versiones.** Cada corrección crea una versión nueva y no borra la anterior: se puede volver a la versión 2 y seguir desde ahí. Iterar no destruye.
+
+**Se puede ver su código.** Un artifact es por dentro un programa pequeño. Hay un botón para ver el código en vez de la pieza, y se puede copiar.
+
+**Se puede crear sin conversación.** En la sección de artifacts hay un botón para empezar uno nuevo directamente, eligiendo qué tipo quieres: aplicación, documento, juego, herramienta, cuestionario, o en blanco.
+
+**Hay que pedirlo explícitamente.** A veces Claude no entiende que quieres un artifact y contesta con texto normal. La instrucción directa —"créalo como artifact"— resuelve el problema.
+
 ### Lo que no hace
 
 No se comparte en Pro ni en Max. No aparece en la app web ni en la móvil. No viaja a otra computadora.
+
+**No se actualiza solo.** Un artifact hecho con los datos de hoy sigue mostrando los datos de hoy mañana. Para que cambie hay que pedírselo, o montar una tarea programada que lo actualice, y eso está en la Ficha 6. Es la confusión más frecuente: un artifact no es un tablero conectado a una fuente viva.
 
 Si el resultado lo va a abrir alguien más, este no es el elemento correcto: hay que ir a la Ficha 8.
 
@@ -235,6 +273,7 @@ De pago.
 | Edición del documento abierto | dentro del archivo | mandando el archivo |
 | Exportación | en tu descargas | mandando el archivo |
 | Artifact local | en tu app de escritorio | descargándolo primero |
+| Sistema de diseño | en tu cuenta de Design | por enlace, dentro de la organización |
 
 Las cinco tienen la misma característica: **para que alguien más las vea, hace falta un acto tuyo.** Ninguna se abre sola desde afuera.
 

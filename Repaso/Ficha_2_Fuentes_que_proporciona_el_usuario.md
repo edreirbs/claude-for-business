@@ -1,6 +1,6 @@
 # Ficha 2 · Fuentes que proporciona el usuario
 
-**Repaso · Claude for Business** — Universidad Panamericana Aguascalientes
+**Repaso · Claude for Business** — Universidad Panamericana
 
 > **Para qué sirve esta ficha.** Claude no sabe nada de tu trabajo hasta que se lo pones enfrente. Hay cuatro maneras de ponérselo, y no son intercambiables: cada una funciona en componentes distintos y tiene reglas distintas sobre qué pasa con el material después. Elegir mal la vía es la razón más común de que Claude conteste "no tengo acceso a ese archivo".
 
@@ -64,11 +64,21 @@ Por qué está escrito así: nombrar las columnas evita que invente una estructu
 
 Abre el archivo original en la página o la celda que Claude citó y confirma que el dato coincide. Basta con revisar dos o tres al azar. Si en alguna no coincide, revisa todas.
 
+### La variante local: el símbolo @
+
+En Cowork y en Claude Code de escritorio no hace falta subir un archivo que ya está en la carpeta conectada: se escribe **@** seguido del nombre y Claude lo trae a la conversación, como cuando mencionas a alguien en una red social.
+
+Es distinto de adjuntar. El @ apunta a un archivo que ya está ahí; el adjunto sube una copia. Y solo alcanza lo que está dentro de la carpeta de esa sesión: si escribes @ y no aparece la carpeta que buscas, es porque esa carpeta no está conectada, no porque el @ falle.
+
+En las sesiones de nube de Claude Code el símbolo @ no existe.
+
 ### Lo que no hace
 
 El archivo no queda guardado. Mañana, en una conversación nueva, hay que volverlo a subir. Si es un documento que vas a consultar siempre, va al conocimiento de un Project (Ficha 4).
 
 Tampoco modifica el archivo que subiste. Lo lee y contesta; si quieres el archivo cambiado, te devuelve uno nuevo.
+
+Hay un tope de archivos por conversación, alrededor de veinte. No es un capricho: cada archivo ocupa espacio en la capacidad de esa conversación, y al pasarse, los últimos dejan de tomarse en cuenta. Está explicado en la Ficha 0.
 
 ### Plan
 
@@ -130,9 +140,21 @@ Por qué está escrito así: nombrar el archivo de salida evita que lo ponga don
 
 Abre la carpeta en tu computadora y confirma que el archivo nuevo está donde dijiste y que los originales conservan su fecha de modificación. Si una fecha cambió, algo se tocó.
 
+### El patrón de la carpeta sincronizada
+
+Si conectas la carpeta que Google Drive o OneDrive sincronizan en tu disco, y la marcas para estar siempre disponible sin conexión, Claude la trata como carpeta local y lo que escriba ahí se sube solo a la nube. Es la forma práctica de trabajar sobre archivos compartidos sin salirse de Cowork.
+
+Lo que no funciona es apuntar a la nube directamente: Claude no entra a tu Google Drive como carpeta. Entra a la copia que Drive dejó en tu disco.
+
 ### Lo que no hace
 
 Solo ve las carpetas que conectaste. Una carpeta que no conectaste, para él no existe, y decirle la ruta por escrito no basta: hay que conectarla.
+
+**Puede borrar archivos.** Si el modo de permisos está en omitir aprobaciones, puede eliminar cosas que no querías. La práctica recomendada es escribirle en las reglas que nunca borre, y que en su lugar mueva a una carpeta llamada `_para_borrar` donde tú decides después.
+
+**No versiona.** Cuando modifica un documento, lo borra y lo genera de nuevo; no deja historial. Por eso conviene pedirle una bitácora, explicada en la Ficha 5.
+
+Antes de trabajar sobre una carpeta real conviene revisar el modo de permisos, que está en la Ficha 0.
 
 ### Plan
 
@@ -241,6 +263,12 @@ Por qué está escrito así: la cifra sin fecha no sirve para nada dentro de tre
 
 Abre tú la liga que te devolvió y busca la cifra en la página. Si la liga no abre en la cifra, no sirve como fuente.
 
+### Cómo lo hace
+
+Por dentro va sacando capturas de la página por secciones y leyéndolas. Por eso funciona en sitios que no tienen forma de exportar: no necesita que el sitio coopere, le basta con verlo.
+
+También es la razón de que sea lento. Una revisión de veinte pantallas puede tomar veinte minutos.
+
 ### Lo que no hace
 
 No llega a los archivos de tu computadora por esta vía.
@@ -263,5 +291,6 @@ De pago.
 | Carpeta o repositorio | en tu disco | Cowork, Claude Code |
 | Documento abierto | en pantalla, dentro de Office | Office |
 | Pestaña del navegador | en una página web | Cowork, Chrome, Claude Code |
+| Mención con @ | en la carpeta ya conectada | Cowork, Claude Code de escritorio |
 
 La pregunta que resuelve la elección es sencilla: **¿dónde está el material en este momento?** Si está en tu disco y son varios, es carpeta. Si está abierto en Word, es documento abierto. Si está en una página, es pestaña. Si es uno o dos archivos sueltos y la tarea se acaba hoy, es adjunto.

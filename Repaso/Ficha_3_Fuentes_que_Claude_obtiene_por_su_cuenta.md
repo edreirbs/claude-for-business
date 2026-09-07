@@ -1,6 +1,6 @@
 # Ficha 3 · Fuentes que Claude obtiene por su cuenta
 
-**Repaso · Claude for Business** — Universidad Panamericana Aguascalientes
+**Repaso · Claude for Business** — Universidad Panamericana
 
 > **Para qué sirve esta ficha.** Las fuentes de la Ficha 2 las pones tú. Las de esta ficha las va a buscar Claude solo, a internet o a otro sistema de tu organización. Eso cambia dos cosas importantes: primero, tú no viste el material antes de que lo usara, así que la verificación deja de ser opcional; segundo, para llegar a un sistema privado hay que darle una llave, y esa llave casi nunca es tan pequeña como uno cree.
 
@@ -66,17 +66,52 @@ Necesito [el dato]. Dame la cifra, la fecha de corte, quién la publica
 y la liga directa. Si encuentras dos cifras distintas, dame las dos.
 ```
 
+### Lo que pasa antes de que Research arranque
+
+Research no empieza de inmediato. Primero hace dos cosas que conviene aprovechar en vez de saltarse:
+
+**Te hace preguntas de aclaración.** A veces en texto libre, a veces como opciones para elegir. Contestarlas bien vale más que reescribir el prompt.
+
+**Te pregunta con qué herramientas trabajar**: solo internet, o también los sistemas que tengas conectados. Si el encargo es público, conviene desactivar los conectores para que no mezcle fuentes internas con externas sin avisar.
+
+Una práctica que funcionó bien en clase: antes de lanzarlo, preguntarle qué le falta a tu propio encargo.
+
+```
+Antes de lanzar esto como investigación, dime qué le falta a mi prompt
+para que el informe sea más útil.
+```
+
+### Cómo se sigue mientras trabaja
+
+Research abre un panel donde se ve el plan que armó, las fuentes que va consultando y las sub-investigaciones que abre. Puedes entrar a cada fuente desde ahí.
+
+Ese panel es la herramienta de verificación real: no hay que esperar al informe para saber si va bien encaminado.
+
+Y hay un botón de **detener**. Si ves que va por mal camino, se corta ahí mismo: no hay que esperar los diez minutos ni gastar el consumo completo.
+
 ### Cómo se verifica
+
+Las respuestas traen **citas dentro del texto**, que se pueden abrir. Cada afirmación con cita se puede rastrear hasta su fuente sin salir de la conversación.
 
 Abre dos de las ligas al azar y busca la cifra en la página. Este paso no se salta: es la única manera de distinguir una fuente real de una referencia que suena bien.
 
 Si una liga no abre, o abre en una página que no contiene el dato, trata el informe completo con desconfianza y pide que rehaga esa parte.
 
+Y ten presente que **el resultado no es reproducible**: si lanzas la misma búsqueda mañana, las fuentes van a ser otras. No es un fallo, es cómo funciona. Significa que el informe que guardaste es el registro, y que no puedes reconstruirlo repitiendo el prompt.
+
 ### Lo que no hace
 
-No garantiza que la fuente sea buena. Encuentra páginas y las cita; juzgar si esa página merece confianza sigue siendo tuyo. Por eso el encargo pide quién publica y qué interés tiene: para que tú puedas juzgar.
+No garantiza que la fuente sea buena. Encuentra páginas y las cita; juzgar si esa página merece confianza sigue siendo tuyo. Un blog personal indexado en un buscador puede aparecer citado junto a un informe institucional. Por eso el encargo pide quién publica y qué interés tiene: para que tú puedas juzgar.
 
-No sabe lo que pasa dentro de tu organización. Para eso están los conectores.
+**Puede citar fuentes que no existen.** Se le llama cita fantasma: una referencia con nombre, año y aspecto verosímil, de un documento que nunca se publicó. Es la razón por la que verificar dos ligas al azar no es exceso de cuidado.
+
+**Sin búsqueda web activada no tiene información actual.** Claude conoce lo que había hasta su fecha de entrenamiento y nada posterior. La conexión a internet no es una propiedad del modelo: es una herramienta que se le agrega, y hay que encenderla.
+
+Conviene también saber apagarla a propósito: cuando trabajas sobre un documento tuyo y no quieres que meta material de internet, se apaga desde el mismo menú.
+
+No sabe lo que pasa dentro de tu organización por esta vía. Para eso están los conectores.
+
+Y una tercera vía que existe en algunos planes corporativos: el **conocimiento interno de la organización**, que permite preguntarle sobre los documentos de tu empresa sin conectar nada. Depende de que tu organización lo tenga habilitado.
 
 ### Plan
 
@@ -111,9 +146,21 @@ Por debajo, todos los conectores hablan un mismo estándar llamado **MCP**. Cuan
 
 Es, junto con los Skills, uno de los dos únicos elementos que funcionan en los seis componentes.
 
+### Cómo se instalan y se encienden
+
+Hay un directorio de conectores dentro de Claude, organizado por categorías, donde se ven los disponibles. Instalar uno abre una pantalla de permisos del propio servicio —la misma que verías al conectar cualquier aplicación— y ahí decides si aceptas. Si no aceptas, el conector simplemente no queda.
+
+Dos cosas que conviene saber:
+
+**Necesitas ya tener cuenta en ese servicio.** El conector no te crea una.
+
+**Se pueden encender y apagar por conversación.** En el menú del símbolo + de cada conversación aparecen los conectores disponibles, y ahí se prenden o se apagan. Conviene apagar los que no vengan al caso, para que Claude no busque en tu correo cuando le preguntaste algo público.
+
+Algunos conectores, además, se reautorizan al empezar cada sesión nueva.
+
 ### Cómo se pide
 
-Un conector se autoriza una vez desde la configuración de tu cuenta. En algunos casos, como Supabase, hay que encenderlo además en cada sesión nueva.
+Un conector se autoriza una vez desde la configuración de tu cuenta. En algunos casos hay que encenderlo además en cada sesión nueva.
 
 Una vez puesto, el primer encargo conviene que sea de solo lectura:
 

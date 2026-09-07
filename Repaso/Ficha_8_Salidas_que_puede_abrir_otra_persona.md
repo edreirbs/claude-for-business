@@ -1,6 +1,6 @@
 # Ficha 8 · Salidas que puede abrir otra persona o un sistema
 
-**Repaso · Claude for Business** — Universidad Panamericana Aguascalientes
+**Repaso · Claude for Business** — Universidad Panamericana
 
 > **Para qué sirve esta ficha.** Las salidas de la Ficha 7 se quedan contigo. Éstas salen: llevan una liga que otra persona abre desde su teléfono sin instalar nada, o escriben directamente en un sistema. Es la ficha con más consecuencias, porque una vez que algo salió, salió. Conviene decidir desde el principio si el trabajo termina aquí o en la Ficha 7, ya que cambiar de opinión al final casi siempre significa rehacerlo.
 
@@ -48,6 +48,26 @@ quiero publicar nada que no deba salir.
 
 Por qué está escrito así: la última línea es una revisión de contenido antes de publicar. Publicar es fácil de deshacer mal y difícil de deshacer bien.
 
+### La regla que costó media clase descubrir
+
+Además del Project, hay una segunda condición que decide si el botón de publicar aparece siquiera: **dónde nació el artifact**.
+
+Un artifact creado dentro de una conversación de **Cowork** o de un proyecto local no se puede publicar. Un artifact creado en una conversación de **chat** sí.
+
+En la sesión 3 esto detuvo la clase treinta y cinco minutos: el botón de publicar simplemente no aparecía, y no hay mensaje de error que lo explique. Si te falta ese botón, la causa casi siempre es ésta.
+
+La salida práctica: cuando sepas de antemano que algo se va a compartir, créalo en una conversación de chat normal, fuera de todo Project y fuera de Cowork.
+
+### El destino: web o equipo
+
+Al publicar hay dos opciones. **Publicar en la web** da una liga que abre cualquiera. **Compartir con tu equipo** lo deja dentro de la organización, y esa opción solo existe en los planes Team y Enterprise.
+
+En Enterprise el administrador puede haber apagado la publicación externa por completo.
+
+### Quien lo recibe puede reutilizarlo
+
+Al abrir un artifact publicado aparece una opción de reutilizarlo: se lleva una copia a su propia conversación de Claude y desde ahí lo modifica. Lo que publicaste no es solo para mirar; es un punto de partida para otro.
+
 ### Cómo se verifica
 
 Abre la liga en una ventana privada del navegador, o pídele a alguien que la abra desde su teléfono. Si te pide iniciar sesión, no está publicado como creías.
@@ -88,6 +108,21 @@ Cuando otra persona tiene que poder retomar el trabajo, no solo verlo.
 |---|---|
 | Claude Code | Sí |
 
+### El vocabulario mínimo
+
+Trabajar con un repositorio trae cuatro palabras que no se pueden evitar. Estas son:
+
+| Palabra | Qué significa |
+|---|---|
+| **Rama** | Una copia paralela del proyecto donde se hacen cambios sin tocar la versión buena. |
+| **`main`** | La rama principal, la versión buena. |
+| **Pull request** | La propuesta de meter los cambios de una rama a `main`. Es una propuesta, no el cambio. |
+| **Merge** | Aceptar esa propuesta. Aquí sí se combinan. |
+
+El flujo completo: Claude trabaja en una rama, sube los cambios, abre un pull request, tú lo revisas, y entonces se hace merge a `main`.
+
+Trabajar en rama y no directamente en `main` es lo que hace que un error sea reversible. Vale la pena escribirlo en el prompt cada vez.
+
 ### Cómo se pide
 
 Un repositorio que se entrega necesita explicarse solo, porque quien lo abra no vas a ser tú.
@@ -110,6 +145,16 @@ Que alguien más lo abra y llegue al final sin preguntarte nada. Si tiene que pr
 ### Lo que no hace
 
 No lleva tus Skills adentro. Los Skills son de tu cuenta y te siguen a ti. Los subagentes sí viajan, porque viven en la carpeta `.claude/agents/` del repositorio.
+
+**No es lugar para datos.** Un repositorio guarda el proyecto y su código; los datos que crecen van en una base de datos.
+
+**Nunca metas credenciales.** Una llave de acceso escrita dentro de un archivo del repositorio queda expuesta a quien lo abra. Si le pasas una a Claude en la conversación, normalmente se niega a trabajar con ella y te dice que la borres y la cambies.
+
+### Cómo se comparte
+
+Un repositorio público lo puede leer y copiar cualquiera, pero **no lo puede modificar**: para eso tendrías que dar permisos de edición a esa persona en particular.
+
+Hay un mecanismo pensado para repartir un punto de partida: marcarlo como **plantilla**. Quien lo abre le da a "usar esta plantilla" y obtiene su propia copia completa, con las reglas y los subagentes puestos, sin tocar el tuyo.
 
 ### Plan
 
@@ -152,9 +197,32 @@ Por qué está escrito así: los tres errores que más se publican por accidente
 
 Abre la dirección desde un teléfono con datos móviles, no desde tu computadora ni desde tu red. Es la única prueba de que está realmente publicada.
 
+Si el cambio no aparece: recarga primero; si sigue igual, es que falta el despliegue.
+
+### El paso que a todos se les olvidó
+
+Cambiar el código **no cambia la página publicada**. Son dos cosas separadas: primero el cambio entra al repositorio, y después hay que pedir el despliegue.
+
+En la sesión 7 este fue el punto donde se atoró el grupo entero: pedían un cambio, Claude lo hacía, y en la página no pasaba nada. La causa no era un error, era que faltaba el segundo paso.
+
+La regla práctica: **cada vez que quieras ver un cambio publicado, pídelo explícitamente.**
+
+```
+Haz merge a main y despliega la última versión del sitio.
+```
+
+Conviene además escribirlo como regla permanente en el `CLAUDE.md`, para no acordarse cada vez:
+
+```
+Cualquier cambio aprobado en una rama se fusiona a main y se despliega
+en producción. Al terminar, dame la liga y dime qué versión quedó publicada.
+```
+
 ### Lo que no hace
 
 Publicar no es privado. Una página publicada la puede encontrar cualquiera que tenga la dirección, y no hay control de quién la abre a menos que se le agregue uno explícitamente.
+
+Los servicios de publicación gratuitos tienen tope: un número limitado de publicaciones al mes, y la dirección lleva el nombre del servicio como apellido. Quitarlo requiere pagar.
 
 ### Plan
 
@@ -207,6 +275,10 @@ Entra al sistema por tu cuenta, no por Claude, y confirma que el registro está 
 ### Lo que no hace
 
 No se puede deshacer solo. Un registro creado por error se borra a mano, en el sistema, por ti.
+
+Cuando la acción es realmente irreversible, Claude suele enseñarte antes lo que va a ejecutar. En la sesión 7, antes de crear tablas en una base de datos, mostró las instrucciones exactas y esperó. Ese momento es para leer, no para aceptar de corrido.
+
+Los servicios gratuitos tienen límites que aparecen a media tarea: número de proyectos, número de publicaciones al mes, tamaño. Conviene conocerlos antes de empezar.
 
 ### Plan
 

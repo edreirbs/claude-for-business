@@ -1,6 +1,6 @@
 # Ficha 4 · Configuración que escribe el usuario
 
-**Repaso · Claude for Business** — Universidad Panamericana Aguascalientes
+**Repaso · Claude for Business** — Universidad Panamericana
 
 > **Para qué sirve esta ficha.** Todo lo que explicas al empezar una conversación —quién eres, a qué se dedica tu área, cómo se llaman las cosas ahí, qué formato usan, qué nunca hay que hacer— se pierde cuando cierras esa conversación. Los cinco elementos de esta ficha son los cinco lugares donde ese contexto se escribe una sola vez y queda puesto. Son cinco y no uno porque cada componente guarda el contexto en un lugar distinto, y ahí está la confusión que más tiempo cuesta: escribir las reglas en el lugar equivocado se siente exactamente igual que escribirlas bien, hasta que no funcionan.
 
@@ -16,8 +16,13 @@ Antes de verlos uno por uno, conviene entender el patrón. Los cinco hacen lo mi
 
 **Qué tan lejos viaja.** Un Proyecto del chat vive en tu cuenta y lo ves desde cualquier dispositivo. Un `CLAUDE.md` vive dentro de la carpeta, así que viaja con ella: si le mandas la carpeta a un compañero, se lleva las reglas puestas.
 
+Existe una sexta capa, más amplia que las cinco de esta ficha: las **instrucciones de perfil**, que aplican a todas tus conversaciones sin excepción. Están en la Ficha 0 porque son un ajuste de la cuenta, no de un trabajo.
+
+**Cuál gana cuando se contradicen.** De más fuerte a más débil: lo que pides en el mensaje, luego el `CLAUDE.md` o las instrucciones del Proyecto, luego las instrucciones de perfil, y al final el criterio propio de Claude. Si insistes en algo que contradice una regla escrita, gana lo que tú pides.
+
 | Elemento | Dónde vive | Viaja a otra persona |
 |---|---|---|
+| Instrucciones de perfil (Ficha 0) | en tu cuenta, aplican a todo | no |
 | Proyecto del chat | en tu cuenta | solo en Team y Enterprise |
 | Proyecto de Cowork | en tu computadora | no |
 | `CLAUDE.md` | dentro de la carpeta | sí, con la carpeta |
@@ -96,6 +101,18 @@ Abre una conversación nueva dentro del Project y pregunta algo que solo se pued
 No llega a tu disco. El conocimiento son copias que subiste, no tus carpetas.
 
 Un artifact creado dentro de un Project solo lo puede abrir quien tenga acceso a ese Project. Si el resultado lo va a ver alguien de fuera, conviene producirlo en una conversación normal. Esto se explica con más detalle en la Ficha 8.
+
+**No se puede convertir en un proyecto de Cowork, ni al revés.** Lo que nace en el chat se queda en el chat; lo que nace en Cowork se queda en Cowork y es local. Es una decisión que se toma al crearlo y no tiene marcha atrás.
+
+Lo que sí se puede es traer un Proyecto del chat como referencia dentro de un proyecto de Cowork, o dentro de una conversación de Claude Design. Se usa su conocimiento sin convertirlo.
+
+### Cómo se organiza
+
+Una duda frecuente: un Proyecto general por área, o uno por cliente. La recomendación que se dio en clase es empezar con el general, y abrir uno especializado solo cuando el general empiece a estorbar.
+
+Los chats de un Proyecto aparecen también en tu lista general de conversaciones, pero marcados como pertenecientes a ese Proyecto.
+
+Un Proyecto se puede **archivar** para quitarlo de la vista sin borrarlo. Un proyecto de Cowork solo se puede archivar, no borrar, porque borrarlo implicaría borrar tu carpeta.
 
 ### Plan
 
@@ -217,9 +234,19 @@ Por qué está escrito así: el vocabulario evita el malentendido silencioso, qu
 
 Empieza una sesión en esa carpeta y pide: "Antes de trabajar, dime qué reglas encontraste en esta carpeta". Si las enumera, el archivo está en el lugar correcto y con el nombre correcto.
 
+### Una variante que se usó en clase
+
+En Cowork no hace falta que el archivo se llame exactamente `CLAUDE.md`. Un archivo `reglas-mi-area.md` en la raíz también funciona si lo nombras en el encargo la primera vez. La ventaja de esa variante es que puedes llevarte el mismo archivo de reglas a otras carpetas sin copiar y pegar instrucciones.
+
+La diferencia práctica: `CLAUDE.md` se lee solo; cualquier otro nombre conviene mencionarlo la primera vez.
+
 ### Lo que no hace
 
 No manda sobre lo que tú pidas. La jerarquía es: tu encargo pesa más que el `CLAUDE.md`, y el `CLAUDE.md` pesa más que el criterio propio de Claude. Si tú insistes en algo que contradice el archivo, gana lo que tú pides.
+
+**No se aplica solo a lo que ya existe.** Si escribes una regla nueva en el `CLAUDE.md`, el trabajo hecho antes no se corrige por arte de magia: hay que pedir explícitamente que revise el proyecto y lo ajuste a las reglas.
+
+**Conviene que sea corto.** El contenido del archivo se manda junto con cada mensaje, así que cuanto más largo, más consume y más rápido se llena la capacidad de la conversación. Reglas, no manuales.
 
 ### Plan
 
@@ -315,15 +342,46 @@ corregir lo que hayas interpretado mal.
 
 Por qué está escrito así: la última línea es la que permite corregir. Un sistema de diseño mal extraído produce piezas que se ven casi bien, y ese "casi" es difícil de diagnosticar después.
 
+### De qué se puede armar
+
+El asistente de creación acepta cuatro fuentes distintas, y conviene no confundirlas porque en clase fue justo donde la gente se atoró:
+
+| Campo | Qué acepta |
+|---|---|
+| Repositorio de GitHub | Código de una biblioteca de componentes ya existente. |
+| Código de tu computadora | Lo mismo, desde tu disco. |
+| Archivo `.fig` | El formato de Figma. |
+| Fuentes, logotipos y recursos | **Aquí va tu manual de marca**: PDF, imágenes, PNG, JPG, presentaciones. |
+
+Los dos primeros son para equipos que ya tienen componentes programados. Si lo que tienes es un manual de identidad en PDF, va en el cuarto campo.
+
+También hay un campo de notas y una URL de referencia. Si no tienes manual de marca, una práctica que se sugirió en clase: poner la URL de una marca que te guste y anotar que no es tuya, que solo sirve de inspiración.
+
+### Qué contiene un sistema de diseño
+
+Marca y descripción del negocio, iconografía, logotipos, la paleta con sus códigos exactos, las tipografías y sus jerarquías, y los componentes: cómo se ven los botones, las etiquetas, las tablas, con sus tamaños.
+
+### Cómo se administra
+
+Un sistema de diseño se puede editar a mano —cambiar un color, ajustar el tamaño de un elemento— o pidiéndole a Claude que lo edite. Además se puede duplicar, renombrar, marcar como favorito, poner como predeterminado, compartir por enlace dentro de la organización, descargar comprimido para que un diseñador lo abra en sus programas, o borrar.
+
+El primero que creas queda seleccionado de forma predeterminada. Se apaga volviendo a hacer clic.
+
 ### Cómo se verifica
 
 Pide una pieza cualquiera y compárala contra un documento real de tu institución. Los colores y las tipografías tienen que coincidir, no parecerse.
 
+Hay una segunda señal, más sutil y muy útil: **con el sistema de diseño puesto, las preguntas que te hace Claude cambian de tema.** Deja de preguntarte por colores y tipografías y empieza a preguntarte por contenido. Si te sigue preguntando cómo quieres que se vea, el sistema no se está aplicando.
+
 ### Lo que no hace
 
-No genera fotografías ni ilustraciones: el sistema de diseño gobierna composición, color y tipografía, no imágenes.
+No genera fotografías ni ilustraciones: el sistema de diseño gobierna composición, color y tipografía, no imágenes. Si le pides un logotipo, lo va a producir con formas geométricas simples.
 
 Se puede importar desde Figma, pero no exportar hacia Figma.
+
+**No se aplica solo en Claude Code.** Ahí llega con `/design-sync` o con el servidor MCP de Claude Design, y hay que pedirlo.
+
+**Un sistema de diseño escrito dentro de un `CLAUDE.md` es otra cosa.** En la sesión 7 los colores y la tipografía se escribieron como una sección de texto del `CLAUDE.md`, no como un sistema de diseño de Claude Design. Funciona, pero hay que pedir explícitamente que se aplique al proyecto: no ocurre solo.
 
 ### Plan
 
@@ -343,4 +401,8 @@ Si es sobre **cómo se ven las cosas**, va en el sistema de diseño.
 
 Y si es sobre **carpetas que revisitas seguido desde Cowork**, va en el proyecto de Cowork.
 
-Los cinco los escribes tú. El elemento de la ficha siguiente es el único que Claude escribe por su cuenta.
+Y si es sobre **cómo quieres que te trate siempre, en todo**, va en las instrucciones de perfil de la Ficha 0.
+
+Los cinco de esta ficha los escribes tú. El elemento de la ficha siguiente es el único que Claude escribe por su cuenta.
+
+Una advertencia que vale para los cinco: **Claude Code no tiene Projects.** Ahí el contexto se guarda en el `CLAUDE.md` de la carpeta y nada más.

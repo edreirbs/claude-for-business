@@ -1,10 +1,10 @@
 # Ficha 6 · Procedimientos ejecutables
 
-**Repaso · Claude for Business** — Universidad Panamericana Aguascalientes
+**Repaso · Claude for Business** — Universidad Panamericana
 
-> **Para qué sirve esta ficha.** De los veinticuatro elementos del ecosistema, veintidós son fuentes, reglas o resultados. Los dos de esta ficha son los únicos que *hacen algo*: son procedimientos guardados que se ejecutan. Un Skill es una receta que quieres que salga siempre igual. Un subagente es un ayudante que trabaja aparte, con menos permisos que tú. Se parecen lo suficiente para confundirse y sirven para cosas distintas.
+> **Para qué sirve esta ficha.** Casi todos los elementos del ecosistema son fuentes, reglas o resultados. Los tres de esta ficha son los únicos que *hacen algo*: son procedimientos guardados que se ejecutan. Un **Skill** es una receta que quieres que salga siempre igual. Un **subagente** es un ayudante que trabaja aparte, con menos permisos que tú. Una **tarea programada** es cualquiera de las dos cosas anteriores, o cualquier encargo, puesto en un horario para que corra sin ti. Se parecen lo suficiente para confundirse y sirven para cosas distintas.
 
-**Los dos elementos de esta ficha:** Skill · subagente.
+**Los tres elementos de esta ficha:** Skill · subagente · tarea programada.
 
 ---
 
@@ -77,11 +77,27 @@ propón una descripción nueva. No cambies las instrucciones.
 
 Empieza una tarea del tipo que el Skill cubre, con tus palabras normales, y observa si entra solo. Si tienes que llamarlo a mano cada vez, la descripción no está funcionando.
 
+### Dónde vive un Skill: dos ámbitos
+
+Hay dos lugares distintos donde puede vivir un Skill, y la diferencia importa:
+
+**Skill de la cuenta.** Se sube desde Personalizar, en la sección de habilidades, y aparece en todos tus componentes y todos tus proyectos. Es el caso normal.
+
+**Skill del proyecto.** En Claude Code, un Skill puede vivir dentro de la carpeta del proyecto, en `.claude/skills/`. Solo aplica ahí, y viaja con la carpeta.
+
+Los Skills de la cuenta se pueden **encender y apagar** sin borrarlos, igual que un conector. También se pueden reemplazar, editar, probar en una conversación de prueba y descargar como archivo.
+
+### El Skill que crea Skills
+
+Anthropic incluye de fábrica varios Skills, y uno de ellos sirve precisamente para crear otros: se le describe lo que quieres y arma la estructura. Es la vía más rápida cuando no sabes por dónde empezar.
+
 ### Lo que no hace
 
-No viaja con un repositorio ni con una carpeta. Es de tu cuenta, así que te sigue a ti. Si un compañero abre tu carpeta, tus Skills no van adentro.
+No viaja con un repositorio ni con una carpeta, salvo el caso del Skill de proyecto en Claude Code. El Skill de cuenta es tuyo, así que te sigue a ti. Si un compañero abre tu carpeta, tus Skills no van adentro.
 
 Requiere que la ejecución de código esté activada.
+
+**No se llama con el símbolo @.** En el chat se activa solo por su descripción, o se elige desde el menú del símbolo +. En los complementos de Office se llama escribiendo `/`.
 
 ### Plan
 
@@ -145,11 +161,19 @@ El símbolo @ no es decorativo. **Si escribes el nombre sin la arroba, Claude no
 
 Pídele al subagente algo que esté fuera de sus herramientas, por ejemplo que corrija un archivo. Si el recorte está bien puesto, va a reportar que no puede hacerlo.
 
+### Cómo se encadenan
+
+Un subagente puede disparar a otro. El patrón que se propuso en clase: un subagente audita el código y reporta; un segundo subagente, cuyo disparador es haber recibido ese reporte, aplica las correcciones.
+
+Es la forma de mantener separadas las dos responsabilidades —quien revisa no corrige— sin tener que intervenir tú entre una y otra.
+
 ### Lo que no hace
 
-No hereda tus permisos. Si no le diste la herramienta de escribir, no la tiene, por más que se lo pidas.
+No hereda tus permisos. Si no le diste la herramienta de escribir, no la tiene, por más que se lo pidas. Ese recorte es el punto: un revisor que puede corregir deja de ser un revisor.
 
 No se activa solo por escribir su nombre: hace falta la arroba.
+
+**No es un Skill, aunque se parezcan.** Los dos son archivos de texto con una descripción que funciona como disparador. La diferencia está en dónde viven y en qué pueden hacer: el Skill vive en tu cuenta y usa tus herramientas; el subagente vive en el repositorio y usa solo las que le diste.
 
 ### Plan
 
@@ -157,7 +181,97 @@ De pago, como Claude Code.
 
 ---
 
-## Cómo se elige entre los dos
+## TAREA PROGRAMADA
+
+### Qué es
+
+Una instrucción que queda agendada y se ejecuta sola con la periodicidad que le indiques. En clase se describió como *"una mini automatización"*.
+
+No hay una sintaxis especial para crearla. Se le pide en lenguaje natural, dentro de la conversación, y Claude reconoce que se trata de algo recurrente. También se puede crear desde la pestaña de tareas programadas, sin conversación de por medio.
+
+Una tarea programada puede hacer cualquier cosa que Claude sepa hacer en ese componente: leer archivos de la carpeta, actualizar un documento, consultar un sistema conectado, escribir en él, o simplemente avisarte algo.
+
+### Cuándo se usa
+
+Cuando el trabajo es idéntico y recurrente, y lo único que cambia son los datos.
+
+- El primer día de cada mes, tomar los archivos que llegaron a una carpeta y actualizar el concentrado.
+- Cada lunes, revisar si hay documentos nuevos en un sistema conectado y dejarte la lista.
+- Cinco minutos antes de una reunión recurrente, dejarte preparado el formato de minuta.
+- Cada semana, actualizar un tablero con la información más reciente de un archivo.
+
+La señal para crear una tarea programada es haber hecho el mismo encargo tres veces en tres semanas distintas.
+
+### Dónde funciona
+
+| Componente | Funciona | Detalle |
+|---|---|---|
+| Chat | Sí | Aparecen en la sección de actividades programadas. |
+| Cowork | Sí, con condición | Si la tarea toca carpetas locales, la computadora tiene que estar encendida y conectada a internet a esa hora. La etiqueta del producto lo dice: la tarea "está en este equipo". |
+| Claude Code | Sí | En el menú aparecen como rutinas. |
+
+En Design, en Office y en Chrome no existen.
+
+### Cómo se pide
+
+Lo importante de una tarea programada no es la periodicidad: es que **nadie la va a estar supervisando**. Por eso el prompt tiene que resolver de antemano qué pasa cuando algo sale distinto de lo previsto.
+
+```
+Convierte lo que acabas de hacer en una tarea programada que corra sola
+cada [periodicidad] a partir de [cuándo], a las [hora].
+
+Deja el resultado en [dónde], con el nombre [patrón de nombre].
+
+Si un dato no está disponible, no lo inventes: escribe "pendiente" y
+dime qué faltó.
+
+Nunca [la acción que no debe hacer nunca, por ejemplo: dar de alta
+registros nuevos, borrar filas, mandar correos].
+
+Avísame solo si algo necesita mi decisión.
+
+Antes de agendarla, dime qué vas a necesitar de mi computadora: si
+requiere que esté encendida, si necesita internet, y qué pasa si a esa
+hora está apagada.
+```
+
+Por qué está escrito así, línea por línea:
+
+- **El destino y el nombre** evitan que las corridas se acumulen en lugares distintos. Sin eso, en tres meses tienes doce archivos regados.
+- **"No lo inventes: escribe pendiente"** es la regla más importante de toda la ficha. Una tarea desatendida que rellena huecos produce datos falsos que nadie revisó, y eso es peor que no tener el reporte.
+- **"Nunca [acción]"** es el freno. En una tarea supervisada tú detienes el error; aquí no hay nadie.
+- **"Avísame solo si algo necesita mi decisión"** evita que la automatización se convierta en doce notificaciones inútiles al mes, que es como la gente termina apagándolas.
+- **La última pregunta** es la que te dice si la tarea va a funcionar de verdad. Una tarea que necesita tu laptop encendida a las nueve de la noche del jueves no va a correr el jueves que te la lleves apagada.
+
+### Cómo se verifica
+
+Ejecútala una vez a mano desde la pestaña de tareas programadas —hay un botón para correrla en el momento— y revisa el resultado antes de dejarla suelta.
+
+Después de la primera corrida automática, abre el archivo que produjo y compáralo contra lo que habrías hecho tú. Si coincide, ya puedes dejar de revisarla; si no, corrige la instrucción y vuelve a probar a mano.
+
+### Cómo se administra
+
+En la pestaña de tareas programadas aparecen todas, con la opción de ejecutarla ahora, pausarla, editarla o eliminarla. Las que dependen de tu computadora vienen marcadas con esa condición.
+
+### Lo que no hace
+
+**No corre si la computadora está apagada**, cuando la tarea depende de carpetas locales. La frase de la sesión 5 fue clara: *"si a esa hora la laptop está apagada o dormida, pues no se podrá hacer."*
+
+**Siempre necesita internet**, aunque los archivos sean locales, porque el modelo no vive en tu computadora.
+
+**No se supervisa sola.** Una tarea programada mal escrita produce errores en silencio durante meses. Conviene revisar el resultado cada cierto tiempo aunque parezca que funciona.
+
+**No respeta una regla que no le escribiste.** Todo lo que en una conversación normal corriges sobre la marcha, aquí tiene que estar escrito desde el principio.
+
+### Plan
+
+De pago.
+
+---
+
+---
+
+## Cómo se elige entre los tres
 
 | | Skill | Subagente |
 |---|---|---|
