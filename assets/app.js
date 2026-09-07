@@ -29,6 +29,9 @@
     'Repaso/Ficha_8_Salidas_que_puede_abrir_otra_persona.md'
   ];
 
+  // La página de inicio: la matriz de componentes contra elementos.
+  var MATRIZ = 'assets/matriz.json';
+
   // SHA-256 de la contraseña del curso: la contraseña no vive en el código.
   var PASS_HASH = '5a5d14a76d3c8e7326bfc10545ee01170d06758d87f87aa96ac7193d065e696f';
 
@@ -55,6 +58,10 @@
   }
   function slug(s) {
     return fold(s).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'x';
+  }
+  /** Como esc(), pero además apto para el valor de un atributo. */
+  function escA(s) {
+    return esc(s).replace(/"/g, '&quot;');
   }
 
   /** Formato en línea: `código`, **negritas**, *cursivas*, [liga](url). */
@@ -355,8 +362,13 @@
   function buildPages(fichas) {
     var list = [];
     fichas.forEach(function (f) {
-      var hasFields = f.parts.some(function (p) { return /^###\s/m.test(p.md); });
       f.first = list.length;
+      if (f.matrix) {
+        list.push({ id: f.id, kind: 'matrix', ficha: f, label: f.label, md: f.md, ord: 1, html: null });
+        f.count = 1;
+        return;
+      }
+      var hasFields = f.parts.some(function (p) { return /^###\s/m.test(p.md); });
       if (!hasFields || !f.parts.length) {
         list.push({ id: f.id, kind: 'whole', ficha: f, label: f.label, md: f.raw, html: null });
       } else {
@@ -384,6 +396,136 @@
   function pageIndexById(id) {
     for (var i = 0; i < pages.length; i++) if (pages[i].id === id) return i;
     return -1;
+  }
+
+  /* -------------------------------------------------------------- matriz -- */
+
+  /* La matriz se dibuja desde `assets/matriz.json`, no como SVG escrito a mano:
+     así se edita un renglón sin recalcular coordenadas. La geometría es la
+     misma retícula de siempre —105 px entre columnas, 34 px entre renglones—. */
+  var MX = { x0: 538.5, colw: 105, row: 34, gap: 36, sep: 29, top: 100, w: 1144 };
+
+  /** Tramos contiguos de columnas donde el elemento sí funciona. */
+  function mxRuns(row, cols) {
+    var out = [], i = 0, j;
+    while (i < cols.length) {
+      if (!row.c[cols[i].k]) { i++; continue; }
+      j = i;
+      while (j + 1 < cols.length && row.c[cols[j + 1].k]) j++;
+      out.push([i, j]);
+      i = j + 1;
+    }
+    return out;
+  }
+
+  function matrixSVG(m) {
+    var cols = m.cols;
+    var cx = cols.map(function (_, i) { return MX.x0 + i * MX.colw; });
+    var y = MX.top, seps = [], body = '', hits = '', k = 0, H = 0;
+
+    m.groups.forEach(function (g, gi) {
+      var labelY = y, first = labelY + MX.gap;
+      body += '<text class="mx-grouplab mx-g-' + g.k + '" x="20" y="' + labelY + '">' + esc(g.t) +
+        '<tspan class="mx-groupsub"> · ' + esc(g.s) + '</tspan></text>' +
+        '<line class="mx-ghair mx-g-' + g.k + '" x1="420" x2="462" y1="' + (labelY - 4.5) +
+        '" y2="' + (labelY - 4.5) + '"/><g class="mx-g-' + g.k + '">';
+
+      g.rows.forEach(function (r, ri) {
+        var ry = first + ri * MX.row, cy = ry - 5;
+        body += '<text class="mx-rowlab" x="20" y="' + ry + '">' + esc(r.t) +
+          '<tspan class="mx-gloss"> · ' + esc(r.g) + '</tspan></text>';
+        mxRuns(r, cols).forEach(function (run) {
+          body += '<rect class="mx-bar" x="' + (cx[run[0]] - 40) + '" y="' + (ry - 16.5) +
+            '" width="' + (80 + MX.colw * (run[1] - run[0])) + '" height="23" rx="7"/>';
+        });
+        cols.forEach(function (c, ci) {
+          var cell = r.c[c.k];
+          if (!cell) {
+            body += '<circle class="mx-no" cx="' + cx[ci] + '" cy="' + cy + '" r="2"/>';
+            return;
+          }
+          body += '<circle class="mx-dot" id="mxd' + k + '" cx="' + cx[ci] + '" cy="' + cy + '" r="4"/>';
+          hits += '<circle class="mx-hit" data-k="' + k + '" tabindex="0" role="button"' +
+            ' aria-label="' + escA(r.t + ' en ' + c.t) + '"' +
+            ' data-t="' + escA(r.t + '  ·  ' + c.t) + '"' +
+            ' data-d="' + escA(cell[0]) + '"' +
+            (cell[1] ? ' data-n="' + escA(cell[1]) + '"' : '') +
+            ' cx="' + cx[ci] + '" cy="' + cy + '" r="14"/>';
+          k++;
+        });
+      });
+
+      body += '</g>';
+      var last = first + (g.rows.length - 1) * MX.row;
+      if (gi < m.groups.length - 1) { seps.push(last + MX.sep); y = last + MX.sep * 2; }
+      else { H = last + MX.row; }
+    });
+
+    var pre = '';
+    cx.forEach(function (x) {
+      pre += '<rect class="mx-cband" x="' + (x - 49.5) + '" y="72" width="99" height="' + (H - 84) + '" rx="9"/>';
+    });
+    cols.forEach(function (c, i) {
+      pre += '<text class="mx-colh" x="' + cx[i] + '" y="46">' + esc(c.t) + '</text>' +
+        '<text class="mx-colsub" x="' + cx[i] + '" y="63">' + esc(c.s) + '</text>';
+    });
+    var lines = seps.map(function (sy) {
+      return '<line class="mx-sep" x1="20" x2="1124" y1="' + sy + '" y2="' + sy + '"/>';
+    }).join('');
+
+    return '<svg class="mx-svg" viewBox="0 0 ' + MX.w + ' ' + H + '" role="img" aria-label="' +
+      escA('Matriz de los elementos de Claude cruzados con los seis componentes donde funcionan.') +
+      '">' + pre + body + lines + '<g>' + hits + '</g></svg>';
+  }
+
+  function matrixHTML(m) {
+    /* `sub` y los textos de `lee` traen <b> y <code> a propósito: son contenido
+       autorizado del repositorio, no algo que escriba quien visita la página. */
+    var lee = m.lee.map(function (b) {
+      return '<div><h2>' + esc(b[0]) + '</h2><p>' + b[1] + '</p></div>';
+    }).join('');
+    return head(m.kicker, m.title) +
+      '<p class="mx-sub reveal">' + m.sub + '</p>' +
+      '<div class="mx-lee reveal">' + lee + '</div>' +
+      /* El globo va fuera del contenedor con scroll: `overflow-x:auto` obliga
+         a `overflow-y:auto`, y ahí dentro se le cortaría la parte de arriba. */
+      '<div class="mx-canvas reveal"><div class="mx-scroll">' + matrixSVG(m) + '</div>' +
+        '<div class="mx-tip" role="status" aria-live="polite"></div></div>';
+  }
+
+  function mxHide() {
+    var on = $('.mx-dot.on', sheet);
+    if (on) on.classList.remove('on');
+    var tip = $('.mx-tip', sheet);
+    if (tip) tip.classList.remove('on');
+  }
+
+  function mxShow(hit) {
+    var canvas = hit.closest('.mx-canvas'), tip = canvas && $('.mx-tip', canvas);
+    if (!tip) return;
+    mxHide();
+    var dot = document.getElementById('mxd' + hit.getAttribute('data-k'));
+    if (dot) dot.classList.add('on');
+
+    var nota = hit.getAttribute('data-n');
+    tip.innerHTML = '<span class="mx-tt">' + esc(hit.getAttribute('data-t')) + '</span>' +
+      '<p class="mx-td">' + esc(hit.getAttribute('data-d')) + '</p>' +
+      (nota ? '<p class="mx-tn"><b>Salvedad</b>' + esc(nota) + '</p>' : '');
+    tip.classList.add('on');
+
+    /* Ambos rectángulos son relativos al viewport, así que el scroll horizontal
+       de la matriz ya viene descontado: no hay que sumarlo. */
+    var cb = canvas.getBoundingClientRect(), r = hit.getBoundingClientRect();
+    var w = tip.offsetWidth, h = tip.offsetHeight, pad = 12;
+    var x = r.left - cb.left + r.width / 2;
+    var y = r.top - cb.top;
+
+    /* Arriba por defecto; abajo cuando no cabe. El umbral es la barra superior
+       fija, no el borde de la ventana: si no, se metería debajo de ella. */
+    var below = r.top - h - 16 < 72;
+    tip.classList.toggle('below', below);
+    tip.style.top = (below ? y + r.height + 10 : y - 10) + 'px';
+    tip.style.left = Math.max(w / 2 + pad, Math.min(x, cb.width - w / 2 - pad)) + 'px';
   }
 
   /* ------------------------------------------------------------- pintar -- */
@@ -423,7 +565,9 @@
   function pageHTML(p) {
     if (p.html !== null) return p.html;
     var f = p.ficha;
-    if (p.kind === 'part') {
+    if (p.kind === 'matrix') {
+      p.html = matrixHTML(f.data);
+    } else if (p.kind === 'part') {
       /* «Parte 1 · Los controles…» se recorta a «Parte 1» para el antetítulo. */
       var eyebrow = f.title + (p.group ? ' · ' + p.group.title.split(' · ')[0] : '');
       p.html = head(eyebrow, p.label, ' is-part') + renderBody(p.md, { section: true });
@@ -510,6 +654,7 @@
     scrollTop();
 
     function finish() {
+      mxHide();
       observeReveals();
       if (opts.then) opts.then();
     }
@@ -536,7 +681,7 @@
   /** Migaja del paginador: en qué ficha se está y en qué hoja de ella. */
   function crumb(p) {
     var f = p.ficha;
-    var name = f.num === 'i' ? 'Índice' : 'Ficha ' + f.num;
+    var name = f.crumbName || (f.num === 'i' ? 'Índice' : 'Ficha ' + f.num);
     return f.count > 1 ? name + ' · ' + p.ord + ' de ' + f.count : name;
   }
 
@@ -671,14 +816,35 @@
 
   /* ------------------------------------------------------------- carga --- */
 
+  /** La matriz es la hoja de inicio: una ficha de una sola página. */
+  function matrixFicha(data) {
+    var texto = [];
+    data.groups.forEach(function (g) {
+      g.rows.forEach(function (r) {
+        texto.push(r.t + ' · ' + r.g);
+        Object.keys(r.c).forEach(function (k) { texto.push(r.c[k][0]); });
+      });
+    });
+    return {
+      matrix: true, data: data, id: 'matriz', num: '·',
+      label: 'Matriz de componentes y elementos', crumbName: 'Matriz',
+      title: data.title, sub: data.kicker, md: texto.join('\n'),
+      parts: [], groups: []
+    };
+  }
+
   function load() {
     sheet.innerHTML = '<div class="loading"><div class="spinner"></div><p>Abriendo el cuadernillo…</p></div>';
-    return Promise.all(FILES.map(function (f) {
+    var jobs = [fetch(MATRIZ, { cache: 'no-cache' }).then(function (r) {
+      if (!r.ok) throw new Error(MATRIZ + ' → HTTP ' + r.status);
+      return r.json();
+    }).then(matrixFicha)].concat(FILES.map(function (f) {
       return fetch(f, { cache: 'no-cache' }).then(function (r) {
         if (!r.ok) throw new Error(f + ' → HTTP ' + r.status);
         return r.text();
       }).then(function (t) { return parseFicha(f, t); });
-    })).then(function (parsed) {
+    }));
+    return Promise.all(jobs).then(function (parsed) {
       fichas = parsed;
       pages = buildPages(fichas);
       buildIndex();
@@ -786,6 +952,10 @@
         jumpTo(res.getAttribute('data-page'), res.getAttribute('data-anchor'));
         return;
       }
+      var hit = t.closest && t.closest('.mx-hit');
+      if (hit) { mxShow(hit); e.stopPropagation(); return; }
+      if (!(t.closest && t.closest('.mx-tip'))) mxHide();
+
       var copy = t.closest && t.closest('.copy');
       if (copy) {
         var code = copy.closest('.prompt').querySelector('code').textContent;
@@ -802,6 +972,18 @@
       }
       if (!(t.closest && t.closest('#search'))) $('#results').hidden = true;
     });
+
+    /* Globo de la matriz: delegado en la hoja, porque se repinta en cada vuelta. */
+    function onHit(fn) {
+      return function (e) {
+        var h = e.target.closest && e.target.closest('.mx-hit');
+        if (h) fn(h);
+      };
+    }
+    sheet.addEventListener('mouseover', onHit(mxShow));
+    sheet.addEventListener('mouseout', onHit(mxHide));
+    sheet.addEventListener('focusin', onHit(mxShow));
+    sheet.addEventListener('focusout', mxHide);
 
     var q = $('#q'), timer;
     if (window.matchMedia('(max-width:760px)').matches) q.placeholder = 'Buscar…';
@@ -822,7 +1004,7 @@
     document.addEventListener('keydown', function (e) {
       var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
       if (e.key === '/' && !typing) { e.preventDefault(); q.focus(); return; }
-      if (e.key === 'Escape') { toggleToc(false); $('#results').hidden = true; return; }
+      if (e.key === 'Escape') { toggleToc(false); mxHide(); $('#results').hidden = true; return; }
       if (typing || e.metaKey || e.ctrlKey || e.altKey || app.hidden) return;
       if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); goTo(cur + 1); }
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(cur - 1); }
@@ -833,7 +1015,7 @@
     var x0 = 0, y0 = 0, swipeable = false, stage = $('#stage');
     stage.addEventListener('touchstart', function (e) {
       var t0 = e.touches[0];
-      swipeable = !(e.target.closest && e.target.closest('.table-wrap, pre'));
+      swipeable = !(e.target.closest && e.target.closest('.table-wrap, pre, .mx-canvas'));
       x0 = t0.clientX;
       y0 = t0.clientY;
     }, { passive: true });

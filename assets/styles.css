@@ -556,6 +556,83 @@ html:not(.unlocked) body{overflow:hidden}
 }
 .prompt pre code{background:none;border:0;padding:0;font-size:inherit}
 
+/* --------------------------------------------------- 10b. La matriz ------ */
+/* Los colores son los de la UP que ya usa el sitio: azul de Preparatoria para
+   los inputs, vino de Licenciatura para las configuraciones, verde de Posgrados
+   para los outputs, y el dorado institucional para el punto encendido. */
+.mx-sub{max-width:74ch;margin:0 0 26px;font-family:var(--serif);font-size:18px;line-height:1.6;color:var(--ink-2)}
+.mx-lee{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:16px 30px;margin:0 0 26px;
+}
+.mx-lee div{border-left:2px solid var(--line);padding-left:14px}
+.mx-lee h2{
+  display:block;font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  font-weight:700;color:var(--gold-deep);margin:0 0 5px;
+}
+.mx-lee h2::after{display:none}
+.mx-lee p{margin:0;font-family:var(--sans);font-size:14.5px;line-height:1.5;color:var(--ink-3);max-width:none}
+.mx-lee b{color:var(--ink);font-weight:600}
+.mx-lee code{font-size:.88em}
+
+.mx-canvas{
+  position:relative;background:var(--paper-2);border:1px solid var(--line);border-radius:13px;
+  padding:20px 18px;
+}
+.mx-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+/* El sitio tiene una regla global `svg{}` para sus iconos: aquí se anula,
+   porque su stroke heredado dibujaría un contorno sobre cada texto. */
+.mx-scroll .mx-svg{
+  display:block;width:100%;height:auto;min-width:900px;
+  fill:none;stroke:none;stroke-width:1;
+}
+.mx-cband{fill:var(--paper-3)}
+.mx-colh{fill:var(--ink);font-family:var(--sans);font-size:13.5px;font-weight:700;letter-spacing:.09em;text-anchor:middle}
+.mx-colsub{fill:var(--ink-3);font-family:var(--sans);font-size:11px;text-anchor:middle}
+.mx-sep{stroke:var(--line);stroke-width:1}
+.mx-ghair{stroke:currentColor;stroke-width:1;opacity:.35}
+.mx-grouplab{fill:currentColor;font-family:var(--sans);font-size:11.5px;font-weight:700;letter-spacing:.11em}
+.mx-groupsub{fill:var(--ink-3);font-weight:400;letter-spacing:.02em}
+.mx-rowlab{fill:var(--ink);font-family:var(--sans);font-size:14px;font-weight:600}
+.mx-gloss{fill:var(--ink-3);font-size:12.5px;font-weight:400}
+.mx-bar{fill:currentColor;fill-opacity:.11;stroke:currentColor;stroke-width:1.25}
+.mx-no{fill:var(--line)}
+.mx-dot{fill:currentColor;fill-opacity:.62;transition:fill .12s ease,r .12s ease}
+.mx-dot.on{fill:var(--gold);fill-opacity:1;r:6}
+.mx-hit{fill:transparent;cursor:pointer;outline:none}
+.mx-hit:focus-visible{stroke:var(--gold);stroke-width:2;fill:color-mix(in srgb,var(--gold) 12%,transparent)}
+.mx-g-in{color:var(--blue)}
+.mx-g-cfg{color:var(--wine)}
+.mx-g-out{color:var(--green)}
+
+.mx-tip{
+  position:absolute;z-index:5;max-width:320px;padding:12px 14px;border-radius:10px;
+  background:#1b212b;color:#f4f1ec;box-shadow:0 10px 28px rgba(0,0,0,.24);
+  font-family:var(--sans);font-size:13.5px;line-height:1.5;
+  pointer-events:none;opacity:0;transform:translate(-50%,-100%);transition:opacity .12s ease;
+}
+.mx-tip.on{opacity:1}
+.mx-tip .mx-tt{
+  display:block;margin:0 0 6px;font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:#b6bdc8;font-weight:700;
+}
+.mx-tip .mx-td{margin:0;color:inherit;font-family:inherit;font-size:inherit;max-width:none}
+.mx-tip .mx-tn{
+  margin:9px 0 0;padding-top:9px;border-top:1px solid rgba(255,255,255,.16);
+  color:#b6bdc8;font-family:inherit;font-size:12.5px;max-width:none;
+}
+.mx-tip .mx-tn b{
+  display:block;margin-bottom:3px;color:#f4f1ec;font-size:10.5px;
+  letter-spacing:.09em;text-transform:uppercase;font-weight:700;
+}
+.mx-tip.below{transform:translate(-50%,0)}
+.mx-tip::after{
+  content:"";position:absolute;left:50%;bottom:-6px;width:12px;height:12px;
+  background:#1b212b;transform:translateX(-50%) rotate(45deg);
+}
+.mx-tip.below::after{bottom:auto;top:-6px}
+@media (prefers-reduced-motion:reduce){.mx-dot,.mx-tip{transition:none}}
+
 /* -------------------------------------------------------- 11. Fin de hoja - */
 .next-card{
   display:flex;align-items:center;gap:16px;width:100%;text-align:left;margin-top:44px;

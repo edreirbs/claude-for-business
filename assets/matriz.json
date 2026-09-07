@@ -1,0 +1,506 @@
+{
+ "kicker": "Claude for Business · Universidad Panamericana",
+ "title": "Matriz de componentes y elementos de Claude",
+ "sub": "Las columnas son los <b>componentes</b>: los seis lugares donde puedes trabajar. Los renglones son los <b>elementos</b>: las piezas con las que trabajas, agrupadas según si entran, se conservan o salen.",
+ "lee": [
+  [
+   "Cómo se lee",
+   "Busca tu renglón y mira hasta dónde llega su barra. Se extiende sobre las columnas donde esa pieza funciona; un punto gris pequeño significa que ahí no existe."
+  ],
+  [
+   "Los puntos de colores",
+   "<b>Pasa el mouse o toca cualquiera de ellos</b> y se abre una explicación de qué hace exactamente esa pieza en ese componente. El punto se enciende mientras la lees."
+  ],
+  [
+   "Para qué sirve",
+   "Cuando algo no funciona, la causa suele ser que estás parado en la columna equivocada. Un <code>CLAUDE.md</code> no hace nada en el chat, y un Artifact no se puede publicar desde Office."
+  ]
+ ],
+ "cols": [
+  {
+   "k": "chat",
+   "t": "CHAT",
+   "s": "la conversación"
+  },
+  {
+   "k": "design",
+   "t": "DESIGN",
+   "s": "el lienzo"
+  },
+  {
+   "k": "cowork",
+   "t": "COWORK",
+   "s": "tus carpetas"
+  },
+  {
+   "k": "office",
+   "t": "OFFICE",
+   "s": "Word·Excel·PPT"
+  },
+  {
+   "k": "chrome",
+   "t": "CHROME",
+   "s": "la pestaña"
+  },
+  {
+   "k": "code",
+   "t": "CLAUDE CODE",
+   "s": "tu repositorio"
+  }
+ ],
+ "groups": [
+  {
+   "k": "in",
+   "t": "INPUTS",
+   "s": "de dónde toma la información",
+   "rows": [
+    {
+     "t": "Archivos adjuntos",
+     "g": "lo que subes en la conversación",
+     "c": {
+      "chat": [
+       "Subes un PDF, una hoja de cálculo o una imagen y Claude la lee dentro de esa conversación. Al abrir otra, ya no está.",
+       ""
+      ],
+      "design": [
+       "Subes tu manual de marca, una captura o una presentación para que la pieza salga con esa referencia a la vista.",
+       ""
+      ],
+      "cowork": [
+       "Además de la carpeta conectada, puedes adjuntar un archivo suelto que no vive ahí.",
+       ""
+      ],
+      "office": [
+       "Se adjunta desde el panel, junto al archivo que ya tienes abierto.",
+       "Documentado de manera indirecta: aparece descrito como una capacidad que un administrador puede apagar."
+      ],
+      "chrome": [
+       "Se adjunta desde el panel lateral, para cruzarlo con lo que hay en la página.",
+       ""
+      ],
+      "code": [
+       "Se arrastra al prompt, junto con el repositorio en el que trabaja.",
+       "Solo en la app de escritorio y en sesiones SSH. En la terminal, la documentación dice que no está disponible."
+      ]
+     }
+    },
+    {
+     "t": "Carpeta o repositorio",
+     "g": "los archivos que ya están en disco",
+     "c": {
+      "cowork": [
+       "Conectas una carpeta y Claude ve todo lo que hay dentro sin que le pases archivo por archivo.",
+       "Desde una sesión en la nube, Claude alcanza tus carpetas solo mientras la app de escritorio siga abierta en esa computadora."
+      ],
+      "code": [
+       "El repositorio completo es el contexto: los archivos, las reglas y los subagentes que trae dentro.",
+       ""
+      ]
+     }
+    },
+    {
+     "t": "Documento abierto",
+     "g": "el Word, Excel o PPT en pantalla",
+     "c": {
+      "office": [
+       "Lee el archivo que tienes en pantalla con su formato, sus fórmulas, sus comentarios y su control de cambios.",
+       "Solo el archivo que ya tienes abierto. Claude no puede abrir, cerrar ni cambiar de archivo por su cuenta."
+      ]
+     }
+    },
+    {
+     "t": "Pestaña del navegador",
+     "g": "la página que tienes enfrente",
+     "c": {
+      "cowork": [
+       "Cowork puede abrir el navegador y leer una página como parte de una tarea más grande.",
+       ""
+      ],
+      "chrome": [
+       "Lee la página que tienes enfrente, incluso lo que solo se ve con la sesión iniciada.",
+       "Ve todas las pestañas que arrastres a su grupo de pestañas, no solo la que tienes al frente."
+      ],
+      "code": [
+       "Puede consultar una página para verificar cómo quedó lo que acaba de publicar.",
+       ""
+      ]
+     }
+    },
+    {
+     "t": "Búsqueda en la web",
+     "g": "internet e informes de Research",
+     "c": {
+      "chat": [
+       "Busca en internet y cita las ligas. Research hace la versión larga, con informe y fuentes evaluadas.",
+       ""
+      ],
+      "design": [
+       "Trae datos de afuera cuando la pieza depende de información que no le diste.",
+       "Documentado en el blog de Anthropic de julio de 2026, no en el centro de ayuda."
+      ],
+      "cowork": [
+       "Consulta internet dentro de una tarea, sin que tengas que pegarle los resultados.",
+       ""
+      ],
+      "office": [
+       "Busca en la web desde el panel, sin salir de Word, Excel o PowerPoint.",
+       "Documentado de manera indirecta: aparece descrito como una capacidad que un administrador puede apagar."
+      ],
+      "chrome": [
+       "Consulta la web abriendo páginas.",
+       "Ocurre navegando: el panel tiene acceso al navegador y consulta la web desde ahí."
+      ],
+      "code": [
+       "Consulta documentación técnica mientras trabaja sobre el repositorio.",
+       ""
+      ]
+     }
+    },
+    {
+     "t": "Conector",
+     "g": "Supabase, Drive, M365, Slack",
+     "c": {
+      "chat": [
+       "Le das acceso a otro sistema y lo consulta en tu nombre, sin que exportes nada.",
+       "En Team y Enterprise, un Owner debe habilitar los conectores antes de que alguien de la organización pueda usarlos."
+      ],
+      "design": [
+       "Puede traer material de un sistema conectado para la pieza que está armando.",
+       "Documentado en el blog de Anthropic de julio de 2026, no en el centro de ayuda."
+      ],
+      "cowork": [
+       "Cruza lo que hay en tu carpeta con lo que hay en un sistema de tu organización.",
+       ""
+      ],
+      "office": [
+       "Se enciende desde el botón más del panel, para traer datos externos a la hoja.",
+       ""
+      ],
+      "chrome": [
+       "El panel hereda los conectores que ya tenías, porque corre como una sesión de Cowork.",
+       ""
+      ],
+      "code": [
+       "Es la vía para llegar a bases de datos y servicios de publicación desde el repositorio.",
+       ""
+      ]
+     }
+    },
+    {
+     "t": "Conocimiento del Proyecto",
+     "g": "los archivos que le cargaste",
+     "c": {
+      "chat": [
+       "Los archivos que cargaste al Proyecto están en cualquier conversación suya, sin volver a subirlos.",
+       ""
+      ],
+      "design": [
+       "Enlazas un Proyecto y sus archivos entran como contexto de la sesión de diseño.",
+       "El conocimiento y la memoria no son de Design: llegan por el Proyecto que enlazaste."
+      ],
+      "cowork": [
+       "Un proyecto de Cowork puede enlazar un Proyecto del chat y usar su conocimiento.",
+       ""
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "k": "cfg",
+   "t": "CONFIGURACIONES",
+   "s": "lo que conserva entre una sesión y otra",
+   "rows": [
+    {
+     "t": "Proyecto del chat",
+     "g": "instrucciones y archivos fijos",
+     "c": {
+      "chat": [
+       "Instrucciones fijas más archivos de referencia, aplicados a todas las conversaciones de ese Proyecto.",
+       ""
+      ],
+      "design": [
+       "Se enlaza para que Design trabaje con ese contexto en vez de que se lo expliques.",
+       "El conocimiento y la memoria no son de Design: llegan por el Proyecto que enlazaste."
+      ],
+      "cowork": [
+       "Un proyecto de Cowork puede apuntar a uno del chat en lugar de repetir sus instrucciones.",
+       ""
+      ]
+     }
+    },
+    {
+     "t": "Proyecto de Cowork",
+     "g": "carpetas, reglas y memoria",
+     "c": {
+      "cowork": [
+       "Guarda qué carpetas están conectadas, las reglas fijas de ese trabajo y una memoria propia.",
+       ""
+      ]
+     }
+    },
+    {
+     "t": "Instrucciones del complemento",
+     "g": "una por aplicación",
+     "c": {
+      "office": [
+       "Un campo de reglas por aplicación: lo que escribes en Excel no aplica en Word ni en PowerPoint.",
+       ""
+      ]
+     }
+    },
+    {
+     "t": "Memoria",
+     "g": "lo que retiene de otras conversaciones",
+     "c": {
+      "chat": [
+       "Claude guarda por su cuenta notas sobre ti y tu trabajo, y las aplica en conversaciones nuevas.",
+       ""
+      ],
+      "design": [
+       "Lo que recuerda llega a través del Proyecto que enlazaste.",
+       "El conocimiento y la memoria no son de Design: llegan por el Proyecto que enlazaste."
+      ],
+      "cowork": [
+       "Además de la memoria general, cada proyecto de Cowork guarda la suya, que no pasa a otro proyecto.",
+       ""
+      ],
+      "code": [
+       "Recuerda entre sesiones lo que fue aprendiendo del proyecto.",
+       "Además tiene su propia memoria automática, local a esa computadora."
+      ]
+     }
+    },
+    {
+     "t": "CLAUDE.md",
+     "g": "reglas escritas dentro de la carpeta",
+     "c": {
+      "cowork": [
+       "Un archivo de reglas en la raíz de la carpeta. Conviene nombrarlo en el encargo la primera vez.",
+       ""
+      ],
+      "code": [
+       "Se lee solo al abrir el repositorio, y viaja con él cuando alguien más lo copia.",
+       ""
+      ]
+     }
+    },
+    {
+     "t": "Skill",
+     "g": "un procedimiento guardado en tu cuenta",
+     "c": {
+      "chat": [
+       "Un procedimiento guardado que entra solo cuando su descripción coincide con lo que pediste.",
+       "Requiere que la ejecución de código esté activada en tu cuenta."
+      ],
+      "design": [
+       "Aplica los procedimientos que ya tienes guardados también al armar piezas visuales.",
+       "No aparece en la documentación oficial de Claude Design. Se verificó directamente en el producto."
+      ],
+      "cowork": [
+       "Los mismos Skills de tu cuenta, disponibles al trabajar sobre carpetas.",
+       ""
+      ],
+      "office": [
+       "Se llaman escribiendo una diagonal en el panel del complemento.",
+       ""
+      ],
+      "chrome": [
+       "El panel hereda tus Skills, porque corre como una sesión de Cowork.",
+       ""
+      ],
+      "code": [
+       "Disponibles en la sesión, y además se pueden guardar dentro del propio repositorio.",
+       "La documentación oficial marca los Skills en Claude Code como beta."
+      ]
+     }
+    },
+    {
+     "t": "Sistema de diseño",
+     "g": "colores, tipografías y componentes",
+     "c": {
+      "design": [
+       "Tu paleta, tus tipografías y tus componentes, aplicados a todo lo que produzca.",
+       ""
+      ],
+      "code": [
+       "Lleva tu identidad visual al código del proyecto.",
+       "Llega con el comando /design-sync o con el servidor MCP de Claude Design."
+      ]
+     }
+    },
+    {
+     "t": "Subagente",
+     "g": "un ayudante con permisos recortados",
+     "c": {
+      "code": [
+       "Un ayudante definido dentro del repositorio, con las herramientas que tú le diste y ninguna más.",
+       ""
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "k": "out",
+   "t": "OUTPUTS",
+   "s": "dónde queda el resultado",
+   "rows": [
+    {
+     "t": "Respuesta en pantalla",
+     "g": "texto en el panel, sin archivo",
+     "c": {
+      "chat": [
+       "Texto dentro de la conversación. Se copia y se pega; no queda guardado en ningún archivo.",
+       ""
+      ],
+      "design": [
+       "El panel de conversación acompaña al lienzo y explica lo que hizo y por qué.",
+       ""
+      ],
+      "cowork": [
+       "Reporta lo que hizo con los archivos, además de dejarlos escritos en la carpeta.",
+       ""
+      ],
+      "office": [
+       "Contesta en el panel sin tocar el documento, cuando solo preguntaste algo.",
+       ""
+      ],
+      "chrome": [
+       "Contesta en el panel lateral, junto a la página que estás viendo.",
+       ""
+      ],
+      "code": [
+       "Explica en la sesión qué archivos cambió y por qué.",
+       ""
+      ]
+     }
+    },
+    {
+     "t": "Artifact",
+     "g": "una pieza con liga propia y versiones",
+     "c": {
+      "chat": [
+       "Una pieza aparte de la conversación, con versiones y liga propia. Aquí es donde nace uno que se va a compartir.",
+       ""
+      ],
+      "design": [
+       "El diseño se puede publicar como artifact desde el menú de exportación.",
+       ""
+      ],
+      "cowork": [
+       "Produce tableros que viven en la app de escritorio y que no se pueden compartir por liga.",
+       ""
+      ],
+      "code": [
+       "Puede producir artifacts a partir del repositorio.",
+       "Depende del plan, y en Enterprise de que un administrador los habilite."
+      ]
+     }
+    },
+    {
+     "t": "Edición del documento abierto",
+     "g": "cambios dentro del archivo",
+     "c": {
+      "office": [
+       "Escribe dentro del archivo: control de cambios en Word, fórmulas reales en Excel, láminas en PowerPoint.",
+       "Solo el archivo que ya tienes abierto. Claude no puede abrir, cerrar ni cambiar de archivo por su cuenta."
+      ]
+     }
+    },
+    {
+     "t": "Archivo en tu carpeta",
+     "g": "un archivo nuevo en disco",
+     "c": {
+      "cowork": [
+       "Escribe archivos reales en tu disco, con su formato interno correcto.",
+       "Desde una sesión en la nube, Claude alcanza tus carpetas solo mientras la app de escritorio siga abierta en esa computadora."
+      ],
+      "code": [
+       "Crea y modifica archivos dentro del repositorio, con historial de cada cambio.",
+       ""
+      ]
+     }
+    },
+    {
+     "t": "Repositorio",
+     "g": "la carpeta versionada del proyecto",
+     "c": {
+      "code": [
+       "Entrega el trabajo completo, con historial y reglas, listo para que otra persona lo abra y siga.",
+       ""
+      ]
+     }
+    },
+    {
+     "t": "Página publicada",
+     "g": "una liga abierta en internet",
+     "c": {
+      "code": [
+       "Publica un sitio con dirección propia, que cualquiera abre desde su teléfono sin instalar nada.",
+       ""
+      ]
+     }
+    },
+    {
+     "t": "Escritura en un conector",
+     "g": "filas, registros, correos",
+     "c": {
+      "chat": [
+       "Crea o actualiza registros en el sistema conectado desde la propia conversación.",
+       ""
+      ],
+      "design": [
+       "Puede mandar la pieza terminada a un servicio conectado.",
+       "Documentado en el blog de Anthropic de julio de 2026, no en el centro de ayuda."
+      ],
+      "cowork": [
+       "Escribe en un sistema conectado como parte de una tarea sobre archivos.",
+       ""
+      ],
+      "office": [
+       "Deja el resultado en un sistema conectado, además de en la hoja abierta.",
+       ""
+      ],
+      "chrome": [
+       "Escribe en un sistema conectado sin que salgas del navegador.",
+       ""
+      ],
+      "code": [
+       "Crea tablas y escribe filas en la base de datos del proyecto.",
+       ""
+      ]
+     }
+    },
+    {
+     "t": "Acción en el navegador",
+     "g": "clics, formularios, descargas",
+     "c": {
+      "cowork": [
+       "Opera una página como parte de una tarea, cuando ese sistema no tiene otra vía de entrada.",
+       ""
+      ],
+      "chrome": [
+       "Hace clic, escribe en campos y llena formularios usando tu sesión ya iniciada.",
+       "Ve todas las pestañas que arrastres a su grupo de pestañas, no solo la que tienes al frente."
+      ],
+      "code": [
+       "Puede verificar en el navegador que lo publicado se ve como debía.",
+       ""
+      ]
+     }
+    },
+    {
+     "t": "Exportación",
+     "g": "PDF, PPTX, HTML autónomo o MP4",
+     "c": {
+      "design": [
+       "Descarga la pieza como PDF, PowerPoint editable, HTML autónomo, imagen o video.",
+       "La liga para compartir que genera Design es interna de tu organización, no una página abierta a internet."
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -57,6 +57,8 @@ El contenido se cruzó además con las transcripciones de las siete sesiones del
 
 Las mismas fichas, publicadas como GitHub Page: un cuadernillo que se hojea, con paso de página animado, buscador sobre las nueve fichas y botón para copiar cada prompt. Pide la contraseña del curso al abrirse.
 
+Abre en la **Matriz de componentes y elementos de Claude**: los veinticuatro elementos cruzados con los seis componentes. Cada barra dice hasta dónde llega una pieza, y cada punto abre —al pasar el mouse, al tocarlo o con el teclado— qué hace exactamente esa pieza en ese componente, con su salvedad cuando la tiene.
+
 El sitio publica las Fichas 0 a 8. `00_Indice_de_las_fichas.md` se queda en el repositorio pero fuera de la web: explica cómo está organizado el material, y esa explicación no se quiso ahí. Para reponerlo basta con volver a listarlo en `FILES`, en `assets/app.js`.
 
 | Archivo | Qué hace |
@@ -64,6 +66,7 @@ El sitio publica las Fichas 0 a 8. `00_Indice_de_las_fichas.md` se queda en el r
 | `index.html` | La página. Portada con contraseña y el armazón del cuadernillo. |
 | `assets/styles.css` | Todo el diseño: paleta de la UP, hoja, animaciones, modo claro y oscuro, tablas apiladas en móvil e impresión. |
 | `assets/app.js` | Lee los `.md` de `Repaso/`, los convierte a HTML y maneja navegación, índice, buscador y candado. |
+| `assets/matriz.json` | Los datos de la matriz de inicio: columnas, renglones y qué hace cada pieza en cada componente. |
 | `.nojekyll` | Le pide a GitHub Pages que sirva los archivos tal cual, sin procesarlos con Jekyll. |
 
 Sin dependencias, sin paso de compilación y sin marco de trabajo: tres archivos y las fuentes de Google. Las fichas siguen siendo los `.md` de `Repaso/` — son la única fuente de la verdad, y la web se actualiza sola cuando cambian.
@@ -106,7 +109,7 @@ Editar el arreglo `FILES` al principio de `assets/app.js`. Todo lo demás —el 
 
 ### Cómo se corta el material en hojas
 
-Cada ficha se abre en una portadilla más una hoja por elemento, para que una vuelta de página quepa en dos o tres pantallas en vez de pedir diez de scroll. Son 65 hojas en total.
+La matriz es la hoja de inicio. Después, cada ficha se abre en una portadilla más una hoja por elemento, para que una vuelta de página quepa en dos o tres pantallas en vez de pedir diez de scroll. Son 66 hojas en total.
 
 El corte se hace en los encabezados `##`. Un `#` posterior al título es un **divisor de parte**: la Ficha 0 se divide así en «Parte 1 · Los controles de cada conversación» y «Parte 2 · Los ajustes de tu cuenta». El divisor agrupa los elementos que lo siguen —en la portadilla y en el índice lateral— y no se pinta como un título suelto.
 
@@ -116,13 +119,21 @@ Una ficha sin campos `###` se queda entera en una sola hoja.
 
 Dentro de cada hoja, los campos (`### Qué es`, `### Cuándo se usa`…) se acomodan en tarjetas de dos columnas. Las que llevan tabla o prompt ocupan el ancho completo, porque lo necesitan.
 
+### La matriz de inicio
+
+Se dibuja desde `assets/matriz.json`, no como un SVG escrito a mano: agregar un renglón o cambiar una descripción es editar el JSON, sin recalcular coordenadas. La retícula sale sola —105 px entre columnas, 34 px entre renglones— y los tramos de barra se calculan buscando columnas contiguas donde el elemento existe.
+
+El texto de cada globo viaja en atributos `data-` del propio punto, no en un arreglo paralelo: así no hay índices que se puedan desalinear al editar.
+
+Los colores son los mismos de la UP que usa el resto del sitio: azul de Preparatoria para los inputs, vino de Licenciatura para las configuraciones, verde de Posgrados para los outputs, y el dorado institucional para el punto encendido.
+
 ### Cómo se hojea
 
 Con las flechas de abajo, con `←` y `→`, o deslizando el dedo. `/` abre el buscador, `Inicio` y `Fin` van a la primera y la última hoja.
 
 El índice de la izquierda lista las nueve fichas y despliega los elementos de la que esté abierta, con sus divisores de parte cuando los hay. El paginador dice en qué ficha se está y en cuál de sus hojas.
 
-Cada hoja tiene su propia liga para mandarla directa: `#ficha-3` es la portadilla de la Ficha 3 y `#ficha-3-conectores` es su elemento «Conectores».
+Cada hoja tiene su propia liga para mandarla directa: `#matriz` es la de inicio, `#ficha-3` la portadilla de la Ficha 3 y `#ficha-3-conectores` su elemento «Conectores».
 
 ### Cómo se publica una actualización
 
