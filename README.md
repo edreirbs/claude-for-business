@@ -10,7 +10,7 @@ Ocho sesiones de 150 minutos para participantes no técnicos, sobre el uso de Cl
 
 ### `Repaso/`
 
-Nueve fichas de repaso que describen el ecosistema completo de Claude: seis **componentes** —los lugares donde se puede trabajar— y los **elementos** con los que se trabaja, agrupados en inputs, configuraciones y outputs, más una ficha cero con los ajustes que se deciden antes de empezar.
+Nueve fichas de repaso, numeradas de la 0 a la 8, que describen el ecosistema completo de Claude: seis **componentes** —los lugares donde se puede trabajar— y los **elementos** con los que se trabaja, agrupados en inputs, configuraciones y outputs. La Ficha 0 va aparte porque no describe qué puedes hacer sino en qué condiciones lo vas a hacer.
 
 Su contenido se contrastó contra la transcripción completa de las siete sesiones impartidas, para que nada de lo explicado en clase quede fuera.
 

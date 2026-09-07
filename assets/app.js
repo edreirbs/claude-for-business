@@ -15,6 +15,7 @@
 
   var FILES = [
     'Repaso/00_Indice_de_las_fichas.md',
+    'Repaso/Ficha_0_Los_controles_y_los_ajustes.md',
     'Repaso/Ficha_1_Los_seis_componentes.md',
     'Repaso/Ficha_2_Fuentes_que_proporciona_el_usuario.md',
     'Repaso/Ficha_3_Fuentes_que_Claude_obtiene_por_su_cuenta.md',
