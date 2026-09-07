@@ -13,8 +13,11 @@
 
   /* ------------------------------------------------------------ ajustes -- */
 
+  /* El cuadernillo arranca en la Ficha 0. `00_Indice_de_las_fichas.md` se queda
+     en el repositorio pero fuera del sitio: describe cómo está organizado el
+     material, y esa explicación no se quiso en la web. Para reponerlo, basta
+     con volver a listarlo aquí arriba. */
   var FILES = [
-    'Repaso/00_Indice_de_las_fichas.md',
     'Repaso/Ficha_0_Los_controles_y_los_ajustes.md',
     'Repaso/Ficha_1_Los_seis_componentes.md',
     'Repaso/Ficha_2_Fuentes_que_proporciona_el_usuario.md',
@@ -252,29 +255,45 @@
   }
 
   /**
-   * Parte una ficha en su entrada y sus elementos (`##`), respetando los
-   * bloques de código: la Ficha 4 trae un CLAUDE.md de ejemplo cuyas líneas
-   * empiezan con `##` y no son encabezados.
+   * Parte una ficha en su entrada y sus elementos (`##`).
+   *
+   * Un `#` posterior al título es un divisor de parte —la Ficha 0 se divide en
+   * «Parte 1 · Los controles de cada conversación» y «Parte 2 · Los ajustes de
+   * tu cuenta»—: agrupa los elementos que lo siguen y no se pinta como título.
+   *
+   * Todo esto respeta los bloques de código: la Ficha 4 trae un CLAUDE.md de
+   * ejemplo cuyas líneas empiezan con `#` y `##` y no son encabezados.
    */
   function splitParts(md) {
     var lines = md.replace(/\r\n?/g, '\n').split('\n');
-    var intro = [], parts = [], cur = null, fence = false, m;
+    var intro = [], parts = [], groups = [];
+    var cur = null, group = null, fence = false, m;
+
     for (var i = 0; i < lines.length; i++) {
       if (/^\s*```/.test(lines[i])) fence = !fence;
+
+      m = fence ? null : lines[i].match(/^#\s+(.*)$/);
+      if (m) {
+        group = { title: m[1].trim(), lines: [], parts: [] };
+        groups.push(group);
+        cur = null;
+        continue;
+      }
+
       m = fence ? null : lines[i].match(/^##\s+(.*)$/);
       if (m) {
-        cur = { title: m[1].trim(), lines: [] };
+        cur = { title: m[1].trim(), lines: [], group: group };
         parts.push(cur);
-      } else {
-        (cur ? cur.lines : intro).push(lines[i]);
+        if (group) group.parts.push(cur);
+        continue;
       }
+
+      (cur ? cur.lines : group ? group.lines : intro).push(lines[i]);
     }
-    return {
-      intro: trimBlock(intro.join('\n')),
-      parts: parts.map(function (p) {
-        return { title: p.title, md: trimBlock(p.lines.join('\n')) };
-      })
-    };
+
+    parts.forEach(function (p) { p.md = trimBlock(p.lines.join('\n')); });
+    groups.forEach(function (g) { g.intro = trimBlock(g.lines.join('\n')); });
+    return { intro: trimBlock(intro.join('\n')), parts: parts, groups: groups };
   }
 
   /** Primera frase del «Qué es» de un elemento, para las tarjetas de entrada. */
@@ -323,7 +342,7 @@
     var split = splitParts(rest);
     return {
       id: id, file: file, title: title, sub: sub, num: num, label: label,
-      raw: rest, intro: split.intro, parts: split.parts
+      raw: rest, intro: split.intro, parts: split.parts, groups: split.groups
     };
   }
 
@@ -343,9 +362,10 @@
       } else {
         list.push({ id: f.id, kind: 'intro', ficha: f, label: f.label, md: f.intro, html: null });
         f.parts.forEach(function (p) {
+          p.page = list.length;
           list.push({
             id: f.id + '-' + slug(p.title), kind: 'part', ficha: f,
-            label: p.title, md: p.md, html: null
+            label: p.title, group: p.group, md: p.md, html: null
           });
         });
       }
@@ -376,11 +396,10 @@
     '</header>';
   }
 
-  /** Tarjetas de los elementos de una ficha, en su portadilla. */
-  function partCards(f) {
-    return '<div class="fields part-map">' + f.parts.map(function (p, n) {
+  function cardsFor(list) {
+    return '<div class="fields part-map">' + list.map(function (p, n) {
       var g = gist(p.md);
-      return '<button class="field part-card reveal" data-go="' + (f.first + 1 + n) + '">' +
+      return '<button class="field part-card reveal" data-go="' + p.page + '">' +
         '<span class="pc-n">' + (n + 1) + '</span>' +
         '<span class="pc-t">' + esc(p.title) + '</span>' +
         (g ? '<span class="pc-d">' + esc(g) + '</span>' : '') +
@@ -388,11 +407,26 @@
     }).join('') + '</div>';
   }
 
+  /** Tarjetas de los elementos de una ficha, en su portadilla. */
+  function partCards(f) {
+    if (!f.groups.length) return cardsFor(f.parts);
+    /* Con divisores de parte, las tarjetas van agrupadas bajo cada uno. */
+    var loose = f.parts.filter(function (p) { return !p.group; });
+    return (loose.length ? cardsFor(loose) : '') + f.groups.map(function (g) {
+      return '<div class="group reveal">' +
+        '<h2 class="group-head" id="' + slug(g.title) + '">' + inline(g.title) + '</h2>' +
+        renderBody(g.intro) +
+      '</div>' + cardsFor(g.parts);
+    }).join('');
+  }
+
   function pageHTML(p) {
     if (p.html !== null) return p.html;
     var f = p.ficha;
     if (p.kind === 'part') {
-      p.html = head(f.title, p.label, ' is-part') + renderBody(p.md, { section: true });
+      /* «Parte 1 · Los controles…» se recorta a «Parte 1» para el antetítulo. */
+      var eyebrow = f.title + (p.group ? ' · ' + p.group.title.split(' · ')[0] : '');
+      p.html = head(eyebrow, p.label, ' is-part') + renderBody(p.md, { section: true });
     } else if (p.kind === 'intro') {
       p.html = head(f.sub, f.title) + renderBody(p.md) + partCards(f);
     } else {
@@ -525,10 +559,16 @@
         (open ? ' aria-current="true"' : '') + '>' +
         '<span class="n">' + esc(g.num) + '</span><span class="t">' + esc(g.label) + '</span></button>';
       if (open && g.count > 1) {
+        var seen = null;
         row += '<ol class="toc-sub">' + pages.slice(g.first + 1, g.first + g.count).map(function (q, n) {
-          return '<li><button class="toc-sub-item" data-go="' + (g.first + 1 + n) + '"' +
-            (g.first + 1 + n === cur ? ' aria-current="true"' : '') + '>' +
-            esc(q.label) + '</button></li>';
+          var at = g.first + 1 + n, li = '';
+          /* Divisor cuando la ficha viene partida (la Ficha 0, en dos partes). */
+          if (q.group && q.group !== seen) {
+            li = '<li class="toc-group">' + esc(q.group.title.split(' · ')[0]) + '</li>';
+          }
+          seen = q.group;
+          return li + '<li><button class="toc-sub-item" data-go="' + at + '"' +
+            (at === cur ? ' aria-current="true"' : '') + '>' + esc(q.label) + '</button></li>';
         }).join('') + '</ol>';
       }
       return row + '</li>';

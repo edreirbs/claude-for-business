@@ -53,7 +53,11 @@ El contenido se cruzó además con las transcripciones de las siete sesiones del
 
 ## El cuadernillo en web
 
-Las mismas fichas, publicadas como GitHub Page: un cuadernillo que se hojea, con paso de página animado, buscador sobre las nueve fichas y botón para copiar cada prompt.
+**https://edreirbs.github.io/claude-for-business/**
+
+Las mismas fichas, publicadas como GitHub Page: un cuadernillo que se hojea, con paso de página animado, buscador sobre las nueve fichas y botón para copiar cada prompt. Pide la contraseña del curso al abrirse.
+
+El sitio publica las Fichas 0 a 8. `00_Indice_de_las_fichas.md` se queda en el repositorio pero fuera de la web: explica cómo está organizado el material, y esa explicación no se quiso ahí. Para reponerlo basta con volver a listarlo en `FILES`, en `assets/app.js`.
 
 | Archivo | Qué hace |
 |---|---|
@@ -102,9 +106,13 @@ Editar el arreglo `FILES` al principio de `assets/app.js`. Todo lo demás —el 
 
 ### Cómo se corta el material en hojas
 
-Cada ficha se abre en una portadilla más una hoja por elemento, para que una vuelta de página quepa en una o dos pantallas en vez de pedir diez de scroll. El corte se hace en los encabezados `##`, respetando los bloques de código: la Ficha 4 trae un `CLAUDE.md` de ejemplo cuyas líneas empiezan con `##` y no son encabezados.
+Cada ficha se abre en una portadilla más una hoja por elemento, para que una vuelta de página quepa en dos o tres pantallas en vez de pedir diez de scroll. Son 65 hojas en total.
 
-Una ficha sin campos `###` —el índice— se queda entera en una sola hoja.
+El corte se hace en los encabezados `##`. Un `#` posterior al título es un **divisor de parte**: la Ficha 0 se divide así en «Parte 1 · Los controles de cada conversación» y «Parte 2 · Los ajustes de tu cuenta». El divisor agrupa los elementos que lo siguen —en la portadilla y en el índice lateral— y no se pinta como un título suelto.
+
+Todo el corte respeta los bloques de código: la Ficha 4 trae un `CLAUDE.md` de ejemplo cuyas líneas empiezan con `#` y `##` y no son encabezados. Sin esa salvedad, «Reglas de esta carpeta» y «Vocabulario» se volverían hojas del cuadernillo.
+
+Una ficha sin campos `###` se queda entera en una sola hoja.
 
 Dentro de cada hoja, los campos (`### Qué es`, `### Cuándo se usa`…) se acomodan en tarjetas de dos columnas. Las que llevan tabla o prompt ocupan el ancho completo, porque lo necesitan.
 
@@ -112,9 +120,13 @@ Dentro de cada hoja, los campos (`### Qué es`, `### Cuándo se usa`…) se acom
 
 Con las flechas de abajo, con `←` y `→`, o deslizando el dedo. `/` abre el buscador, `Inicio` y `Fin` van a la primera y la última hoja.
 
-El índice de la izquierda lista las nueve fichas y despliega los elementos de la que esté abierta. El paginador dice en qué ficha se está y en cuál de sus hojas.
+El índice de la izquierda lista las nueve fichas y despliega los elementos de la que esté abierta, con sus divisores de parte cuando los hay. El paginador dice en qué ficha se está y en cuál de sus hojas.
 
 Cada hoja tiene su propia liga para mandarla directa: `#ficha-3` es la portadilla de la Ficha 3 y `#ficha-3-conectores` es su elemento «Conectores».
+
+### Cómo se publica una actualización
+
+`./sync.sh "mensaje"` espeja la carpeta `Repaso` del curso en el repositorio y sube los cambios. GitHub Pages republica el sitio solo; no hay compilación de por medio.
 
 ---
 
