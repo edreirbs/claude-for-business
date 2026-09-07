@@ -82,13 +82,42 @@
     return t.split('|').map(function (c) { return c.trim(); });
   }
 
-  function renderBody(md) {
+  function renderBody(md, opts) {
     var lines = md.replace(/\r\n?/g, '\n').split('\n');
-    var out = '', sec = null, i = 0;
+    var out = '', sec = null, cards = null, card = null, i = 0;
 
-    function push(html) { if (sec === null) out += html; else sec += html; }
+    /* Una hoja de elemento ya viene sin su `##`, así que se abre la sección
+       de entrada para que sus campos sigan formando la rejilla. */
+    if (opts && opts.section) { sec = ''; cards = ''; }
+
+    /* Tres niveles: la hoja, la sección de cada elemento (##) y la tarjeta de
+       cada campo (###). Los campos van en rejilla para que se vean varios a la
+       vez, en vez de una sola columna larga. */
+    function push(html) {
+      if (card !== null) card += html;
+      else if (sec !== null) sec += html;
+      else out += html;
+    }
+    /** Añade `reveal` solo fuera de las tarjetas: adentro anima la tarjeta entera. */
+    function cls(base) {
+      var c = card === null ? (base ? base + ' reveal' : 'reveal') : base;
+      return c ? ' class="' + c + '"' : '';
+    }
+    function closeCard() {
+      if (card === null) return;
+      var wide = /<table|class="prompt"/.test(card) ? ' is-wide' : '';
+      cards += '<div class="field' + wide + ' reveal">' + card + '</div>';
+      card = null;
+    }
     function closeSec() {
-      if (sec !== null) { out += '<section class="element reveal">' + sec + '</section>'; sec = null; }
+      closeCard();
+      if (cards) sec += '<div class="fields">' + cards + '</div>';
+      cards = null;
+      if (sec !== null) {
+        var kind = sec.indexOf('class="fields"') === -1 ? '' : ' has-fields';
+        out += '<section class="element' + kind + '">' + sec + '</section>';
+        sec = null;
+      }
     }
     function nextMeaningful(from) {
       var j = from;
@@ -107,7 +136,7 @@
         while (i < lines.length && !/^\s*```/.test(lines[i])) { buf.push(lines[i]); i++; }
         i++;
         push(
-          '<figure class="prompt reveal">' +
+          '<figure' + cls('prompt') + '>' +
             '<div class="prompt-bar"><span class="prompt-tag">Prompt</span>' +
             '<button class="copy" type="button">' +
               '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/>' +
@@ -123,7 +152,7 @@
         var rows = [];
         while (i < lines.length && lines[i].trim().charAt(0) === '|') { rows.push(lines[i]); i++; }
         var head = splitRow(rows[0]);
-        var html = '<div class="table-wrap reveal"><table><thead><tr>';
+        var html = '<div' + cls('table-wrap') + '><table><thead><tr>';
         head.forEach(function (h) { html += '<th>' + inline(h) + '</th>'; });
         html += '</tr></thead><tbody>';
         rows.slice(2).forEach(function (r) {
@@ -142,8 +171,18 @@
       var h = L.match(/^(#{1,6})\s+(.*)$/);
       if (h) {
         var lvl = h[1].length, txt = h[2].trim();
-        if (lvl <= 2) { closeSec(); sec = ''; }
-        push('<h' + lvl + ' id="' + slug(txt) + '">' + inline(txt) + '</h' + lvl + '>');
+        var head = '<h' + lvl + ' id="' + slug(txt) + '"';
+        if (lvl <= 2) {
+          closeSec();
+          sec = '';
+          cards = '';
+          push(head + ' class="reveal">' + inline(txt) + '</h' + lvl + '>');
+        } else if (lvl === 3 && cards !== null) {
+          closeCard();
+          card = head + '>' + inline(txt) + '</h' + lvl + '>';
+        } else {
+          push(head + '>' + inline(txt) + '</h' + lvl + '>');
+        }
         i++;
         continue;
       }
@@ -159,7 +198,7 @@
       if (/^\s*>/.test(L)) {
         var q = [];
         while (i < lines.length && /^\s*>/.test(lines[i])) { q.push(lines[i].replace(/^\s*>\s?/, '')); i++; }
-        push('<blockquote class="lede reveal">' + renderBody(q.join('\n')) + '</blockquote>');
+        push('<blockquote' + cls('lede') + '>' + renderBody(q.join('\n')) + '</blockquote>');
         continue;
       }
 
@@ -180,7 +219,7 @@
           } else { break; }
         }
         if (item !== null) items.push(item);
-        push('<' + tag + ' class="reveal">' + items.map(function (t) {
+        push('<' + tag + cls('') + '>' + items.map(function (t) {
           return '<li>' + inline(t) + '</li>';
         }).join('') + '</' + tag + '>');
         continue;
@@ -195,8 +234,7 @@
       }
       if (!p.length) { i++; continue; }
       var body = inline(p.join(' '));
-      var cls = /^<strong>[^<]*:<\/strong>/.test(body) ? ' class="note reveal"' : ' class="reveal"';
-      push('<p' + cls + '>' + body + '</p>');
+      push('<p' + cls(/^<strong>[^<]*:<\/strong>/.test(body) ? 'note' : '') + '>' + body + '</p>');
     }
 
     closeSec();
@@ -205,21 +243,49 @@
 
   /* --------------------------------------------------- ficha -> objeto --- */
 
-  /** Primera frase útil de la ficha, para las tarjetas de la portada. */
-  function summarize(md) {
-    var quote = md.match(/^>[\s\S]*?(?=\n[ \t]*\n)/m);
-    var text = quote ? quote[0].replace(/^\s*>\s?/gm, ' ') : '';
-    if (!text) {
-      var blocks = md.split(/\n[ \t]*\n/);
-      for (var b = 0; b < blocks.length; b++) {
-        var t = blocks[b].trim();
-        if (t && !/^[#>|`*-]/.test(t)) { text = t; break; }
+  /** Quita blancos sobrantes y la regla `---` con la que cierra cada bloque. */
+  function trimBlock(s) {
+    s = s.replace(/^(?:[ \t]*\n)+/, '').replace(/(?:[ \t]*\n)+$/, '');
+    s = s.replace(/\n[ \t]*(?:-{3,}|\*{3,}|_{3,})[ \t]*$/, '');
+    return s.replace(/(?:[ \t]*\n)+$/, '');
+  }
+
+  /**
+   * Parte una ficha en su entrada y sus elementos (`##`), respetando los
+   * bloques de código: la Ficha 4 trae un CLAUDE.md de ejemplo cuyas líneas
+   * empiezan con `##` y no son encabezados.
+   */
+  function splitParts(md) {
+    var lines = md.replace(/\r\n?/g, '\n').split('\n');
+    var intro = [], parts = [], cur = null, fence = false, m;
+    for (var i = 0; i < lines.length; i++) {
+      if (/^\s*```/.test(lines[i])) fence = !fence;
+      m = fence ? null : lines[i].match(/^##\s+(.*)$/);
+      if (m) {
+        cur = { title: m[1].trim(), lines: [] };
+        parts.push(cur);
+      } else {
+        (cur ? cur.lines : intro).push(lines[i]);
       }
     }
-    text = text.replace(/\*\*[^*]*\*\*/, '').replace(/[*`>]/g, '').replace(/\s+/g, ' ').trim();
+    return {
+      intro: trimBlock(intro.join('\n')),
+      parts: parts.map(function (p) {
+        return { title: p.title, md: trimBlock(p.lines.join('\n')) };
+      })
+    };
+  }
+
+  /** Primera frase del «Qué es» de un elemento, para las tarjetas de entrada. */
+  function gist(md) {
+    var body = md.split(/^###\s+.*$/m);
+    var text = (body[1] || body[0] || '').split(/\n[ \t]*\n/).filter(function (b) {
+      return b.trim() && !/^[#>|`\-*]/.test(b.trim());
+    })[0] || '';
+    text = text.replace(/[*`]/g, '').replace(/\s+/g, ' ').trim();
     var cut = text.indexOf('. ');
     if (cut > 40) text = text.slice(0, cut + 1);
-    if (text.length > 155) text = text.slice(0, 152).replace(/\s\S*$/, '') + '…';
+    if (text.length > 150) text = text.slice(0, 147).replace(/\s\S*$/, '') + '…';
     return text;
   }
 
@@ -253,17 +319,45 @@
     var fn = name.match(/^Ficha_(\d+)_/);
     var id = fn ? 'ficha-' + fn[1] : (num === 'i' ? 'indice' : slug(name.replace(/\.md$/, '')));
 
+    var split = splitParts(rest);
     return {
       id: id, file: file, title: title, sub: sub, num: num, label: label,
-      raw: rest, summary: summarize(rest), html: null
+      raw: rest, intro: split.intro, parts: split.parts
     };
+  }
+
+  /**
+   * Aplana las fichas en hojas. Una ficha con campos (`###`) se abre en una
+   * portadilla más una hoja por elemento: así cada vuelta de página cabe en
+   * una o dos pantallas en vez de pedir diez de scroll. Las que no los tienen
+   * —el índice— se quedan enteras.
+   */
+  function buildPages(fichas) {
+    var list = [];
+    fichas.forEach(function (f) {
+      var hasFields = f.parts.some(function (p) { return /^###\s/m.test(p.md); });
+      f.first = list.length;
+      if (!hasFields || !f.parts.length) {
+        list.push({ id: f.id, kind: 'whole', ficha: f, label: f.label, md: f.raw, html: null });
+      } else {
+        list.push({ id: f.id, kind: 'intro', ficha: f, label: f.label, md: f.intro, html: null });
+        f.parts.forEach(function (p) {
+          list.push({
+            id: f.id + '-' + slug(p.title), kind: 'part', ficha: f,
+            label: p.title, md: p.md, html: null
+          });
+        });
+      }
+      f.count = list.length - f.first;
+      for (var n = f.first; n < list.length; n++) { list[n].ord = n - f.first + 1; }
+    });
+    return list;
   }
 
   /* -------------------------------------------------------- estructura --- */
 
   var gate = $('#gate'), app = $('#app'), sheet = $('#sheet'), veil = $('#turnVeil');
-  var COVER = { id: 'portada', num: '·', label: 'Portada', cover: true };
-  var pages = [COVER];
+  var fichas = [], pages = [];
   var cur = 0, turning = false, io = null;
 
   function pageIndexById(id) {
@@ -271,46 +365,37 @@
     return -1;
   }
 
-  /* ------------------------------------------------------------ portada -- */
-
-  function coverHTML() {
-    var cards = pages.slice(1).map(function (p, n) {
-      return '<button class="cover-card reveal" data-go="' + (n + 1) + '">' +
-        '<span class="cc-n">' + esc(p.num) + '</span>' +
-        '<span class="cc-t">' + esc(p.label) +
-          (p.summary ? '<span class="cc-d">' + esc(p.summary) + '</span>' : '') +
-        '</span></button>';
-    }).join('');
-
-    return '<div class="cover-page">' +
-      '<div class="cover-crest" aria-hidden="true">UP</div>' +
-      '<p class="eyebrow reveal">Universidad Panamericana · Aguascalientes</p>' +
-      '<h1 class="reveal">Claude <span class="sep">for</span> Business</h1>' +
-      '<p class="cover-sub reveal">Cuadernillo de repaso. Ocho fichas y un índice sobre el ecosistema de Claude: ' +
-        'los seis componentes donde se puede trabajar y los veinticuatro elementos con los que se trabaja.</p>' +
-      '<p class="cover-meta reveal">Ocho sesiones · 150 minutos · participantes no técnicos</p>' +
-      '<div class="cover-sep reveal"></div>' +
-      '<div class="cover-grid">' + cards + '</div>' +
-      '<div class="cover-how reveal"><h2>Cómo se hojea</h2><ul>' +
-        '<li>Con las flechas de abajo, con <kbd>&larr;</kbd> y <kbd>&rarr;</kbd>, o deslizando el dedo sobre la hoja.</li>' +
-        '<li>El índice salta a cualquier ficha; en pantalla chica se abre con el botón de arriba a la izquierda.</li>' +
-        '<li>El buscador (<kbd>/</kbd>) encuentra cualquier palabra de las nueve fichas y lleva a la sección exacta.</li>' +
-        '<li>Cada prompt trae un botón para copiarlo tal cual.</li>' +
-      '</ul></div></div>';
-  }
-
   /* ------------------------------------------------------------- pintar -- */
 
+  function head(eyebrow, title, extra) {
+    return '<header class="page-head reveal' + (extra || '') + '">' +
+      (eyebrow ? '<p class="eyebrow">' + esc(eyebrow) + '</p>' : '') +
+      '<h1>' + esc(title).replace(/ · /g, ' <span class="sep">·</span> ') + '</h1>' +
+      '<div class="head-rule"></div>' +
+    '</header>';
+  }
+
+  /** Tarjetas de los elementos de una ficha, en su portadilla. */
+  function partCards(f) {
+    return '<div class="fields part-map">' + f.parts.map(function (p, n) {
+      var g = gist(p.md);
+      return '<button class="field part-card reveal" data-go="' + (f.first + 1 + n) + '">' +
+        '<span class="pc-n">' + (n + 1) + '</span>' +
+        '<span class="pc-t">' + esc(p.title) + '</span>' +
+        (g ? '<span class="pc-d">' + esc(g) + '</span>' : '') +
+      '</button>';
+    }).join('') + '</div>';
+  }
+
   function pageHTML(p) {
-    if (p.cover) return coverHTML();
-    if (p.html === null) {
-      var title = esc(p.title).replace(/ · /g, ' <span class="sep">·</span> ');
-      p.html =
-        '<header class="page-head reveal">' +
-          (p.sub ? '<p class="eyebrow">' + esc(p.sub) + '</p>' : '') +
-          '<h1>' + title + '</h1>' +
-          '<div class="head-rule"></div>' +
-        '</header>' + renderBody(p.raw);
+    if (p.html !== null) return p.html;
+    var f = p.ficha;
+    if (p.kind === 'part') {
+      p.html = head(f.title, p.label, ' is-part') + renderBody(p.md, { section: true });
+    } else if (p.kind === 'intro') {
+      p.html = head(f.sub, f.title) + renderBody(p.md) + partCards(f);
+    } else {
+      p.html = head(f.sub, f.title) + renderBody(p.md);
     }
     return p.html;
   }
@@ -318,15 +403,17 @@
   function nextCardHTML() {
     var n = cur + 1;
     if (n < pages.length) {
+      var nx = pages[n];
+      var lbl = nx.ficha === pages[cur].ficha ? 'Siguiente' : 'Siguiente ficha';
       return '<button class="next-card reveal" data-go="' + n + '">' +
-        '<span class="nc-txt"><span class="nc-lbl">Siguiente</span>' +
-        '<span class="nc-ttl">' + esc(pages[n].label) + '</span></span>' +
+        '<span class="nc-txt"><span class="nc-lbl">' + lbl + '</span>' +
+        '<span class="nc-ttl">' + esc(nx.kind === 'part' ? nx.label : nx.ficha.title) + '</span></span>' +
         '<span class="nc-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h13M12 5l7 7-7 7"/></svg></span>' +
         '</button>';
     }
     return '<button class="next-card reveal" data-go="0">' +
       '<span class="nc-txt"><span class="nc-lbl">Fin del cuadernillo</span>' +
-      '<span class="nc-ttl">Volver a la portada</span></span>' +
+      '<span class="nc-ttl">Volver al índice</span></span>' +
       '<span class="nc-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 12H6M12 5l-7 7 7 7"/></svg></span>' +
       '</button>';
   }
@@ -411,27 +498,42 @@
     });
   }
 
-  function syncChrome() {
-    $('#pgCount').textContent = (cur + 1) + ' / ' + pages.length;
-    $('#prev').disabled = cur === 0;
-    $('#next').disabled = cur === pages.length - 1;
-    $$('#dots .dot').forEach(function (d, n) {
-      d.setAttribute('aria-current', n === cur ? 'true' : 'false');
-    });
-    $$('#tocList .toc-item').forEach(function (b, n) {
-      b.setAttribute('aria-current', n === cur ? 'true' : 'false');
-    });
-    document.title = (cur === 0 ? 'Cuadernillo de repaso' : pages[cur].label) + ' · Claude for Business';
+  /** Migaja del paginador: en qué ficha se está y en qué hoja de ella. */
+  function crumb(p) {
+    var f = p.ficha;
+    var name = f.num === 'i' ? 'Índice' : 'Ficha ' + f.num;
+    return f.count > 1 ? name + ' · ' + p.ord + ' de ' + f.count : name;
   }
 
-  function buildChrome() {
-    $('#tocList').innerHTML = pages.map(function (p, n) {
-      return '<li><button class="toc-item" data-go="' + n + '">' +
-        '<span class="n">' + esc(p.num) + '</span><span class="t">' + esc(p.label) + '</span></button></li>';
+  function syncChrome() {
+    var p = pages[cur], f = p.ficha;
+    $('#pgCount').textContent = crumb(p);
+    $('#prev').disabled = cur === 0;
+    $('#next').disabled = cur === pages.length - 1;
+
+    /* Los puntos son las hojas de la ficha en curso, no las 48 del cuadernillo. */
+    $('#dots').innerHTML = pages.slice(f.first, f.first + f.count).map(function (q, n) {
+      return '<button class="dot" data-go="' + (f.first + n) + '" aria-label="Ir a ' + esc(q.label) + '"' +
+        (f.first + n === cur ? ' aria-current="true"' : '') + '></button>';
     }).join('');
-    $('#dots').innerHTML = pages.map(function (p, n) {
-      return '<button class="dot" data-go="' + n + '" aria-label="Ir a ' + esc(p.label) + '"></button>';
+
+    /* El índice despliega los elementos solo de la ficha abierta. */
+    $('#tocList').innerHTML = fichas.map(function (g) {
+      var open = g === f;
+      var row = '<li><button class="toc-item" data-go="' + g.first + '"' +
+        (open ? ' aria-current="true"' : '') + '>' +
+        '<span class="n">' + esc(g.num) + '</span><span class="t">' + esc(g.label) + '</span></button>';
+      if (open && g.count > 1) {
+        row += '<ol class="toc-sub">' + pages.slice(g.first + 1, g.first + g.count).map(function (q, n) {
+          return '<li><button class="toc-sub-item" data-go="' + (g.first + 1 + n) + '"' +
+            (g.first + 1 + n === cur ? ' aria-current="true"' : '') + '>' +
+            esc(q.label) + '</button></li>';
+        }).join('') + '</ol>';
+      }
+      return row + '</li>';
     }).join('');
+
+    document.title = (p.kind === 'part' ? p.label + ' · ' + f.label : f.label) + ' · Claude for Business';
   }
 
   /* ----------------------------------------------------------- índice ---- */
@@ -450,17 +552,17 @@
   function buildIndex() {
     index = [];
     pages.forEach(function (p, n) {
-      if (p.cover) return;
-      var section = p.label, anchor = '';
-      p.raw.split('\n').forEach(function (line) {
-        var h = line.match(/^(#{2,4})\s+(.*)$/);
+      var section = p.label, anchor = '', fence = false;
+      p.md.split('\n').forEach(function (line) {
+        if (/^\s*```/.test(line)) { fence = !fence; return; }
+        var h = fence ? null : line.match(/^(#{2,4})\s+(.*)$/);
         if (h) {
           section = h[2].trim();
           anchor = slug(section);
           return;
         }
         var t = line.trim();
-        if (!t || t.charAt(0) === '|' || /^(-{3,}|```)/.test(t)) return;
+        if (!t || t.charAt(0) === '|' || /^-{3,}/.test(t)) return;
         index.push({
           page: n, section: section, anchor: anchor,
           text: t.replace(/[*`>]/g, '').replace(/^\s*[-+]\s+/, '').trim()
@@ -497,8 +599,11 @@
       return;
     }
     box.innerHTML = hits.map(function (h) {
-      var where = esc(pages[h.page].label) +
-        (h.section !== pages[h.page].label ? ' · ' + esc(h.section) : '');
+      var pg = pages[h.page];
+      var bits = [pg.ficha.label];
+      if (pg.label !== pg.ficha.label) bits.push(pg.label);
+      if (h.section !== pg.label && h.section !== pg.ficha.label) bits.push(h.section);
+      var where = bits.map(esc).join(' · ');
       return '<button class="res" type="button" data-page="' + h.page + '" data-anchor="' + esc(h.anchor) + '">' +
         '<b>' + where + '</b><span>' + highlight(h.text, q.trim()) + '</span></button>';
     }).join('');
@@ -532,12 +637,12 @@
         if (!r.ok) throw new Error(f + ' → HTTP ' + r.status);
         return r.text();
       }).then(function (t) { return parseFicha(f, t); });
-    })).then(function (fichas) {
-      pages = [COVER].concat(fichas);
-      buildChrome();
+    })).then(function (parsed) {
+      fichas = parsed;
+      pages = buildPages(fichas);
       buildIndex();
       var want = pageIndexById((location.hash || '').replace(/^#/, ''));
-      cur = want > 0 ? want : 0;
+      cur = want >= 0 ? want : 0;
       location.hash = pages[cur].id;
       syncChrome();
       paint();
