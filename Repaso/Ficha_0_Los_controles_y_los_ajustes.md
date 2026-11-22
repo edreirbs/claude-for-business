@@ -20,14 +20,14 @@
 
 Claude no es un solo motor: es una familia de modelos. Todos entienden lo mismo, pero se diferencian en qué tan a fondo razonan, qué tan rápido contestan y cuánto consumen de tu límite de uso.
 
-De menor a mayor capacidad, las familias son **Haiku**, **Sonnet**, **Opus** y el modelo insignia del momento. Los números de versión cambian varias veces al año, así que lo que conviene recordar no son los nombres exactos sino el orden y el criterio.
+De menor a mayor capacidad, las familias son **Haiku**, **Sonnet**, **Opus** y **Fable**, el modelo insignia del momento. Hoy el menú las muestra, de arriba abajo, como "Fable 5.2", "Opus 5.5", "Sonnet 5.5" y "Haiku 5.5"; las versiones anteriores están en "Más modelos". Los números de versión cambian varias veces al año, así que lo que conviene recordar no son los nombres exactos sino el orden y el criterio.
 
 | Familia | Para qué sirve | Qué cuesta |
 |---|---|---|
 | **Haiku** | Tareas rápidas y mecánicas: extraer datos de un formato conocido, clasificar, reformatear. | Muy poco. |
 | **Sonnet** | El caballo de batalla del trabajo administrativo diario. Redactar, analizar, comparar, revisar. | Moderado. |
 | **Opus** | Trabajo que requiere criterio: diseñar una rúbrica, resolver una contradicción, decidir entre alternativas. | Alto. |
-| **El insignia** | Lo más complejo, y tiene además un límite semanal propio. | El más alto. |
+| **Fable** | Lo más complejo. El menú lo describe "Para tus desafíos más difíciles". | El más alto. |
 
 ### Cuándo se cambia
 
@@ -37,11 +37,11 @@ De menor a mayor capacidad, las familias son **Haiku**, **Sonnet**, **Opus** y e
 
 ### Dónde funciona
 
-El selector aparece en el chat, en Design, en Cowork y en Claude Code. En los complementos de Office también hay selector, aunque con menos opciones.
+El selector aparece en el chat, en los diseños de "Artefactos" › "Diseño", en Cowork y en Claude Code. En los complementos de Office también hay selector, aunque con menos opciones.
 
 ### Cómo se pide
 
-No se pide con un prompt: se elige en el menú desplegable que está junto a la caja de texto, antes de mandar el mensaje.
+No se pide con un prompt: se elige antes de mandar el mensaje, dando clic en el nombre del modelo, abajo a la derecha de la caja de texto. Un chat o un diseño nuevo abre con el último modelo que usaste, así que conviene revisarlo cada vez. Si el que buscas no está en la lista, búscalo en "Más modelos".
 
 Lo que sí conviene escribir en el prompt es la exigencia, para que el modelo elegido la cumpla:
 
@@ -62,7 +62,7 @@ Cambiar de modelo no arregla un prompt mal escrito. Si el encargo es ambiguo, el
 
 ### Plan
 
-Los modelos disponibles dependen del plan. En el gratuito el catálogo es reducido.
+Los modelos disponibles dependen del plan. En el gratuito el catálogo es reducido. Fable está incluido en Max y Ultra; en Pro sale con la nota "Requiere créditos de uso", que se compran aparte.
 
 ---
 
@@ -70,18 +70,18 @@ Los modelos disponibles dependen del plan. En el gratuito el catálogo es reduci
 
 ### Qué es
 
-Es cuánto va a razonar Claude antes de contestar: cuántas veces revisa su propio trabajo, cuántas rutas explora, qué tan a fondo revisa el material. Los niveles van de **bajo** a **medio**, **alto**, **extra** y **max**. En Claude Code existe además un nivel superior, **UltraCode**, que trabaja en paralelo.
+Es cuánto va a razonar Claude antes de contestar: cuántas veces revisa su propio trabajo, cuántas rutas explora, qué tan a fondo revisa el material. Se elige en el mismo menú del modelo, en "Esfuerzo", y los niveles van de "Bajo" a "Medio" (marcado "Recomendado"), "Alto", "Extra" y "Máx". En Claude Code puede aparecer además un nivel superior que trabaja en paralelo; en el curso se vio como **UltraCode**.
 
-Aparte del nivel hay un interruptor de **razonamiento extendido** o **pensamiento**, que hace visible el proceso de razonamiento antes de la respuesta.
+En los modelos actuales el razonamiento ya no se apaga: siempre piensan antes de contestar, y lo único que decides es cuánto. Algunos modelos anteriores, en "Más modelos", traen en lugar de "Esfuerzo" un interruptor de **pensamiento extendido**.
 
 La imagen que usó el profesor: si le das una hoja de cálculo de diez mil filas y cuarenta columnas, el esfuerzo alto es lo que hace que *"de verdad visite cada celda; los demás a lo mejor se saltarían algunas."*
 
 ### Cuándo se cambia
 
-- **Bajo o medio**: tareas mecánicas, o cuando tienes prisa. Es el rango del trabajo diario.
-- **Alto**: cuando el resultado tiene que estar completo y no admite omisiones. Es el mejor punto de equilibrio.
-- **Extra o max**: análisis largos, decisiones complejas, revisiones exhaustivas de mucho material.
-- **UltraCode**, solo en Claude Code: tareas realmente grandes. Consume mucho más rápido porque trabaja en varias cosas a la vez.
+- **"Bajo" o "Medio"**: tareas mecánicas, o cuando tienes prisa. Es el rango del trabajo diario, y "Medio" es el que el menú recomienda.
+- **"Alto"**: cuando el resultado tiene que estar completo y no admite omisiones. Es el mejor punto de equilibrio.
+- **"Extra" o "Máx"**: análisis largos, decisiones complejas, revisiones exhaustivas de mucho material.
+- **UltraCode**, solo en Claude Code y si tu versión lo muestra: tareas realmente grandes. Consume mucho más rápido porque trabaja en varias cosas a la vez.
 
 ### Cómo se verifica
 
@@ -95,7 +95,7 @@ Y cuesta tiempo: en la sesión 2 una corrida con esfuerzo extra *"se tardó un c
 
 ### Plan
 
-Los niveles superiores consumen más rápido tu límite de uso, y en algunos planes están restringidos.
+Los niveles superiores consumen más rápido tu límite de uso, y en algunos planes están restringidos. El menú lo avisa: "Máx" trae una etiqueta con cuántas veces más gasta (en Pro, "5× o más de uso").
 
 ---
 
@@ -103,21 +103,23 @@ Los niveles superiores consumen más rápido tu límite de uso, y en algunos pla
 
 ### Qué es
 
-Cuando Claude puede modificar cosas —archivos de tu carpeta, un repositorio, una base de datos— hay que decidir cuánto le dejas hacer sin preguntarte. Ese es el modo de permisos, y es el control más importante de todos, porque es el único que puede evitar un daño irreversible.
+Cuando Claude puede modificar cosas —archivos de tu carpeta, un repositorio, una base de datos— hay que decidir cuánto le dejas hacer sin preguntarte. Ese es el modo de permisos, y es el control más importante de todos, porque es el único que puede evitar un daño irreversible. Hoy también aparece en el chat, porque para crear un archivo Claude ejecuta comandos.
 
 Los modos, de más control a menos:
 
 | Modo | Qué hace |
 |---|---|
-| **Manual / aprobar todo** | Te pregunta antes de cada acción. Nada ocurre sin tu clic. |
-| **Plan** | Antes de tocar nada, escribe el plan completo: qué archivos toca, en qué orden y cómo se va a verificar. Tú lo apruebas y luego ejecuta. |
+| **Manual** | Te pregunta antes de cada acción. Nada ocurre sin tu clic. |
+| **Plan** o **Planificación** | Antes de tocar nada, escribe el plan completo: qué archivos toca, en qué orden y cómo se va a verificar. Tú lo apruebas y luego ejecuta. |
 | **Aceptar ediciones** | Aplica las modificaciones de archivos sin preguntar, pero te consulta lo demás. |
-| **Auto** | Decide solo, y solo te consulta lo que considera delicado. |
+| **Automático** | Decide solo, y solo te consulta lo que considera delicado. El menú lo describe así: "Claude gestiona las decisiones de permisos". |
 | **Omitir todas las aprobaciones** | Hace lo que crea necesario sin preguntar nada. |
 
 ### Cuándo se usa cada uno
 
-**Plan** es el recomendado para trabajo real. Te deja ver el error antes de que ocurra, y de paso ahorra consumo, porque no ejecuta trabajo que ibas a rechazar.
+**Automático** es el que viene puesto de fábrica. El primer chat lo avisa con "Automático es ahora el modo predeterminado" y el botón "Confirmo que lo leí".
+
+**Plan** (en Claude Code en la web se llama "Planificación") es el recomendado para trabajo real. Te deja ver el error antes de que ocurra, y de paso ahorra consumo, porque no ejecuta trabajo que ibas a rechazar.
 
 **Manual** cuando el material es delicado o irreemplazable.
 
@@ -127,16 +129,17 @@ Los modos, de más control a menos:
 
 | Componente | Cómo aparece |
 |---|---|
-| Cowork | Omitir todas las aprobaciones / aprobar manualmente. |
-| Claude Code | Los cinco modos: auto, manual, aceptar ediciones, plan, omitir permisos. |
+| Chat | "Automático" o "Manual", abajo a la derecha de la caja, junto al modelo. |
+| Cowork | Los mismos, y puede traer además una opción para omitir todas las aprobaciones. |
+| Claude Code | En la app de escritorio: "Manual", "Aceptar ediciones", "Plan", "Automático" y omitir permisos. En la web, el menú "Permisos · esta sesión" trae "Automático", "Aceptar ediciones" y "Planificación". |
 | Office | Preguntar cada modificación / aceptar todas las ediciones / rechazar. |
 | Chrome | Se autoriza sitio por sitio, y se puede pedir aprobación por acción. |
 
-En el chat y en Design no aplica: ahí Claude no modifica nada tuyo por su cuenta.
+En los diseños de "Artefactos" › "Diseño" no aplica igual: ahí Claude solo modifica la pieza que está armando, no tus archivos.
 
 ### Cómo se pide
 
-El modo se elige en el menú junto a la caja de texto. Pero además conviene escribirlo en el prompt, porque una instrucción explícita pesa más que el ajuste:
+El modo se elige abajo a la derecha de la caja de texto, junto al modelo. Pero además conviene escribirlo en el prompt, porque una instrucción explícita pesa más que el ajuste:
 
 ```
 No apliques nada todavía. Dame primero el plan por escrito: qué archivos
@@ -157,17 +160,19 @@ Por qué está escrito así: separar el plan de la ejecución en dos mensajes es
 
 Cuando el modo es plan, el plan aparece en un panel aparte y debe incluir un paso de verificación. Si el plan no dice cómo se comprueba que funcionó, pídeselo antes de aprobarlo.
 
+Aun en "Automático", cuando va a crear archivos Claude puede detenerse con "Necesita tu intervención" y "Claude quiere ejecutar un comando". Lee qué comando es y da "Permitir una vez" o "Rechazar". Puede salir varias veces en la misma tarea.
+
 Además, en Cowork y en Claude Code puedes desplegar cada paso ejecutado y ver exactamente qué comandos corrió. La sesión 6 lo describió como la garantía de que *"no es una caja negra"*.
 
 ### Lo que no hace
 
 El modo de permisos no protege lo que está fuera de la carpeta conectada. Protege del exceso de iniciativa, no del alcance mal definido.
 
-Y en Claude Code, el modo de omitir permisos hay que habilitarlo antes en la configuración de la cuenta: no aparece de fábrica.
+Y en Claude Code, el modo de omitir permisos hay que habilitarlo antes en "Configuración" › "Code": no aparece de fábrica.
 
 ### Plan
 
-Los modos existen en todos los planes de pago.
+Los modos de Cowork y de Claude Code son de pago, porque esos dos componentes no están en el plan gratuito.
 
 ---
 
@@ -177,9 +182,11 @@ Los modos existen en todos los planes de pago.
 
 En Claude Code, antes de empezar, se elige si la sesión corre **en tu computadora** o **en la nube**.
 
-**Local** significa que Claude trabaja sobre una carpeta de tu disco. Necesita la app de escritorio abierta y, en Windows, que tengas instalado Git.
+**Local** significa que Claude trabaja sobre una carpeta de tu disco. Necesita la app de escritorio abierta y, en Windows, que tengas instalado Git. "Local" solo aparece en la app de escritorio.
 
 **En la nube** significa que Claude trabaja en una computadora prestada que está en internet, sobre un repositorio de GitHub. Tu computadora puede estar apagada. Funciona igual desde el navegador que desde la app.
+
+En el navegador, en claude.ai/code (el ícono `</>`), solo hay nube. El entorno arranca en "Automático" y avisa "Se usará Default": es el entorno de nube que viene de fábrica, y para empezar no hay que cambiarlo.
 
 ### Cuándo se usa cada uno
 
@@ -194,7 +201,7 @@ Y el estado de las conexiones queda fijado al arrancar: si empiezas una sesión 
 
 ### Plan
 
-En cuentas de organización, el administrador puede desactivar la ejecución local, la ejecución en la nube, o conectores concretos. Cuando eso ocurre, no hay nada que el usuario pueda hacer más que solicitarlo.
+Claude Code no está en el plan gratuito. En cuentas de organización, el administrador puede desactivar la ejecución local, la ejecución en la nube, o conectores concretos. Cuando eso ocurre, no hay nada que el usuario pueda hacer más que solicitarlo.
 
 ---
 
@@ -208,7 +215,7 @@ Cuando se llena, ocurre la **compactación**: Claude resume lo hablado y se qued
 
 Es la razón de tres cosas que se ven en el uso diario:
 
-- Hay un tope de documentos por conversación, alrededor de veinte, porque cada documento ocupa espacio en esa ventana.
+- Hay un tope de veinte archivos por conversación, y aun antes de llegar a él, cada documento ocupa espacio en esa ventana.
 - Si cambias de conversación, el contexto no viaja.
 - En conversaciones muy largas, Claude empieza a olvidar detalles del principio.
 
@@ -254,7 +261,7 @@ Y una advertencia que atraviesa toda la ficha: **Claude es probabilístico.** El
 
 ### Qué es
 
-En la configuración de la cuenta hay un campo donde se escribe lo que Claude debe saber de ti y cómo debe tratarte **en todas las conversaciones**, sin importar el Proyecto ni el componente.
+En la configuración de la cuenta hay un campo donde se escribe lo que Claude debe saber de ti y cómo debe tratarte **en todas las conversaciones**, sin importar el Proyecto ni el componente. Está en tu nombre, abajo a la izquierda › "Configuración" › "Tu Claude" › "Instrucciones".
 
 Es la capa más amplia de todas las de configuración. La Ficha 4 tiene cinco lugares donde se escribe contexto; éste es el sexto, y el único que aplica siempre.
 
@@ -321,6 +328,8 @@ Cuando produces textos de tipos distintos que tienen que sonar distinto: el ejec
 
 No cambia el contenido, solo la forma. Y no se comparte: vive en tu cuenta.
 
+Además, cambia de lugar seguido: hoy no aparece ni en el + de la caja de texto ni en "Configuración". Si en tu cuenta no lo encuentras, pide el tono en el prompt o déjalo escrito en las instrucciones de un Proyecto.
+
 ### Plan
 
 Gratuito.
@@ -331,7 +340,7 @@ Gratuito.
 
 ### El ajuste de entrenamiento
 
-En la configuración de la cuenta, en la sección de privacidad, hay un interruptor que permite que tus conversaciones se usen para entrenar y mejorar los modelos. En clase el profesor pidió al grupo apagarlo, y es una recomendación razonable para trabajo profesional.
+En "Configuración" › "Privacidad", en el bloque "Preferencias", está el interruptor "Ayuda a mejorar nuestros modelos de IA" (en algunas cuentas sale en inglés: "Help improve our AI models"). Permite que tus chats y tus sesiones de programación se usen para entrenar y mejorar los modelos. En clase el profesor pidió al grupo apagarlo, y es una recomendación razonable para trabajo profesional.
 
 Apagarlo no borra lo que ya está guardado: solo evita que lo nuevo se use con ese fin.
 
@@ -359,7 +368,7 @@ Sobre credenciales hay además un comportamiento del producto que conviene conoc
 
 ### Otros ajustes de privacidad
 
-En la misma sección se puede exportar todos tus datos, administrar los artifacts publicados, y controlar el uso de metadatos y de localización aproximada.
+En la misma sección, arriba del interruptor de entrenamiento, está "Metadatos de ubicación", que deja a Claude usar tu ciudad o región aproximada. Ahí mismo están "Cómo protegemos tus datos" y "Cómo usamos tus datos", que explican qué se guarda y para qué.
 
 ### Plan
 
@@ -373,15 +382,15 @@ Los ajustes existen en todos los planes. En Team y Enterprise, algunos los fija 
 
 Las conversaciones se acumulan rápido. Hay cuatro operaciones que en clase resultaron útiles y casi nadie conocía.
 
-**Buscar.** Hay un buscador que no busca por título sino por contenido. Sirve justo cuando no recuerdas cómo se llamaba el chat pero sí de qué trataba.
+**Buscar.** "Buscar", en la barra lateral, no busca por título sino por contenido. Sirve justo cuando no recuerdas cómo se llamaba el chat pero sí de qué trataba.
 
 **Fijar.** Deja una conversación arriba de la lista, para el trabajo en curso.
 
-**Renombrar.** Claude nombra las conversaciones solo, y a veces mal. Se pueden renombrar.
+**Renombrar.** Claude nombra las conversaciones solo, y a veces mal. Se renombran con "Cambiar nombre".
 
 **Archivar o eliminar.** Archivar la quita de la vista sin borrarla. Eliminar la borra.
 
-Las cuatro están en el menú de tres puntos que aparece al pasar el cursor sobre la conversación.
+Las tres últimas están en los tres puntos que aparecen al pasar el cursor sobre la conversación, en la lista de la izquierda: "Fijar", "Cambiar nombre", "Agregar al proyecto", "Archivar" y "Eliminar".
 
 ### Un detalle que confunde
 
@@ -393,17 +402,17 @@ En Claude Code las conversaciones **no se llaman conversaciones, se llaman sesio
 
 ### De dónde sale cada cosa
 
-Casi todo se descarga desde un mismo menú: en Claude, junto a tu nombre, hay un botón de descargas que lista lo que puedes instalar.
+Casi todo se instala desde una misma página: da clic en tu nombre, abajo a la izquierda › "Obtén apps y extensiones". Se abre "Haz más con Claude, en todos tus dispositivos y herramientas", con una tarjeta por componente.
 
 | Componente | De dónde se obtiene |
 |---|---|
-| App de escritorio (Windows y Mac) | Menú de descargas de Claude. |
+| App de escritorio (Windows y Mac) | La tarjeta "Escritorio" de esa página. |
 | App móvil | App Store o Play Store. |
-| Complementos de Word, Excel, PowerPoint y Outlook | Microsoft AppSource, la tienda de complementos de Microsoft. También hay acceso desde el menú de descargas de Claude. |
-| Extensión de Chrome | Chrome Web Store. Conviene fijarla al lado de la barra de direcciones, desde el ícono de pieza de rompecabezas. |
-| Claude Design | No se instala: es una pestaña dentro de Claude. |
-| Cowork | No se instala aparte: es un modo dentro de la app de escritorio, que primero hay que activar en la configuración. |
-| Claude Code | Es una pestaña dentro de la app de escritorio. |
+| Complementos de Word, Excel, PowerPoint y Outlook | La tarjeta "Microsoft 365": un botón "Instalar" por aplicación, que abre la tienda de Microsoft. Si no, desde Excel o PowerPoint: "Inicio" › "Complementos" › busca "Claude". El "Microsoft 365" que aparece en "Plugins" es otra cosa: un conector, no el complemento. |
+| Extensión de Chrome | La tarjeta "Chrome" de esa página, o la Chrome Web Store. Conviene fijarla al lado de la barra de direcciones, desde el ícono de pieza de rompecabezas. |
+| Claude Design | No se instala: se abre en "Artefactos" › "Crea algo nuevo" › "Diseño". El "Design" de la barra lateral es la versión anterior, que cierra el 14 de diciembre de 2026. |
+| Cowork | No se instala aparte: viene en la app de escritorio, que abre con Cowork ya encendido. |
+| Claude Code | En la app de escritorio, o en el navegador en claude.ai/code (el ícono `</>`), donde solo trabaja en la nube. |
 
 ### El requisito que detuvo la clase
 
@@ -416,7 +425,7 @@ En la sesión 6 la instalación de Git consumió el receso completo y unos quinc
 
 ### Dos advertencias de instalación
 
-**Usa la app de escritorio, no el navegador**, cuando trabajes con Cowork o con Claude Code en local. Varias de las funciones de esas sesiones solo existen ahí.
+**Usa la app de escritorio, no el navegador**, cuando Cowork tenga que trabajar con carpetas de tu computadora, o cuando uses Claude Code en local. Varias de las funciones de esas sesiones solo existen ahí.
 
 **Inicia sesión en la extensión de Chrome con la cuenta que paga tu plan.** La extensión funciona en cualquier perfil de Chrome, pero las capacidades vienen de la cuenta de Claude, no del perfil del navegador.
 
@@ -428,21 +437,21 @@ En la sesión 6 la instalación de Git consumió el receso completo y unos quinc
 
 | Control | Dónde está |
 |---|---|
-| Modelo | menú junto a la caja de texto |
-| Nivel de esfuerzo | el mismo menú |
-| Modo de permisos | menú junto a la caja de texto, en Cowork y Claude Code |
-| Local o nube | al abrir la sesión de Claude Code |
+| Modelo | el nombre del modelo, abajo a la derecha de la caja de texto |
+| Nivel de esfuerzo | el mismo menú, en "Esfuerzo" |
+| Modo de permisos | junto al modelo: "Automático" o "Manual"; en Claude Code hay más modos |
+| Local o nube | al abrir la sesión de Claude Code; en el navegador, solo nube |
 | Capacidad de la conversación | indicador junto a la caja de texto, en Claude Code |
 
 **Una sola vez, en tu cuenta**, deja resueltos estos cinco:
 
 | Si quieres… | Ve a… |
 |---|---|
-| que una regla aplique a todo lo que pidas | instrucciones de perfil |
+| que una regla aplique a todo lo que pidas | "Configuración" › "Tu Claude" › "Instrucciones" |
 | cambiar el tono según el documento | estilos |
-| que tus conversaciones no se usen para entrenar | privacidad |
-| encontrar una conversación que no recuerdas | el buscador de conversaciones |
-| instalar un componente | el menú de descargas junto a tu nombre |
+| que tus conversaciones no se usen para entrenar | "Configuración" › "Privacidad" |
+| encontrar una conversación que no recuerdas | "Buscar", en la barra lateral |
+| instalar un componente | tu nombre › "Obtén apps y extensiones" |
 | usar Claude Code | instalar Git primero |
 
 Y la regla que conviene llevarse de toda la ficha: **antes de subir algo, pregúntate si lo publicarías en LinkedIn.** Si la respuesta es no, anonimízalo o no lo subas.

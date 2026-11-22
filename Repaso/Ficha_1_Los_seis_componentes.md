@@ -16,7 +16,7 @@ Cuando algo visual sale de Claude, está hecho con formas, tipografía y color e
 
 ### Qué quiere decir "agente"
 
-Un agente es un sistema de inteligencia artificial que además de conversar tiene **herramientas** y las puede usar por su cuenta: leer un archivo, escribir otro, consultar un sistema, hacer clic en una página. Cowork y Claude Code son agentes; el chat, en su forma básica, no.
+Un agente es un sistema de inteligencia artificial que además de conversar tiene **herramientas** y las puede usar por su cuenta: leer un archivo, escribir otro, consultar un sistema, hacer clic en una página. Cowork y Claude Code son agentes. El chat, en su forma básica, no lo es, aunque hoy también usa herramientas cuando crea un archivo, y por eso trae su propio modo de permisos.
 
 La consecuencia práctica: en los componentes que son agentes hay que decidir cuánto los dejas actuar sin preguntarte. Ese ajuste es el modo de permisos, y está explicado en la Ficha 0.
 
@@ -27,6 +27,8 @@ La consecuencia práctica: en los componentes que son agentes hay que decidir cu
 ### Qué es
 
 Es la ventana de conversación: tú escribes, Claude responde. Es lo que la mayoría de la gente conoce como "usar Claude". Todo ocurre dentro de esa conversación. Si subes un archivo, ese archivo vive ahí adentro y no en tu computadora, y cuando abres una conversación nueva ya no está disponible.
+
+Si le pides la respuesta "como documento", Claude la arma como un documento de Claude Docs que se abre a la derecha, y en el chat queda una tarjeta con su nombre y "Claude Docs · Solo tú". Para bajarlo: "Compartir", arriba a la derecha del documento › pestaña "Exportación" › "Word", "PDF" o "Markdown".
 
 ### Cuándo se usa
 
@@ -41,7 +43,7 @@ Cuando el material cabe en un mensaje o en unos cuantos archivos, y lo que esper
 | Vía | Qué significa |
 |---|---|
 | **App web** | Entras desde el navegador. No instalas nada. |
-| **App de escritorio** | Un programa que instalas en tu computadora. Por dentro se ve casi igual que la web, pero es la única puerta a Cowork y a Claude Code, y algunos ajustes solo aparecen ahí. |
+| **App de escritorio** | Un programa que instalas en tu computadora. Por dentro se ve casi igual que la web, pero es la única puerta a las carpetas de tu computadora, en Cowork, y a las sesiones locales de Claude Code, y algunos ajustes solo aparecen ahí. |
 | **App móvil** | En el teléfono. |
 
 La conversación es la misma en las tres: si la empiezas en la computadora, la puedes seguir en el teléfono.
@@ -50,13 +52,13 @@ La conversación es la misma en las tres: si la empiezas en la computadora, la p
 
 No toca los archivos de tu computadora. Si le pides "ordena mi carpeta de Descargas", desde aquí no puede; para eso está Cowork.
 
-Lo que subes se queda en esa conversación. Para que un archivo esté disponible siempre, sin volver a subirlo cada vez, hay que cargarlo al conocimiento de un Project, que se explica en la Ficha 4.
+Lo que subes se queda en esa conversación. Para que un archivo esté disponible siempre, sin volver a subirlo cada vez, hay que cargarlo al conocimiento de un Proyecto ("Proyectos", en la barra lateral), que se explica en la Ficha 4.
 
-Hay un tope de documentos por conversación, alrededor de veinte, y no es arbitrario: es la capacidad de la conversación. Está explicado en la Ficha 0.
+Hay un tope de veinte archivos por conversación, y aun antes de llegar a él, cada archivo ocupa parte de la capacidad de la conversación. Está explicado en la Ficha 0.
 
 ### Plan
 
-Gratuito, con un límite de mensajes que se reinicia cada cierto tiempo. Dos cosas dentro del chat sí son de pago: los Projects con archivos cargados, y poder escribir el símbolo @ para llamar a un archivo por su nombre.
+Gratuito, con un límite de mensajes que se reinicia cada cierto tiempo. En "Configuración" › "Uso" ves cuánto llevas y a qué hora se restablece. Tres cosas dentro del chat sí son de pago: los Proyectos con archivos cargados, poder escribir el símbolo @ para llamar a un archivo por su nombre, e "Investigación", que está en el + de la caja de texto.
 
 ---
 
@@ -65,6 +67,8 @@ Gratuito, con un límite de mensajes que se reinicia cada cierto tiempo. Dos cos
 ### Qué es
 
 Un espacio de trabajo distinto del chat. En vez de contestarte con texto, Claude arma una pieza visual sobre un lienzo —una hoja en blanco donde acomoda títulos, bloques de texto, formas y color— y tú le vas pidiendo cambios encima de lo que ya armó. Se parece más a un programa de diseño que a una conversación.
+
+Ya no es una aplicación aparte: hoy se abre dentro de claude.ai, desde "Artefactos" › "Crea algo nuevo" › "Diseño". Sigue siendo un componente propio, porque el resultado no es una respuesta en la conversación sino una pieza sobre un lienzo.
 
 Su rasgo distintivo frente al chat es que **lo que produce se puede editar directamente**, sin volver a pedírselo. Eso se explica en la Ficha 7.
 
@@ -76,28 +80,30 @@ Cuando lo primero que importa del resultado es cómo se ve, y cuando vas a hacer
 - Necesitas un cartel de una página para pegar en el tablero del área.
 - Necesitas enseñar cómo se vería la pantalla de una aplicación antes de pedirle a alguien que la programe.
 
+Para láminas, "Crea algo nuevo" también trae la tarjeta "Diapositivas", que deja elegir tu sistema de diseño y se descarga en PowerPoint desde "Exportar".
+
 Una práctica que funcionó bien en clase: **escribir el contenido en el chat y traerlo a Design solo para darle forma.** Design es más lento y consume más rápido; usarlo para redactar es desperdiciarlo.
 
 ### Cómo está organizado
 
-Design se abre en una pestaña propia y tiene tres secciones: **Projects**, donde están los diseños que ya hiciste, con vista previa; **Design Systems**, donde viven tus identidades de marca —eso está en la Ficha 4—; y **Templates**, para plantillas propias.
+Se entra por "Artefactos", en la barra lateral. La página avisa "Claude Design ahora está aquí" y, en "Crea algo nuevo", ofrece "Documentos", "Diapositivas", "Hoja de cálculo" (Beta), "Diseño", "Datos" y "Pizarra" (Beta), entre otras. Lo que ya hiciste queda en la pestaña "Tuyos".
 
-Al empezar un diseño se elige una **plantilla**, y cada una cambia lo que Claude te ofrece: láminas, documentos, correos, animaciones, diagramas, carteles, aplicaciones móviles, objetos en tres dimensiones, o empezar en blanco. La plantilla escribe sola la primera parte del prompt.
+La tarjeta "Diseño" abre de una vez un chat "Diseño sin título", con el lienzo a la derecha y, en el centro, "Describe una idea y conviértela en un diseño". Ahí mismo está el botón "Sistema de diseño", para elegir tu identidad de marca; los sistemas se crean en "Configuración" › "Capacidades" › "Sistemas de diseño" › "Administrar", y eso está en la Ficha 4. El nombre de la pieza, arriba del lienzo, abre su menú: "Compartir", "Exportar", "Transferir a Claude Code" y "Duplicar", entre otras.
+
+El "Design" que todavía aparece en la barra lateral es la versión anterior, independiente, y cierra el 14 de diciembre de 2026. Lo nuevo se hace en "Artefactos". Si tienes diseños allá, su pantalla ofrece "Mover tus proyectos" para traerlos.
 
 ### De dónde se consume
 
 | Vía | Qué significa |
 |---|---|
-| **App web** | Desde el navegador. |
-| **App de escritorio** | Desde la barra lateral. |
+| **App web** | En "Artefactos", en la barra lateral. |
+| **App de escritorio** | En "Artefactos", igual que en la web. |
 
-No está en la app móvil. Todo lo que hagas en una lo ves en la otra: aquí no hay nada local.
+En la app móvil no está documentado. Todo lo que hagas en una lo ves en la otra: aquí no hay nada local.
 
 ### Lo que no hace
 
 No genera fotografías ni ilustraciones, como se explicó arriba.
-
-Se puede traer un sistema de diseño desde Figma hacia Claude, pero no se puede mandar el resultado hacia Figma.
 
 Tarda. Una pieza puede llevar varios minutos, y conviene lanzarla y dedicarse a otra cosa mientras.
 
@@ -105,7 +111,7 @@ Y tiene un sesgo estético que conviene conocer: si no le das una referencia de 
 
 ### Plan
 
-De pago, en Pro, Max, Team y Enterprise. En Enterprise viene apagado hasta que un administrador lo enciende. Sigue en beta, que quiere decir que es una versión en pruebas: puede cambiar de un mes a otro y puede fallar.
+Está en todos los planes, incluido el gratuito, y ya salió de beta. En Team y Enterprise, el administrador de la organización tiene que tenerlo encendido.
 
 Consume de la misma bolsa que el resto de Claude, pero más rápido que el chat.
 
@@ -131,8 +137,8 @@ Cuando el trabajo son varios archivos que ya existen en tu disco, y el resultado
 
 | Vía | Qué significa |
 |---|---|
-| **App de escritorio** | En macOS y en Windows. Es el camino principal, y hay que activarlo primero en la configuración. |
-| **App web y app móvil** | Todavía en beta. Desde ahí puedes seguir dando instrucciones sobre una sesión que ya está corriendo, pero no manipular directamente los archivos, porque viven en la otra computadora. |
+| **App de escritorio** | En macOS y en Windows. Es el camino principal y la única que llega a las carpetas de tu computadora. Ya no hay que activarlo: la app abre con Cowork encendido, en la misma ventana que el chat. |
+| **App web y app móvil** | También dan Cowork, porque las sesiones nuevas corren en la nube. Pero tus carpetas solo las alcanza mientras la app de escritorio siga abierta en tu computadora. |
 | **Extensión de Chrome** | El panel lateral de Chrome funciona por dentro como una sesión de Cowork, y por eso lo que configuraste para Cowork también aparece ahí. |
 
 ### Lo que no hace
@@ -149,7 +155,7 @@ Si conectas la carpeta que Google Drive o OneDrive sincronizan en tu disco, y la
 
 ### Plan
 
-De pago. Consume bastante más que el chat.
+De pago: no está en el plan gratuito. Consume bastante más que el chat.
 
 ---
 
@@ -180,7 +186,7 @@ Tres condiciones: el complemento tiene que estar abierto en cada archivo, viene 
 
 | Vía | Qué significa |
 |---|---|
-| **Complemento de Office** | Dentro de Word, Excel, PowerPoint y Outlook, en sus versiones web, de Windows y de Mac. Se instala desde Microsoft AppSource. |
+| **Complemento de Office** | Dentro de Word, Excel, PowerPoint y Outlook, en sus versiones web, de Windows y de Mac. Se instala desde tu nombre, abajo a la izquierda › "Obtén apps y extensiones" › "Microsoft 365", con un "Instalar" por aplicación que abre la tienda de Microsoft. Los detalles están en la Ficha 0. |
 
 No existe en iPad ni en Android.
 
@@ -202,7 +208,7 @@ Como los cambios van dentro del archivo original, conviene **trabajar sobre un d
 
 ### Plan
 
-De pago, en Pro, Max, Team y Enterprise. En Team y en Enterprise el administrador tiene que habilitarlos antes de que aparezcan.
+De pago, en Pro, Max, Ultra, Team y Enterprise. En Team y en Enterprise el administrador tiene que habilitarlos antes de que aparezcan.
 
 ---
 
@@ -240,7 +246,7 @@ No funciona en otros navegadores construidos sobre la misma base que Chrome, com
 
 No llega por sí solo a los archivos de tu computadora.
 
-Los permisos se dan sitio por sitio: autorizarlo en un sitio no lo autoriza en los demás.
+Los permisos se dan sitio por sitio: autorizarlo en un sitio no lo autoriza en los demás. Los que ya diste se revisan en "Configuración" › "Capacidades" › "Permisos de sitios".
 
 Trae bloqueadas de fábrica las categorías de banca en línea, plataformas de inversión y casas de cambio de criptomonedas. Como regla de trabajo conviene no autorizarlo tampoco en nómina, expedientes de personal ni portales con datos de terceros.
 
@@ -248,7 +254,7 @@ Es lento. Una tarea de veinte capturas puede llevar veinte minutos. La ventaja e
 
 ### Plan
 
-De pago. El panel lateral está en beta.
+De pago, en todos los planes de pago.
 
 ---
 
@@ -274,13 +280,16 @@ Conviene ser realista sobre el alcance: lo que se produce son **prototipos y her
 
 Al abrir una sesión se elige dónde corre. **Local** trabaja sobre una carpeta de tu disco y necesita la app de escritorio. **En la nube** trabaja sobre un repositorio de GitHub en una computadora prestada, funciona igual desde el navegador y no requiere que tu computadora esté encendida. Está explicado en la Ficha 0.
 
+En el navegador, en claude.ai/code (el ícono `</>`), solo hay nube: el entorno arranca en "Automático" y avisa "Se usará Default". "Local" solo aparece en la app de escritorio.
+
 ### De dónde se consume
 
 | Vía | Qué significa |
 |---|---|
-| **App de escritorio** | En la pestaña Code. Es la vía para sesiones locales. |
+| **App de escritorio** | En la pestaña Code. Es la única vía para sesiones locales. |
 | **Terminal** | La ventana de texto donde se escriben comandos en lugar de hacer clic. |
-| **App web** | Para sesiones de nube. |
+| **App web** | En claude.ai/code, con el ícono `</>`. Solo sesiones de nube. |
+| **App móvil** | En la pestaña "Code", para seguir sesiones de nube. |
 
 ### El requisito que hay que resolver antes
 
@@ -292,11 +301,11 @@ Conviene instalarlo con anticipación: en clase esta instalación consumió un r
 
 En las sesiones de nube no existe el símbolo @ para meter un archivo a la conversación, no hay chat lateral y no se instalan complementos desde un menú. Tampoco funcionan ahí los conectores que corren dentro de tu propia computadora.
 
-**No tiene Projects.** Los Projects son del chat y de Cowork. Aquí el contexto se guarda en el `CLAUDE.md` de la carpeta, que se explica en la Ficha 4.
+**No tiene Proyectos.** Los Proyectos son del chat y de Cowork. Aquí el contexto se guarda en el `CLAUDE.md` de la carpeta, que se explica en la Ficha 4.
 
 ### Plan
 
-De pago. Viene incluido en cada asiento estándar de Team, donde asiento quiere decir la licencia que la organización le asigna a cada persona. En Enterprise depende del tipo de asiento: uno de solo chat no lo incluye.
+De pago, en Pro, Max, Ultra, Team y Enterprise; no está en el plan gratuito. En Team y en Enterprise depende del tipo de asiento, donde asiento quiere decir la licencia que la organización le asigna a cada persona: uno de solo chat no lo incluye.
 
 ---
 
@@ -310,7 +319,7 @@ La decisión se toma por dónde está el material, no por qué tan complicada es
 | el archivo que ya tienes abierto en pantalla | **Office** |
 | varios archivos de una carpeta | **Cowork** |
 | una página web | **Chrome** |
-| ningún lado todavía, y el resultado se ve | **Design** |
+| ningún lado todavía, y el resultado se ve | **Design** ("Artefactos" › "Diseño") |
 | una carpeta que alguien más tiene que abrir completa | **Claude Code** |
 
 Y una segunda regla, para cuando el material podría estar en varios lados: **Cowork hace el trabajo de esta vez; Claude Code construye la herramienta que lo hace cada mes.**
@@ -319,11 +328,12 @@ Y una segunda regla, para cuando el material podría estar en varios lados: **Co
 
 ## Cuando un componente no aparece
 
-Si algo de lo descrito aquí no existe en tu pantalla, hay tres causas posibles, en este orden:
+Si algo de lo descrito aquí no existe en tu pantalla, hay cuatro causas posibles, en este orden:
 
-1. **Estás en el navegador y no en la app de escritorio.** Cowork y las sesiones locales de Claude Code solo aparecen ahí.
-2. **Tu plan no lo incluye.** Todo salvo el chat es de pago.
+1. **Estás en el navegador y no en la app de escritorio.** Las carpetas de tu computadora, en Cowork, y las sesiones locales de Claude Code solo aparecen ahí.
+2. **Tu plan no lo incluye.** El chat y Design están en todos los planes, incluido el gratuito. Cowork, Office, Chrome y Claude Code son de pago.
 3. **El administrador de tu organización lo apagó.** Pasa con Design, con Claude Code, con la extensión de Chrome y con conectores concretos. No se resuelve desde tu cuenta: hay que solicitarlo.
+4. **Lo buscas donde estaba antes.** Design ya no se abre aparte: está en "Artefactos" › "Crea algo nuevo" › "Diseño". El "Design" de la barra lateral es la versión anterior, que cierra el 14 de diciembre de 2026.
 
 De dónde se descarga cada componente está en la Ficha 0.
 

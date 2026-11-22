@@ -16,18 +16,18 @@ Antes de verlos uno por uno, conviene entender el patrón. Los cinco hacen lo mi
 
 **Qué tan lejos viaja.** Un Proyecto del chat vive en tu cuenta y lo ves desde cualquier dispositivo. Un `CLAUDE.md` vive dentro de la carpeta, así que viaja con ella: si le mandas la carpeta a un compañero, se lleva las reglas puestas.
 
-Existe una sexta capa, más amplia que las cinco de esta ficha: las **instrucciones de perfil**, que aplican a todas tus conversaciones sin excepción. Están en la Ficha 0 porque son un ajuste de la cuenta, no de un trabajo.
+Existe una sexta capa, más amplia que las cinco de esta ficha: las **instrucciones de perfil**, que aplican a todas tus conversaciones sin excepción. Se escriben en "Configuración" › "Tu Claude" › "Instrucciones", y están en la Ficha 0 porque son un ajuste de la cuenta, no de un trabajo.
 
-**Cuál gana cuando se contradicen.** De más fuerte a más débil: lo que pides en el mensaje, luego el `CLAUDE.md` o las instrucciones del Proyecto, luego las instrucciones de perfil, y al final el criterio propio de Claude. Si insistes en algo que contradice una regla escrita, gana lo que tú pides.
+**Cuál gana cuando se contradicen.** De más fuerte a más débil: lo que pides en el mensaje, luego el `CLAUDE.md` o las instrucciones del proyecto, luego las instrucciones de perfil, y al final el criterio propio de Claude. Si insistes en algo que contradice una regla escrita, gana lo que tú pides.
 
 | Elemento | Dónde vive | Viaja a otra persona |
 |---|---|---|
 | Instrucciones de perfil (Ficha 0) | en tu cuenta, aplican a todo | no |
-| Proyecto del chat | en tu cuenta | solo en Team y Enterprise |
-| Proyecto de Cowork | en tu computadora | no |
+| Proyecto del chat | en tu cuenta | con "Compartir", arriba a la derecha; qué permite depende de tu plan |
+| Proyecto de Cowork | en tu cuenta, atado a una carpeta de tu computadora | no: la carpeta se queda en tu computadora |
 | `CLAUDE.md` | dentro de la carpeta | sí, con la carpeta |
 | Instrucciones del complemento | en ese dispositivo, por aplicación | no |
-| Sistema de diseño | en tu cuenta de Design | dentro de la organización |
+| Sistema de diseño | en tu cuenta ("Configuración" › "Capacidades" › "Sistemas de diseño") | dentro de la organización |
 
 ---
 
@@ -35,32 +35,34 @@ Existe una sexta capa, más amplia que las cinco de esta ficha: las **instruccio
 
 ### Qué es
 
-Un Project es un contenedor de conversaciones que comparten dos cosas: unas **instrucciones** que se aplican a todas, y un **conocimiento**, que son archivos cargados de una vez y disponibles en cualquier conversación de ese Project.
+Un proyecto es un contenedor de conversaciones que comparten dos cosas: unas **instrucciones** que se aplican a todas, y un **conocimiento**, que son archivos cargados de una vez y disponibles en cualquier conversación de ese proyecto. En pantalla, a la derecha del proyecto, son "Instrucciones" y "Contexto". En el mismo panel están "Memoria", lo que Claude aprendió en ese proyecto (Ficha 5), y "Programado", sus tareas programadas (Ficha 6).
 
-La diferencia con subir un archivo suelto es esa segunda parte. Un archivo adjunto vive en una conversación; un archivo del conocimiento está en todas las conversaciones del Project, siempre, sin volverlo a subir.
+La diferencia con subir un archivo suelto es esa segunda parte. Un archivo adjunto vive en una conversación; un archivo del conocimiento está en todas las conversaciones del proyecto, siempre, sin volverlo a subir.
 
-**Sobre el conocimiento del Proyecto.** En el cuadro del ecosistema, el *conocimiento del Proyecto* aparece como un input, es decir, como una fuente de información, y se explica aquí porque no existe fuera de un Project. Son los archivos que cargaste una vez a ese contenedor: manuales, políticas, glosarios, plantillas, informes de referencia. Claude los tiene disponibles en toda conversación de ese Project sin que tú los vuelvas a adjuntar, y los puede citar igual que cita un archivo recién subido.
+**Sobre el conocimiento del Proyecto.** En el cuadro del ecosistema, el *conocimiento del Proyecto* aparece como un input, es decir, como una fuente de información, y se explica aquí porque no existe fuera de un proyecto. Son los archivos que cargaste una vez en "Contexto": manuales, políticas, glosarios, plantillas, informes de referencia. Claude los tiene disponibles en toda conversación de ese proyecto sin que tú los vuelvas a adjuntar, y los puede citar igual que cita un archivo recién subido.
 
 ### Cuándo se usa
 
 Cuando hay un cuerpo de contexto que vas a necesitar muchas veces.
 
-- Un Project de tu área, con el organigrama, el glosario interno, la política vigente y las plantillas que usan. Cada vez que empiezas algo de trabajo, empiezas dentro de ese Project y ya no explicas nada.
-- Un Project por cliente o por materia, con sus documentos base.
-- Un Project para un proceso repetido, con las instrucciones de cómo se hace y el ejemplo del resultado bien hecho.
+- Un proyecto de tu área, con el organigrama, el glosario interno, la política vigente y las plantillas que usan. Cada vez que empiezas algo de trabajo, empiezas dentro de ese proyecto y ya no explicas nada.
+- Un proyecto por cliente o por materia, con sus documentos base.
+- Un proyecto para un proceso repetido, con las instrucciones de cómo se hace y el ejemplo del resultado bien hecho.
 
 ### Dónde funciona
 
 | Componente | Funciona | Detalle |
 |---|---|---|
 | Chat | Sí | |
-| Cowork | Sí | Un proyecto de Cowork puede enlazar un Project del chat para aprovechar su conocimiento. |
-| Design, Office, Chrome | No documentado | Design tiene sus propios "projects", que son otra cosa. |
+| Cowork | Sí | Es el mismo proyecto, abierto en la app de escritorio (ver Proyecto de Cowork). |
+| Design, Office, Chrome | No documentado | Los "projects" del Design independiente eran otra cosa: hoy los diseños se guardan en "Artefactos". |
 | Claude Code | No | |
 
 ### Cómo se pide
 
-Las instrucciones del Project no son un prompt: son un texto fijo que se escribe una vez en la configuración. Conviene que respondan cinco preguntas.
+Se crea en "Proyectos" › "Nuevo proyecto". En la ventana "Crear un proyecto" basta con el nombre, en "¿En qué estás trabajando?", y "Crear proyecto". Lo que escribas en "¿Qué quieres lograr?" queda solo como descripción, arriba: **no son las instrucciones.** Las instrucciones van a la derecha del proyecto, en "Instrucciones" › "Agregar" (o "Editar", si ya tiene), y se guardan con "Guardar instrucciones". Los archivos, en "Contexto" › "Agregar".
+
+Las instrucciones del proyecto no son un prompt: son un texto fijo que se escribe una vez. Conviene que respondan cinco preguntas.
 
 ```
 QUIÉN SOY
@@ -87,36 +89,34 @@ Por qué está escrito así: los tres primeros bloques evitan que tengas que exp
 Para usar un archivo del conocimiento dentro de una conversación:
 
 ```
-Usando el documento de política que está en el conocimiento de este
-Project, dime si el caso que te voy a describir cumple o no, y cita
+Usando el documento de política que está en el contexto de este
+proyecto, dime si el caso que te voy a describir cumple o no, y cita
 el numeral exacto en el que te basas.
 ```
 
 ### Cómo se verifica
 
-Abre una conversación nueva dentro del Project y pregunta algo que solo se pueda responder con el conocimiento cargado. Si contesta bien sin que tú le hayas dado el archivo, el Project está funcionando.
+Abre una conversación nueva dentro del proyecto y pregunta algo que solo se pueda responder con el conocimiento cargado. Si contesta bien sin que tú le hayas dado el archivo, el proyecto está funcionando. Para que el chat quede dentro del proyecto, escribe en la caja del propio proyecto (dice "Nueva sesión en..."); "Crear", en la barra de la izquierda, lo abre fuera. Si no siguió tus instrucciones, revisa que el nombre del proyecto aparezca arriba del chat.
 
 ### Lo que no hace
 
-No llega a tu disco. El conocimiento son copias que subiste, no tus carpetas.
+No llega a tu disco por sí solo. El conocimiento son copias que subiste, no tus carpetas. Cada archivo del "Contexto" puede pesar hasta 30 MB, bastante menos que un adjunto en el chat.
 
-Un artifact creado dentro de un Project solo lo puede abrir quien tenga acceso a ese Project. Si el resultado lo va a ver alguien de fuera, conviene producirlo en una conversación normal. Esto se explica con más detalle en la Ficha 8.
+Un artifact creado dentro de un proyecto solo lo puede abrir quien tenga acceso a ese proyecto. Si el resultado lo va a ver alguien de fuera, conviene producirlo en una conversación normal. Esto se explica con más detalle en la Ficha 8.
 
-**No se puede convertir en un proyecto de Cowork, ni al revés.** Lo que nace en el chat se queda en el chat; lo que nace en Cowork se queda en Cowork y es local. Es una decisión que se toma al crearlo y no tiene marcha atrás.
-
-Lo que sí se puede es traer un Proyecto del chat como referencia dentro de un proyecto de Cowork, o dentro de una conversación de Claude Design. Se usa su conocimiento sin convertirlo.
+**Ya no hay que elegir entre proyecto del chat y proyecto de Cowork.** Desde que el chat y Cowork se unieron (en Pro, Max y Ultra; en Team y Enterprise, según lo active tu organización), un proyecto es uno solo. Se explica en el elemento siguiente.
 
 ### Cómo se organiza
 
-Una duda frecuente: un Proyecto general por área, o uno por cliente. La recomendación que se dio en clase es empezar con el general, y abrir uno especializado solo cuando el general empiece a estorbar.
+Una duda frecuente: un proyecto general por área, o uno por cliente. La recomendación que se dio en clase es empezar con el general, y abrir uno especializado solo cuando el general empiece a estorbar.
 
-Los chats de un Proyecto aparecen también en tu lista general de conversaciones, pero marcados como pertenecientes a ese Proyecto.
+Los chats de un proyecto aparecen también en tu lista general de conversaciones, pero marcados como pertenecientes a ese proyecto.
 
-Un Proyecto se puede **archivar** para quitarlo de la vista sin borrarlo. Un proyecto de Cowork solo se puede archivar, no borrar, porque borrarlo implicaría borrar tu carpeta.
+Un proyecto se puede **archivar** para quitarlo de la vista sin borrarlo.
 
 ### Plan
 
-El Project como contenedor es gratuito, con un máximo de cinco en el plan gratuito. El conocimiento cargado y la @mención de archivos son de pago.
+El proyecto como contenedor está también en el plan gratuito, con un número limitado de proyectos. El conocimiento cargado y la @mención de archivos son de pago.
 
 ---
 
@@ -124,9 +124,9 @@ El Project como contenedor es gratuito, con un máximo de cinco en el plan gratu
 
 ### Qué es
 
-El equivalente de un Project, pero para trabajo sobre carpetas. Guarda cuatro cosas: qué carpetas están conectadas, unas instrucciones fijas, unas ligas de referencia y una memoria propia.
+Un proyecto que, además, trabaja sobre una carpeta de tu computadora. Guarda cuatro cosas: qué carpetas están conectadas, unas instrucciones fijas, unas ligas de referencia y una memoria propia.
 
-No es lo mismo que un Project del chat, aunque se llamen igual. Éste vive en tu computadora.
+Desde que el chat y Cowork se unieron, ya no es un tipo de proyecto aparte: es el mismo de "Proyectos", en la barra de la izquierda, abierto en la app de escritorio con una carpeta conectada. Las instrucciones y el contexto los comparte con el chat; la carpeta, no, porque está en tu computadora.
 
 ### Cuándo se usa
 
@@ -137,15 +137,15 @@ Cuando vuelves periódicamente sobre las mismas carpetas.
 
 ### Dónde funciona
 
-| Componente | Funciona |
-|---|---|
-| Cowork | Sí |
+| Componente | Funciona | Detalle |
+|---|---|---|
+| Cowork | Sí | Solo en la app de escritorio, porque la carpeta está en tu computadora. |
 
 En ningún otro.
 
 ### Cómo se pide
 
-En las instrucciones del proyecto de Cowork conviene ser más operativo que en las del chat, porque aquí se manipulan archivos reales.
+La carpeta se conecta antes del primer mensaje, con el selector de carpeta o de proyecto de abajo de la caja (Ficha 2). En las instrucciones del proyecto de Cowork conviene ser más operativo que en las del chat, porque aquí se manipulan archivos reales.
 
 ```
 Los archivos originales de esta carpeta nunca se modifican ni se
@@ -167,13 +167,13 @@ Empieza una sesión nueva en ese proyecto y pídele que te diga con qué reglas 
 
 ### Lo que no hace
 
-Los proyectos de Cowork no se comparten con nadie, en ningún plan. Lo que sí se comparte es el archivo de reglas, porque es un archivo.
+La carpeta no se comparte: es de tu computadora, y nadie más la alcanza a través del proyecto. Lo que sí se comparte es el archivo de reglas, porque es un archivo.
 
-Un proyecto atado a una carpeta local solo admite sesiones de escritorio.
+Un proyecto atado a una carpeta local solo trabaja desde la app de escritorio, y solo mientras la app sigue abierta.
 
 ### Plan
 
-De pago.
+De pago. El plan gratuito no trae Cowork.
 
 ---
 
@@ -300,7 +300,7 @@ Abre una conversación nueva en esa aplicación y pide algo sencillo. Si respeta
 
 No cruza entre aplicaciones. Hay que escribirla tres veces si se quiere en Word, Excel y PowerPoint.
 
-No es un Project: no guarda archivos de referencia, solo texto de instrucciones.
+No es un proyecto: no guarda archivos de referencia, solo texto de instrucciones.
 
 ### Plan
 
@@ -312,9 +312,11 @@ De pago, igual que el complemento.
 
 ### Qué es
 
-Un sistema de diseño es el conjunto de decisiones visuales de una marca: sus colores exactos, sus tipografías, cómo se ven sus botones y sus tablas, cuánto espacio hay entre elementos. En Claude Design se puede cargar uno y, a partir de ahí, todo lo que produzca sale con esa identidad sin que se la vuelvas a describir.
+Un sistema de diseño es el conjunto de decisiones visuales de una marca: sus colores exactos, sus tipografías, cómo se ven sus botones y sus tablas, cuánto espacio hay entre elementos. Se crea una vez en tu cuenta y, a partir de ahí, todo lo que Claude Design produzca con él sale con esa identidad sin que se la vuelvas a describir.
 
-Se puede armar de varias maneras: subiendo material de tu marca —presentaciones, un manual, un logotipo, una paleta—, apuntando a un repositorio de código que ya tenga los componentes, o tomando uno de los seis que vienen incluidos.
+Claude Design ya no es una app aparte: un diseño nuevo se hace en "Artefactos" › "Crea algo nuevo" › "Diseño". El "Design" que todavía sale en la barra de la izquierda es el independiente, y cierra el 14 de diciembre de 2026.
+
+El sistema se crea en "Configuración" › "Capacidades" › "Sistemas de diseño" › "Administrar" › "Nuevo sistema de diseño". Se puede armar de varias maneras: subiendo material de tu marca (presentaciones, un manual, un logotipo, una paleta), trayéndolo de una herramienta de diseño conectada, o leyendo un repositorio de código que ya tenga los componentes.
 
 ### Cuándo se usa
 
@@ -327,10 +329,13 @@ Cuando todo lo que produzcas tiene que verse consistente entre sí y con lo que 
 
 | Componente | Funciona | Detalle |
 |---|---|---|
-| Design | Sí | Es su capa de configuración propia. |
-| Claude Code | Sí, con condición | Llega con el comando `/design-sync` o con el servidor MCP de Claude Design. El comando `/design` está en research preview, es decir, una versión temprana en pruebas. |
+| Design | Sí | Es su capa de configuración propia. En un diseño nuevo se elige con el botón "Sistema de diseño", en el centro; en uno que ya existe, con el signo + › "Sistema de diseño". "Diapositivas" también deja elegirlo. |
+| Chat | Sí | El signo + de la caja también trae "Sistema de diseño", para elegirlo en ese chat. |
+| Claude Code | Sí, con condición | "Nuevo sistema de diseño" › "Con Claude Code" lo arma leyendo los tokens de tu repositorio. Un diseño se manda a Claude Code con "Transferir a Claude Code", en el menú de su nombre. |
 
 ### Cómo se pide
+
+"Nuevo sistema de diseño" › "Con Claude" abre una pestaña con un chat que pregunta "¿En qué debería basarse este sistema de diseño?". Ahí subes tu material y pegas algo así:
 
 ```
 Voy a subir material de nuestra identidad: [qué subes].
@@ -344,18 +349,18 @@ Por qué está escrito así: la última línea es la que permite corregir. Un si
 
 ### De qué se puede armar
 
-El asistente de creación acepta cuatro fuentes distintas, y conviene no confundirlas porque en clase fue justo donde la gente se atoró:
+Hay varias fuentes distintas, y conviene no confundirlas porque en clase fue justo donde la gente se atoró:
 
-| Campo | Qué acepta |
+| Opción | Qué acepta |
 |---|---|
-| Repositorio de GitHub | Código de una biblioteca de componentes ya existente. |
-| Código de tu computadora | Lo mismo, desde tu disco. |
-| Archivo `.fig` | El formato de Figma. |
-| Fuentes, logotipos y recursos | **Aquí va tu manual de marca**: PDF, imágenes, PNG, JPG, presentaciones. |
+| "Subir archivos de marca" | **Aquí va tu manual de marca**: PDF, imágenes, presentaciones, logotipos. |
+| "Crear a partir de conectores" | Lo que ya tengas en una herramienta de diseño conectada, por ejemplo Figma. |
+| "Sincronizar desde GitHub" | Código de una biblioteca de componentes ya existente. |
+| "Con Claude Code" | Lo mismo, leyendo los tokens de tu repositorio. |
 
-Los dos primeros son para equipos que ya tienen componentes programados. Si lo que tienes es un manual de identidad en PDF, va en el cuarto campo.
+Las dos últimas son para equipos que ya tienen componentes programados. Si lo que tienes es un manual de identidad en PDF, va en la primera.
 
-También hay un campo de notas y una URL de referencia. Si no tienes manual de marca, una práctica que se sugirió en clase: poner la URL de una marca que te guste y anotar que no es tuya, que solo sirve de inspiración.
+También puedes describirlo en el chat. Si no tienes manual de marca, una práctica que se sugirió en clase: darle la liga de una marca que te guste y aclarar que no es tuya, que solo sirve de inspiración.
 
 ### Qué contiene un sistema de diseño
 
@@ -363,15 +368,19 @@ Marca y descripción del negocio, iconografía, logotipos, la paleta con sus có
 
 ### Cómo se administra
 
-Un sistema de diseño se puede editar a mano —cambiar un color, ajustar el tamaño de un elemento— o pidiéndole a Claude que lo edite. Además se puede duplicar, renombrar, marcar como favorito, poner como predeterminado, compartir por enlace dentro de la organización, descargar comprimido para que un diseñador lo abra en sus programas, o borrar.
+Un sistema de diseño se puede editar a mano (cambiar un color, ajustar el tamaño de un elemento) o pidiéndole a Claude que lo edite. Además se puede duplicar, renombrar, marcar como favorito, poner como predeterminado, compartir por enlace dentro de la organización, descargar comprimido para que un diseñador lo abra en sus programas, o borrar. La lista está en "Configuración" › "Capacidades" › "Sistemas de diseño" › "Administrar", y dice quién puede usar cada uno. Los que hiciste en el Design independiente salen marcados "Independiente".
 
-El primero que creas queda seleccionado de forma predeterminada. Se apaga volviendo a hacer clic.
+Ojo: con solo dar "Con Claude" ya queda creado uno vacío llamado "Design System". Si no lo terminas, bórralo para no elegirlo por error.
+
+Si el botón "Sistema de diseño" de un diseño ya trae un nombre, ese sistema está puesto. Para quitarlo, ábrelo y quita su palomita.
 
 ### Cómo se verifica
 
-Pide una pieza cualquiera y compárala contra un documento real de tu institución. Los colores y las tipografías tienen que coincidir, no parecerse.
+Primero, que el botón del centro del diseño diga "Sistema de diseño: [tu sistema]". Si el sistema que acabas de crear no aparece en esa lista, recarga la página.
 
-Hay una segunda señal, más sutil y muy útil: **con el sistema de diseño puesto, las preguntas que te hace Claude cambian de tema.** Deja de preguntarte por colores y tipografías y empieza a preguntarte por contenido. Si te sigue preguntando cómo quieres que se vea, el sistema no se está aplicando.
+Luego pide una pieza cualquiera y compárala contra un documento real de tu institución. Los colores y las tipografías tienen que coincidir, no parecerse.
+
+Hay otra señal, más sutil y muy útil: **con el sistema de diseño puesto, las preguntas que te hace Claude cambian de tema.** Deja de preguntarte por colores y tipografías y empieza a preguntarte por contenido. Si te sigue preguntando cómo quieres que se vea, el sistema no se está aplicando.
 
 ### Lo que no hace
 
@@ -379,13 +388,13 @@ No genera fotografías ni ilustraciones: el sistema de diseño gobierna composic
 
 Se puede importar desde Figma, pero no exportar hacia Figma.
 
-**No se aplica solo en Claude Code.** Ahí llega con `/design-sync` o con el servidor MCP de Claude Design, y hay que pedirlo.
+**No se aplica solo en Claude Code.** Ahí llega cuando lo pides: con "Transferir a Claude Code" desde el diseño, o pidiéndole a Claude Code que use tu sistema de diseño.
 
 **Un sistema de diseño escrito dentro de un `CLAUDE.md` es otra cosa.** En la sesión 7 los colores y la tipografía se escribieron como una sección de texto del `CLAUDE.md`, no como un sistema de diseño de Claude Design. Funciona, pero hay que pedir explícitamente que se aplique al proyecto: no ocurre solo.
 
 ### Plan
 
-De pago. En Enterprise, Claude Design viene apagado hasta que un administrador lo habilita.
+Claude Design está en todos los planes, también en el gratuito, pero en el gratuito el sistema de diseño puede no estar disponible. En Team y Enterprise, un administrador tiene que encender Design para la organización.
 
 ---
 
@@ -399,10 +408,10 @@ Si es sobre **cómo trabajas dentro de Excel, Word o PowerPoint**, va en las ins
 
 Si es sobre **cómo se ven las cosas**, va en el sistema de diseño.
 
-Y si es sobre **carpetas que revisitas seguido desde Cowork**, va en el proyecto de Cowork.
+Y si es sobre **carpetas que revisitas seguido desde Cowork**, va en un proyecto con esa carpeta conectada, en la app de escritorio.
 
 Y si es sobre **cómo quieres que te trate siempre, en todo**, va en las instrucciones de perfil de la Ficha 0.
 
 Los cinco de esta ficha los escribes tú. El elemento de la ficha siguiente es el único que Claude escribe por su cuenta.
 
-Una advertencia que vale para los cinco: **Claude Code no tiene Projects.** Ahí el contexto se guarda en el `CLAUDE.md` de la carpeta y nada más.
+Una advertencia que vale para los cinco: **Claude Code no tiene proyectos.** Ahí el contexto se guarda en el `CLAUDE.md` de la carpeta y nada más.

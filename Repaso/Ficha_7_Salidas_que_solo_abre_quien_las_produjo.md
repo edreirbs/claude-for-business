@@ -68,7 +68,7 @@ Cuando el resultado tiene que quedar guardado, abrirse en el programa que le cor
 | Componente | Funciona | Detalle |
 |---|---|---|
 | Cowork | Sí, con condición | Desde una sesión de nube, Claude alcanza tus carpetas solo mientras la app de escritorio siga abierta en esa computadora. |
-| Claude Code | Sí | |
+| Claude Code | Sí, con condición | En tu disco, solo con el entorno "Local", que existe únicamente en la app de escritorio. En la web (claude.ai/code) el archivo queda en el repositorio, no en tu computadora. |
 
 ### Cómo se pide
 
@@ -145,23 +145,26 @@ De pago.
 
 ### Qué es
 
-El resultado de Claude Design convertido en un archivo que se descarga: PDF, PowerPoint, HTML autónomo, PNG o video MP4.
+Un documento, unas diapositivas o un diseño hechos en Claude, convertidos en un archivo que se descarga: Word, PDF, PowerPoint, HTML autónomo, PNG o Markdown.
+
+Los tres son artefactos y quedan en "Artefactos", en la barra lateral. Un documento nace en la conversación cuando pides la respuesta "como documento": Claude lo abre a la derecha como documento de Claude Docs, y en el chat queda una tarjeta con su nombre y "Claude Docs · Solo tú". Un diseño o unas diapositivas se empiezan en "Artefactos" › "Crea algo nuevo" › "Diseño" o "Diapositivas".
 
 "HTML autónomo" quiere decir un archivo de página web que trae todo adentro y funciona sin conexión, con solo abrirlo.
 
 ### Cuándo se usa
 
-Cuando la pieza visual tiene que salir de Claude para entrar a otro flujo: imprimirse, proyectarse, adjuntarse a un correo o seguirse editando en PowerPoint.
+Cuando la pieza tiene que salir de Claude para entrar a otro flujo: imprimirse, proyectarse, adjuntarse a un correo o seguirse editando en Word o en PowerPoint.
 
 ### Dónde funciona
 
 | Componente | Funciona | Detalle |
 |---|---|---|
-| Design | Sí, con condición | La liga que genera Claude Design para compartir es interna de tu organización. No es una página abierta a internet. |
+| Chat | Sí | Un documento de Claude Docs se descarga con "Compartir", arriba a la derecha del documento › "Exportación" › "Word", "PDF" o "Markdown". |
+| Design | Sí | Un diseño se descarga con "Compartir", arriba del lienzo › "Exportación" › "HTML", "PDF" o "PNG". Unas diapositivas salen en PowerPoint desde su nombre, arriba › "Exportar". |
 
 ### Cómo se pide
 
-La exportación se hace desde el menú de Design, no con un prompt. Lo que sí se pide antes es que la pieza esté lista para el formato de destino:
+La exportación se hace con el botón "Compartir", en la pestaña "Exportación", no con un prompt. Lo que sí se pide antes es que la pieza esté lista para el formato de destino:
 
 ```
 Antes de exportar a PowerPoint, revisa que ningún texto se salga de su
@@ -171,29 +174,38 @@ Dime qué láminas tuviste que ajustar.
 
 Por qué está escrito así: el texto que se sale de su caja es el defecto más común y solo se nota al abrir el archivo exportado, cuando ya lo estás proyectando.
 
+Si una descarga no te funciona, la salida de respaldo es copiar y pegar: el menú del nombre del documento trae "Copiar como Markdown".
+
 ### Cómo se verifica
 
 Abrir el archivo exportado. Exportar no es terminar: abrirlo es terminar. Un PDF que no se abrió no está revisado.
 
-### Los formatos que salen de Design
+### Los formatos que salen de cada artefacto
 
-Además de PDF, PowerPoint editable, HTML y video, Claude Design exporta **PNG** para imágenes sueltas, **GLB u OBJ** cuando lo que hiciste es un objeto en tres dimensiones —esos archivos se abren en programas de modelado y se pueden mandar a imprimir en 3D—, y un **paquete de proyecto comprimido**, que es la salida de rescate cuando alguna de las otras falla.
+- **Documento (Claude Docs):** "Word" (un .docx que se sigue editando), "PDF" y "Markdown". En "Enviar a" están "Google Docs", "Notion" y "Canva".
+- **Diseño:** "HTML" (la página web independiente), "PDF" y "PNG", más las opciones "Claude Docs" y "Claude Slides", que lo pasan a documento o a diapositivas. "Enviar a" lo manda a "Canva".
+- **Diapositivas:** "PowerPoint", desde "Exportar".
+- **Video MP4:** sale de Claude Motion, que solo está en Team y Enterprise.
 
-También puede mandar el diseño a servicios conectados, como herramientas de presentación o de publicación, y a **Claude Code**, para que lo que diseñaste se convierta en algo funcional.
+Según la ayuda de Anthropic, también se puede bajar el proyecto completo en un archivo comprimido, que es la salida de rescate cuando alguna de las otras falla.
 
-### El modo de edición: cambiar sin volver a pedir
+Y en el menú del nombre del diseño está "Transferir a Claude Code", para que lo que diseñaste se convierta en algo funcional.
 
-Es la diferencia más grande entre Design y el chat, y conviene tenerla presente antes de elegir dónde trabajar.
+### Cambiar sin volver a pedir
 
-En Design puedes entrar a **modo de edición** y cambiar el texto y el tamaño de los elementos directamente, con el cursor, como en un procesador de texto. Al salir te pregunta si conservas los cambios.
+Es la diferencia más grande entre un artefacto y una respuesta del chat, y conviene tenerla presente antes de elegir dónde trabajar.
 
-Y están los **tweaks**: controles rápidos que quedan incrustados en la pieza —el color del título, la tipografía, el fondo— y que puedes mover sin escribir nada. A veces Claude los propone solo; también se pueden pedir:
+En un diseño puedes cambiar el texto directamente, con el cursor: un doble clic en un texto marca el bloque, y un segundo doble clic lo deja listo para escribir. Con el globito "Comentar", en las herramientas de abajo del lienzo, señalas un punto exacto de la pieza y le dices a Claude qué cambiar ahí.
+
+Un documento de Claude Docs se edita igual que en un procesador de texto, sin pedirle nada a Claude.
+
+También le puedes pedir controles rápidos, los **tweaks**, que quedan incrustados en la pieza (el color del título, la tipografía, el fondo) y que mueves sin escribir nada:
 
 ```
 Agrega un tweak para modificar el color de fondo de las láminas.
 ```
 
-En el chat no existe nada de esto: cualquier cambio implica volver a pedirlo y que rehaga la pieza completa.
+En una respuesta normal del chat no existe nada de esto: cualquier cambio implica volver a pedirlo y que rehaga la pieza completa.
 
 ### Lo que no hace
 
@@ -201,11 +213,13 @@ No exporta hacia Figma. Figma aparece para importar un sistema de diseño, no co
 
 No genera fotografías ni ilustraciones: lo que exporta está hecho con formas, tipografía y color.
 
-**El enlace para compartir que genera Design es interno de tu organización**, no una página abierta a internet.
+**Un archivo exportado no se actualiza.** Si después cambias el documento o el diseño, hay que exportarlo otra vez.
+
+**Una liga no es una exportación**, aunque "Compartir" ofrezca las dos cosas juntas. "Copiar enlace privado" solo lo abre quien tú invites. "Copiar enlace público" ya es una liga que otra persona abre por su cuenta, y eso está en la Ficha 8.
 
 ### Plan
 
-De pago. Los comentarios sobre un diseño solo existen en Team y Enterprise.
+Todos los planes, incluido el gratuito: Design, Docs y Slides están en todos. El video MP4 de Claude Motion, solo en Team y Enterprise.
 
 ---
 
@@ -213,9 +227,9 @@ De pago. Los comentarios sobre un diseño solo existen en Team y Enterprise.
 
 ### Qué es
 
-Un artifact es una pieza que Claude produce aparte de la conversación —un documento, una tabla, una página, una herramienta pequeña— y que se muestra en su propio panel, con versiones: cada corrección crea una versión nueva y se puede regresar a la anterior.
+Un artifact (en pantalla, "artefacto") es una pieza que Claude produce aparte de la conversación (un documento, unas diapositivas, un diseño, una tabla, una página, una herramienta pequeña) y que se muestra en su propio panel, con versiones: cada corrección crea una versión nueva y se puede regresar a la anterior. Todos quedan juntos en "Artefactos", en la barra lateral.
 
-Hay dos clases de artifact, y esta ficha cubre la primera: **el que no se puede compartir, solo descargar.** El caso típico es el *live artifact* de Cowork, que vive únicamente dentro de la app de escritorio: no aparece en la versión web ni en el teléfono, y en los planes Pro y Max no se puede compartir ni publicar. En Team y Enterprise sí se comparte, pero dentro de la organización.
+Hay dos clases de artifact, y esta ficha cubre la primera: **el que no se comparte.** Los documentos y los diseños nacen con "Acceso general" en "Solo tú": mientras no lo cambies, nadie más los abre, y para pasárselos a alguien los exportas, como se explica arriba. El caso extremo es el *live artifact* de Cowork, que vive únicamente dentro de la app de escritorio: no aparece en la versión web ni en el teléfono, y en los planes Pro y Max no se puede compartir ni publicar. En Team y Enterprise sí se comparte, pero dentro de la organización.
 
 La otra clase, el artifact publicado con liga propia, está en la Ficha 8.
 
@@ -227,6 +241,8 @@ Cuando el resultado es para ti: un tablero de trabajo que consultas mientras ava
 
 | Componente | Funciona | Detalle |
 |---|---|---|
+| Chat | Sí | Un documento nace en "Solo tú" y así se queda mientras no lo cambies en "Compartir". |
+| Design | Sí | Igual: un diseño nuevo nace en "Solo tú". |
 | Cowork | Sí | El live artifact vive solo en la app de escritorio. Ni siquiera viaja si cambias de computadora. |
 
 ### Cómo se pide
@@ -238,29 +254,29 @@ Todavía no lo voy a compartir con nadie.
 
 ### Cómo se verifica
 
-Que abra en su panel y que puedas navegar entre versiones.
+Que abra en su panel y que puedas navegar entre versiones. En "Compartir", "Acceso general" tiene que decir "Solo tú".
 
 ### Lo que todo artifact hace, se comparta o no
 
-**Guarda versiones.** Cada corrección crea una versión nueva y no borra la anterior: se puede volver a la versión 2 y seguir desde ahí. Iterar no destruye.
+**Guarda versiones.** Cada corrección crea una versión nueva y no borra la anterior: se puede volver a la versión 2 y seguir desde ahí. Iterar no destruye. En un documento, el menú de su nombre trae "Historial de versiones".
 
-**Se puede ver su código.** Un artifact es por dentro un programa pequeño. Hay un botón para ver el código en vez de la pieza, y se puede copiar.
+**Se puede ver su código.** Un artifact de página o de herramienta es por dentro un programa pequeño. Hay un botón para ver el código en vez de la pieza, y se puede copiar.
 
-**Se puede crear sin conversación.** En la sección de artifacts hay un botón para empezar uno nuevo directamente, eligiendo qué tipo quieres: aplicación, documento, juego, herramienta, cuestionario, o en blanco.
+**Se puede empezar desde "Artefactos".** En "Crea algo nuevo" eliges el tipo: "Documentos", "Diapositivas", "Hoja de cálculo", "Diseño", "Datos", "Pizarra" y otros. La tarjeta "Diseño", por ejemplo, abre de una vez una conversación nueva con el lienzo a la derecha.
 
-**Hay que pedirlo explícitamente.** A veces Claude no entiende que quieres un artifact y contesta con texto normal. La instrucción directa —"créalo como artifact"— resuelve el problema.
+**Hay que pedirlo explícitamente.** A veces Claude no entiende que quieres un artifact y contesta con texto normal. La instrucción directa resuelve el problema: "créalo como artifact" o, para un documento, "dámelo como documento".
 
 ### Lo que no hace
 
-No se comparte en Pro ni en Max. No aparece en la app web ni en la móvil. No viaja a otra computadora.
+El live artifact de Cowork no se comparte en Pro ni en Max, no aparece en la app web ni en la móvil y no viaja a otra computadora.
 
-**No se actualiza solo.** Un artifact hecho con los datos de hoy sigue mostrando los datos de hoy mañana. Para que cambie hay que pedírselo, o montar una tarea programada que lo actualice, y eso está en la Ficha 6. Es la confusión más frecuente: un artifact no es un tablero conectado a una fuente viva.
+**No se actualiza solo.** Un artifact hecho con los datos de hoy sigue mostrando los datos de hoy mañana. Para que cambie hay que pedírselo, o montar una tarea programada que lo actualice, y eso está en la Ficha 6. Es la confusión más frecuente: un artifact no es un tablero conectado a una fuente viva. La excepción puede ser lo que armes con la tarjeta "Datos" de "Artefactos", pensada para trabajar con un conector de datos; si la usas, pregúntale a Claude de dónde toma los datos y cada cuándo se actualizan.
 
 Si el resultado lo va a abrir alguien más, este no es el elemento correcto: hay que ir a la Ficha 8.
 
 ### Plan
 
-De pago.
+Los artefactos, incluidos los documentos, las diapositivas y los diseños, están en todos los planes, incluido el gratuito. El live artifact de Cowork es de pago, como Cowork.
 
 ---
 
@@ -271,9 +287,9 @@ De pago.
 | Respuesta en pantalla | en la conversación | copiando y pegando |
 | Archivo en tu carpeta | en tu disco | mandando el archivo |
 | Edición del documento abierto | dentro del archivo | mandando el archivo |
-| Exportación | en tu descargas | mandando el archivo |
-| Artifact local | en tu app de escritorio | descargándolo primero |
-| Sistema de diseño | en tu cuenta de Design | por enlace, dentro de la organización |
+| Exportación | en tus descargas | mandando el archivo |
+| Artifact local | en "Artefactos", en "Solo tú"; el de Cowork, en tu app de escritorio | exportándolo o descargándolo primero |
+| Sistema de diseño | en tu cuenta, en "Configuración" › "Capacidades" › "Sistemas de diseño" | la lista de sistemas dice quién puede usarlo |
 
 Las cinco tienen la misma característica: **para que alguien más las vea, hace falta un acto tuyo.** Ninguna se abre sola desde afuera.
 

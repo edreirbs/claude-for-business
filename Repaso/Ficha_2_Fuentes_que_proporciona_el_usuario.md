@@ -12,9 +12,9 @@
 
 ### Qué es
 
-Subir un archivo a la conversación, igual que se adjunta a un correo. El archivo se copia al espacio de esa conversación, Claude lo lee ahí, y ahí se queda. No se guarda en tu computadora ni queda disponible en otras conversaciones.
+Subir un archivo a la conversación, igual que se adjunta a un correo. Se hace con el signo + de la caja › "Subir o agregar archivos", o arrastrándolo a la caja. El archivo se copia al espacio de esa conversación, Claude lo lee ahí, y ahí se queda. No se guarda en tu computadora ni queda disponible en otras conversaciones.
 
-Acepta documentos de texto, PDF, hojas de cálculo, presentaciones e imágenes. Una imagen la puede leer de verdad: si le subes la foto de un recibo o la captura de una gráfica, puede transcribir lo que dice.
+Acepta PDF, documentos de texto (Word, por ejemplo), hojas de cálculo e imágenes. Para leer un Excel necesita encendido "Crear y editar archivos", en "Configuración" › "Capacidades". Una imagen la puede leer de verdad: si le subes la foto de un recibo o la captura de una gráfica, puede transcribir lo que dice.
 
 ### Cuándo se usa
 
@@ -29,7 +29,7 @@ Cuando el material son uno o unos pocos archivos y la tarea se resuelve en una s
 | Componente | Funciona | Detalle |
 |---|---|---|
 | Chat | Sí | |
-| Design | Sí | Acepta imágenes y documentos como referencia visual. |
+| Design | Sí | Dentro de un diseño ("Artefactos" › "Diseño"), con el signo + › "Subir o agregar archivos". Sirven de referencia visual. |
 | Cowork | Sí | |
 | Office | Sí | Desde el panel del complemento. |
 | Chrome | No documentado | La documentación oficial no dice si se pueden adjuntar archivos al panel. |
@@ -66,7 +66,7 @@ Abre el archivo original en la página o la celda que Claude citó y confirma qu
 
 ### La variante local: el símbolo @
 
-En Cowork y en Claude Code de escritorio no hace falta subir un archivo que ya está en la carpeta conectada: se escribe **@** seguido del nombre y Claude lo trae a la conversación, como cuando mencionas a alguien en una red social.
+En Cowork (la app de escritorio con una carpeta conectada) y en Claude Code de escritorio no hace falta subir un archivo que ya está en la carpeta conectada: se escribe **@** seguido del nombre y Claude lo trae a la conversación, como cuando mencionas a alguien en una red social.
 
 Es distinto de adjuntar. El @ apunta a un archivo que ya está ahí; el adjunto sube una copia. Y solo alcanza lo que está dentro de la carpeta de esa sesión: si escribes @ y no aparece la carpeta que buscas, es porque esa carpeta no está conectada, no porque el @ falle.
 
@@ -74,11 +74,11 @@ En las sesiones de nube de Claude Code el símbolo @ no existe.
 
 ### Lo que no hace
 
-El archivo no queda guardado. Mañana, en una conversación nueva, hay que volverlo a subir. Si es un documento que vas a consultar siempre, va al conocimiento de un Project (Ficha 4).
+El archivo no queda guardado. Mañana, en una conversación nueva, hay que volverlo a subir. Si es un documento que vas a consultar siempre, va al "Contexto" de un proyecto (Ficha 4).
 
 Tampoco modifica el archivo que subiste. Lo lee y contesta; si quieres el archivo cambiado, te devuelve uno nuevo.
 
-Hay un tope de archivos por conversación, alrededor de veinte. No es un capricho: cada archivo ocupa espacio en la capacidad de esa conversación, y al pasarse, los últimos dejan de tomarse en cuenta. Está explicado en la Ficha 0.
+Tiene topes: hasta veinte archivos por conversación, 500 MB por archivo y PDF de hasta mil páginas. De un PDF de más de cien páginas solo lee el texto, no sus gráficas ni sus imágenes: si el dato que buscas está en una gráfica, sube solo esas páginas. Además, cada archivo ocupa espacio en la capacidad de esa conversación, como se explica en la Ficha 0.
 
 ### Plan
 
@@ -106,12 +106,14 @@ Cuando son muchos archivos, cuando no sabes de antemano cuáles vas a necesitar,
 
 | Componente | Funciona | Detalle |
 |---|---|---|
-| Cowork | Sí, con condición | Desde una sesión de nube, Claude alcanza tus carpetas solo mientras la app de escritorio siga abierta en esa computadora. |
-| Claude Code | Sí | Sobre el repositorio. |
+| Cowork | Sí, con condición | Solo desde la app de escritorio. Las sesiones nuevas corren en la nube, y Claude alcanza tu carpeta solo mientras la app siga abierta en esa computadora. |
+| Claude Code | Sí | Sobre el repositorio. En la app de escritorio, con el entorno "Local" y tu carpeta. En la web (claude.ai/code) el entorno es de la nube ("Default") y trabaja sobre un repositorio de GitHub, no sobre tu disco. |
 
-En el chat, en Design, en Office y en Chrome no existe: esos componentes no ven tu disco.
+En el chat del navegador, en Design, en Office y en Chrome no existe: ahí Claude no ve tu disco. Para conectar una carpeta hace falta la app de escritorio.
 
 ### Cómo se pide
+
+La carpeta se conecta antes del primer mensaje: en la app de escritorio, abajo de la caja, da clic en el selector de carpeta o de proyecto (puede decir "Proyecto") y elige la carpeta de tu computadora. Si tu computadora pide permiso de acceso, acéptalo.
 
 La primera instrucción sobre una carpeta nunca debe ser un cambio. Primero se pide inventario, porque tú tampoco sabes con certeza qué hay.
 
@@ -150,7 +152,7 @@ Lo que no funciona es apuntar a la nube directamente: Claude no entra a tu Googl
 
 Solo ve las carpetas que conectaste. Una carpeta que no conectaste, para él no existe, y decirle la ruta por escrito no basta: hay que conectarla.
 
-**Puede borrar archivos.** Si el modo de permisos está en omitir aprobaciones, puede eliminar cosas que no querías. La práctica recomendada es escribirle en las reglas que nunca borre, y que en su lugar mueva a una carpeta llamada `_para_borrar` donde tú decides después.
+**Puede borrar archivos.** El modo de permisos que viene de fábrica es "Automático": Claude decide solo qué permisos pedirte, y no te consulta cada paso. La práctica recomendada es escribirle en las reglas que nunca borre, y que en su lugar mueva a una carpeta llamada `_para_borrar` donde tú decides después. Si quieres aprobar cada acción, cambia el modo a "Manual", abajo junto al modelo.
 
 **No versiona.** Cuando modifica un documento, lo borra y lo genera de nuevo; no deja historial. Por eso conviene pedirle una bitácora, explicada en la Ficha 5.
 
@@ -158,7 +160,7 @@ Antes de trabajar sobre una carpeta real conviene revisar el modo de permisos, q
 
 ### Plan
 
-De pago.
+De pago. El plan gratuito no trae Cowork ni Claude Code.
 
 ---
 
@@ -185,6 +187,8 @@ Cuando el trabajo es sobre un documento que ya existe y el resultado va dentro d
 | Office | Sí, con condición | Solo el archivo que ya tienes abierto. Claude no puede abrir, cerrar ni cambiar de archivo por su cuenta. |
 
 En ningún otro componente existe.
+
+El panel se abre con el botón "Claude" de la pestaña "Inicio" de Word, Excel o PowerPoint. Ojo: "Microsoft 365" en "Plugins" es un conector a tu correo, calendario y archivos, no este complemento.
 
 ### Cómo se pide
 
@@ -243,7 +247,7 @@ Cuando el dato vive en una página y no en un archivo.
 
 | Componente | Funciona | Detalle |
 |---|---|---|
-| Cowork | Sí | |
+| Cowork | Sí | Desde la app de escritorio. |
 | Chrome | Sí, con condición | Claude ve todas las pestañas que arrastres a su grupo de pestañas, no solo la que tienes al frente. |
 | Claude Code | Sí | |
 
@@ -273,7 +277,7 @@ También es la razón de que sea lento. Una revisión de veinte pantallas puede 
 
 No llega a los archivos de tu computadora por esta vía.
 
-Los permisos se dan sitio por sitio: autorizarlo en un sitio no lo autoriza en los demás.
+Los permisos se dan sitio por sitio: autorizarlo en un sitio no lo autoriza en los demás. Los que ya diste se revisan en "Configuración" › "Capacidades" › "Permisos de sitios".
 
 Trae bloqueadas de fábrica banca en línea, plataformas de inversión y casas de cambio de criptomonedas. Como regla de trabajo, conviene no autorizarlo tampoco en nómina, expedientes de personal ni portales con datos de terceros.
 

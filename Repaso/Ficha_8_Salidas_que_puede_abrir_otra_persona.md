@@ -12,7 +12,9 @@
 
 ### Qué es
 
-El mismo artifact de la Ficha 7 —una pieza aparte de la conversación, con versiones— pero publicado: recibe una liga propia y quien la tenga puede abrirlo, sin cuenta de Claude y sin instalar nada.
+El mismo artifact de la Ficha 7 (una pieza aparte de la conversación, con versiones) pero publicado: recibe una liga propia y quien la tenga puede abrirlo, sin cuenta de Claude y sin instalar nada.
+
+Hoy eso vale para cualquier artefacto: una página, una herramienta, un documento, unas diapositivas o un diseño. Todos quedan en "Artefactos" y se comparten con el mismo botón, "Compartir".
 
 La diferencia con el artifact local no está en cómo se construye, sino en dónde nace y qué se hace con él al final.
 
@@ -29,8 +31,8 @@ Cuando el resultado lo tiene que ver alguien más y no quieres mandarle un archi
 | Componente | Funciona | Detalle |
 |---|---|---|
 | Chat | Sí | |
-| Design | Sí | Desde el menú de exportación, con la opción de publicar como artifact. |
-| Cowork | Sí | |
+| Design | Sí | Cada diseño ya es un artefacto: se comparte con "Compartir", arriba del lienzo. |
+| Cowork | Sí, con condición | Lo que nace trabajando sobre carpetas de tu computadora puede no traer la opción de compartir por liga. Ver la regla de abajo. |
 | Claude Code | Sí, con condición | Depende del plan, y en Enterprise de que un administrador los habilite. Las dos páginas oficiales no coinciden en la lista de planes. |
 
 ### Cómo se pide
@@ -52,17 +54,18 @@ Por qué está escrito así: la última línea es una revisión de contenido ant
 
 Además del Project, hay una segunda condición que decide si el botón de publicar aparece siquiera: **dónde nació el artifact**.
 
-Un artifact creado dentro de una conversación de **Cowork** o de un proyecto local no se puede publicar. Un artifact creado en una conversación de **chat** sí.
+En la sesión 3, un artifact creado dentro de una conversación de **Cowork** o de un proyecto local no se pudo publicar; uno creado en una conversación de **chat**, sí. El botón de publicar simplemente no aparecía, no había mensaje de error que lo explicara, y la clase entera se atoró ahí.
 
-En la sesión 3 esto detuvo la clase treinta y cinco minutos: el botón de publicar simplemente no aparecía, y no hay mensaje de error que lo explique. Si te falta ese botón, la causa casi siempre es ésta.
-
-La salida práctica: cuando sepas de antemano que algo se va a compartir, créalo en una conversación de chat normal, fuera de todo Project y fuera de Cowork.
+En Pro, Max y Ultra el chat y Cowork ya son un solo Claude, pero la regla práctica sigue: si te falta la opción de compartir por liga, revisa primero dónde nació. Cuando sepas de antemano que algo se va a compartir, créalo en un chat nuevo en claude.ai, fuera de todo Project y sin carpetas de tu computadora.
 
 ### El destino: web o equipo
 
-Al publicar hay dos opciones. **Publicar en la web** da una liga que abre cualquiera. **Compartir con tu equipo** lo deja dentro de la organización, y esa opción solo existe en los planes Team y Enterprise.
+El botón "Compartir", arriba a la derecha de la pieza, decide quién la abre. Los documentos y los diseños nacen en "Solo tú".
 
-En Enterprise el administrador puede haber apagado la publicación externa por completo.
+- **Una página o una herramienta:** "Compartir" › "Acceso general" › "Cualquier persona con el enlace" › "Compartir públicamente". Esa liga la abre cualquiera.
+- **Un documento o un diseño:** "Compartir" abre dos pestañas. En "Compartir" invitas por correo a personas concretas, y "Copiar enlace privado" da una liga que solo abren ellas. En "Exportación", "Copiar enlace público" da la liga que abre cualquiera.
+
+En Team y Enterprise también se puede dejar dentro de la organización, y el administrador puede haber apagado por completo lo que sale hacia afuera.
 
 ### Quien lo recibe puede reutilizarlo
 
@@ -74,7 +77,7 @@ Abre la liga en una ventana privada del navegador, o pídele a alguien que la ab
 
 ### Lo que no hace, y los puntos de cuidado
 
-**Despublicar es irreversible.** Un artifact despublicado ya no se puede volver a publicar y se borra su almacenamiento.
+**Despublicar puede no tener vuelta.** En la versión que se vio en clase, un artifact despublicado ya no se podía volver a publicar y se borraba su almacenamiento. Antes de quitar una liga que ya circula, cuenta con que puede dejar de servir para siempre.
 
 **Compartir un artifact da acceso también a los adjuntos de la conversación que lo creó.** Si en esa conversación subiste un archivo con información sensible, ese archivo queda alcanzable. Por eso conviene que los artifacts que se van a compartir nazcan en conversaciones limpias.
 
@@ -82,7 +85,7 @@ Abre la liga en una ventana privada del navegador, o pídele a alguien que la ab
 
 ### Plan
 
-De pago para publicar. En Enterprise puede requerir que un administrador lo habilite.
+Los artefactos, los documentos, las diapositivas y los diseños están en todos los planes, incluido el gratuito. Que puedas compartirlos por liga depende de tu plan, y en Team y Enterprise de que un administrador lo permita.
 
 ---
 
@@ -104,9 +107,9 @@ Cuando otra persona tiene que poder retomar el trabajo, no solo verlo.
 
 ### Dónde funciona
 
-| Componente | Funciona |
-|---|---|
-| Claude Code | Sí |
+| Componente | Funciona | Detalle |
+|---|---|---|
+| Claude Code | Sí | En la web (claude.ai/code, ícono `</>`) trabaja en la nube sobre un repositorio de GitHub, y el selector de entorno arranca en "Automático". En tu computadora, con el entorno "Local", que solo existe en la app de escritorio. |
 
 ### El vocabulario mínimo
 
@@ -122,6 +125,8 @@ Trabajar con un repositorio trae cuatro palabras que no se pueden evitar. Estas 
 El flujo completo: Claude trabaja en una rama, sube los cambios, abre un pull request, tú lo revisas, y entonces se hace merge a `main`.
 
 Trabajar en rama y no directamente en `main` es lo que hace que un error sea reversible. Vale la pena escribirlo en el prompt cada vez.
+
+Si además quieres ver el plan antes de que toque un solo archivo, en el menú de permisos ("Permisos · esta sesión") elige "Planificación". "Automático" y "Aceptar ediciones" avanzan sin esa pausa.
 
 ### Cómo se pide
 
@@ -250,8 +255,8 @@ Cuando el trabajo consiste precisamente en que algo quede registrado donde el eq
 
 | Componente | Funciona | Detalle |
 |---|---|---|
-| Chat | Sí | |
-| Design | Sí | Documentado únicamente en el blog de Anthropic de julio de 2026. |
+| Chat | Sí | Los conectores se agregan en "Plugins" y se encienden o apagan para cada chat en el + de la caja › "Plugins". |
+| Design | Sí | "Compartir" › "Exportación" › "Enviar a" manda la pieza a servicios como "Canva". El + de la caja del diseño trae "Plugins", con tus conectores. |
 | Cowork | Sí | |
 | Office | Sí | |
 | Chrome | Sí | |
@@ -267,6 +272,8 @@ Después de hacerlo, dime qué quedó escrito y dónde.
 ```
 
 Por qué está escrito así: con un conector puesto, un cambio en el sistema conectado puede ejecutarse sin pedir confirmación. Lo único que lo detiene es una regla escrita, y esta plantilla es esa regla dicha en el momento. Para que aplique siempre, se escribe en el `CLAUDE.md` o en las instrucciones del Project, como se explica en la Ficha 4.
+
+Esto pesa más ahora que "Automático" es el modo de permisos predeterminado. Si quieres que Claude se detenga a preguntarte antes de actuar, cámbialo a "Manual", abajo a la derecha de la caja, junto al modelo.
 
 ### Cómo se verifica
 
@@ -303,7 +310,7 @@ Cuando el sistema no tiene otra manera de entrar: no exporta, no tiene conector 
 
 | Componente | Funciona | Detalle |
 |---|---|---|
-| Cowork | Sí | |
+| Cowork | Sí, con condición | Solo en la app de escritorio. |
 | Chrome | Sí, con condición | Claude ve todas las pestañas que arrastres a su grupo de pestañas, no solo la que tienes al frente. |
 | Claude Code | Sí | |
 
@@ -323,7 +330,7 @@ Recarga la página tú mismo y confirma que el registro quedó como esperabas.
 
 ### Lo que no hace
 
-Los permisos se dan sitio por sitio. Trae bloqueadas de fábrica banca en línea, plataformas de inversión y casas de cambio de criptomonedas. Como regla de trabajo, conviene no autorizarlo en nómina, expedientes de personal ni portales con datos de terceros.
+Los permisos se dan sitio por sitio, y se revisan en "Configuración" › "Capacidades" › "Permisos de sitios". Trae bloqueadas de fábrica banca en línea, plataformas de inversión y casas de cambio de criptomonedas. Como regla de trabajo, conviene no autorizarlo en nómina, expedientes de personal ni portales con datos de terceros.
 
 ### Plan
 
@@ -335,7 +342,7 @@ De pago.
 
 | Elemento | Qué recibe la otra parte | Se puede deshacer |
 |---|---|---|
-| Artifact publicado | una liga | despublicar es irreversible |
+| Artifact publicado | una liga | despublicar puede no tener vuelta |
 | Repositorio | el trabajo completo, funcionando | sí, es una copia |
 | Página publicada | una dirección de internet | se puede bajar, pero ya se vio |
 | Escritura en un sistema conectado | un registro dentro de su sistema | a mano, por ti |

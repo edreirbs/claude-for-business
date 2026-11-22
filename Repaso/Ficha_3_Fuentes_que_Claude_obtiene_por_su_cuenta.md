@@ -4,21 +4,21 @@
 
 > **Para qué sirve esta ficha.** Las fuentes de la Ficha 2 las pones tú. Las de esta ficha las va a buscar Claude solo, a internet o a otro sistema de tu organización. Eso cambia dos cosas importantes: primero, tú no viste el material antes de que lo usara, así que la verificación deja de ser opcional; segundo, para llegar a un sistema privado hay que darle una llave, y esa llave casi nunca es tan pequeña como uno cree.
 
-**Los dos elementos de esta ficha:** búsqueda en la web y Research · conectores.
+**Los dos elementos de esta ficha:** búsqueda en la web e "Investigación" · conectores.
 
 ---
 
-## BÚSQUEDA EN LA WEB Y RESEARCH
+## BÚSQUEDA EN LA WEB E INVESTIGACIÓN
 
 ### Qué es
 
 Son dos cosas distintas que conviene no confundir.
 
-**La búsqueda web** es rápida. Claude hace unas cuantas consultas, abre unas cuantas páginas y contesta con lo que encontró, citando las ligas. Tarda lo que tarda una respuesta normal.
+**La búsqueda web** es rápida. Claude hace unas cuantas consultas, abre unas cuantas páginas y contesta con lo que encontró, citando las ligas. Tarda lo que tarda una respuesta normal. Viene encendida: no hay que activar nada.
 
-**Research** es una investigación larga. Claude planea una ruta de búsqueda, consulta decenas de fuentes, va profundizando en lo que encuentra y al final entrega un informe estructurado con sus referencias. Tarda varios minutos y trabaja en segundo plano, es decir, puedes cerrar la pestaña y volver después.
+**"Investigación"** (antes se llamaba Research) es la versión larga y profunda. Claude planea una ruta de búsqueda, consulta decenas de fuentes, va profundizando en lo que encuentra y al final entrega un informe estructurado con sus referencias. Tarda varios minutos y trabaja en segundo plano, es decir, puedes cerrar la pestaña y volver después. Se elige en el signo + de la caja › "Investigación", y junto al + aparece un ícono azul. En cada chat nuevo viene apagada, así que se elige cada vez. Trabaja con Opus 5.5 aunque tu chat diga otro modelo, y gasta mucho más de tu uso que una respuesta normal.
 
-La diferencia práctica: la búsqueda web resuelve "cuánto cuesta hoy tal cosa"; Research resuelve "cómo está el mercado de tal cosa y quiénes son los tres competidores relevantes".
+La diferencia práctica: la búsqueda web resuelve "cuánto cuesta hoy tal cosa"; "Investigación" resuelve "cómo está el mercado de tal cosa y quiénes son los tres competidores relevantes".
 
 ### Cuándo se usa
 
@@ -30,8 +30,8 @@ La diferencia práctica: la búsqueda web resuelve "cuánto cuesta hoy tal cosa"
 
 | Componente | Funciona | Detalle |
 |---|---|---|
-| Chat | Sí | Búsqueda web y Research. |
-| Design | Sí | Documentado únicamente en el blog de Anthropic de julio de 2026, no en el centro de ayuda. |
+| Chat | Sí | Búsqueda web e "Investigación". |
+| Design | Sí | Dentro de un diseño ("Artefactos" › "Diseño"), el signo + también trae "Investigación". |
 | Cowork | Sí | |
 | Office | Sí | Documentado de manera indirecta: aparece descrito como una capacidad que un administrador puede apagar. |
 | Chrome | No documentado | La documentación no aclara si el panel hace búsqueda web además de leer la pestaña. |
@@ -66,13 +66,15 @@ Necesito [el dato]. Dame la cifra, la fecha de corte, quién la publica
 y la liga directa. Si encuentras dos cifras distintas, dame las dos.
 ```
 
-### Lo que pasa antes de que Research arranque
+### Lo que pasa antes de que "Investigación" arranque
 
-Research no empieza de inmediato. Primero hace dos cosas que conviene aprovechar en vez de saltarse:
+"Investigación" no siempre empieza de inmediato. Hay dos cosas que conviene aprovechar en vez de saltarse:
 
-**Te hace preguntas de aclaración.** A veces en texto libre, a veces como opciones para elegir. Contestarlas bien vale más que reescribir el prompt.
+**Puede hacerte preguntas de aclaración.** A veces en texto libre, a veces como opciones para elegir. Contestarlas bien vale más que reescribir el prompt. Si no pregunta nada, arranca sola.
 
-**Te pregunta con qué herramientas trabajar**: solo internet, o también los sistemas que tengas conectados. Si el encargo es público, conviene desactivar los conectores para que no mezcle fuentes internas con externas sin avisar.
+**Usa internet y también los conectores que tengas encendidos.** Si el tema es público, apaga antes los conectores en el signo + › "Plugins", para que no mezcle fuentes internas con externas sin avisar.
+
+Si la elegiste y Claude solo contesta, sin investigar, empieza tu instrucción con: "Usa la herramienta de investigación para esto".
 
 Una práctica que funcionó bien en clase: antes de lanzarlo, preguntarle qué le falta a tu propio encargo.
 
@@ -83,11 +85,15 @@ para que el informe sea más útil.
 
 ### Cómo se sigue mientras trabaja
 
-Research abre un panel donde se ve el plan que armó, las fuentes que va consultando y las sub-investigaciones que abre. Puedes entrar a cada fuente desde ahí.
+"Investigación" abre un panel donde se ve el plan que armó, las fuentes que va consultando y las sub-investigaciones que abre. Puedes entrar a cada fuente desde ahí.
 
 Ese panel es la herramienta de verificación real: no hay que esperar al informe para saber si va bien encaminado.
 
-Y hay un botón de **detener**. Si ves que va por mal camino, se corta ahí mismo: no hay que esperar los diez minutos ni gastar el consumo completo.
+Y hay un botón de **detener**. Si ves que va por mal camino, se corta ahí mismo: no hay que esperar a que termine ni gastar el consumo completo.
+
+### Dónde queda el informe
+
+Cuando termina, el informe se abre en un panel a la derecha, con "Copiar" y "Publicar" arriba a la derecha. "Copiar" lo lleva a tu documento. "Publicar" le da una liga propia: revisa quién podrá abrirlo antes de confirmar. Compartir el informe no es lo mismo que compartir el chat, que lleva también tus prompts y tus archivos.
 
 ### Cómo se verifica
 
@@ -105,9 +111,9 @@ No garantiza que la fuente sea buena. Encuentra páginas y las cita; juzgar si e
 
 **Puede citar fuentes que no existen.** Se le llama cita fantasma: una referencia con nombre, año y aspecto verosímil, de un documento que nunca se publicó. Es la razón por la que verificar dos ligas al azar no es exceso de cuidado.
 
-**Sin búsqueda web activada no tiene información actual.** Claude conoce lo que había hasta su fecha de entrenamiento y nada posterior. La conexión a internet no es una propiedad del modelo: es una herramienta que se le agrega, y hay que encenderla.
+**Sin búsqueda web no tiene información actual.** Claude conoce lo que había hasta su fecha de entrenamiento y nada posterior. La conexión a internet no es una propiedad del modelo: es una herramienta que se le agrega. Viene encendida, pero si tu organización la apagó, Claude contesta de memoria, y una cifra reciente contestada de memoria puede ser inventada. Si busca, lo avisa y pone la liga de cada dato.
 
-Conviene también saber apagarla a propósito: cuando trabajas sobre un documento tuyo y no quieres que meta material de internet, se apaga desde el mismo menú.
+Conviene también saber pedirle que no busque: cuando trabajas sobre un documento tuyo y no quieres que meta material de internet, díselo en el prompt ("No busques en la web; trabaja solo con el archivo").
 
 No sabe lo que pasa dentro de tu organización por esta vía. Para eso están los conectores.
 
@@ -115,7 +121,7 @@ Y una tercera vía que existe en algunos planes corporativos: el **conocimiento 
 
 ### Plan
 
-La búsqueda web y Research son de pago.
+La búsqueda web está en todos los planes, también en el gratuito. "Investigación" es de pago: sin ella, la misma instrucción se manda en un chat normal y Claude usa la búsqueda web.
 
 ---
 
@@ -138,7 +144,7 @@ Por debajo, todos los conectores hablan un mismo estándar llamado **MCP**. Cuan
 | Componente | Funciona | Detalle |
 |---|---|---|
 | Chat | Sí, con condición | En Team y Enterprise, un Owner debe habilitar los conectores antes de que alguien de la organización pueda usarlos. |
-| Design | Sí | Documentado únicamente en el blog de Anthropic de julio de 2026. |
+| Design | Sí | Dentro de un diseño ("Artefactos" › "Diseño"), el signo + trae "Plugins", con tus conectores. |
 | Cowork | Sí | |
 | Office | Sí | Desde el botón + del panel. |
 | Chrome | Sí | El panel corre como sesión de Cowork y hereda los conectores que ya tenías. |
@@ -148,19 +154,23 @@ Es, junto con los Skills, uno de los dos únicos elementos que funcionan en los 
 
 ### Cómo se instalan y se encienden
 
-Hay un directorio de conectores dentro de Claude, organizado por categorías, donde se ven los disponibles. Instalar uno abre una pantalla de permisos del propio servicio —la misma que verías al conectar cualquier aplicación— y ahí decides si aceptas. Si no aceptas, el conector simplemente no queda.
+Los conectores viven en "Plugins", en la barra de la izquierda, junto con las Skills. Arriba, el filtro "Conectores" deja solo los conectores. "Tus plugins" lista los que ya conectaste ("Conector · De Canva", por ejemplo), y "Más usados" muestra los más comunes, como "Microsoft 365", "Google Sheets" o "Slack". El buscador encuentra los demás. Para uno que no está en la lista, "Agregar" › "Agregar conector personalizado".
 
-Dos cosas que conviene saber:
+Conectar uno abre una pantalla de permisos del propio servicio, la misma que verías al conectar cualquier aplicación, y ahí decides si aceptas. Si no aceptas, el conector simplemente no queda.
+
+Tres cosas que conviene saber:
 
 **Necesitas ya tener cuenta en ese servicio.** El conector no te crea una.
 
-**Se pueden encender y apagar por conversación.** En el menú del símbolo + de cada conversación aparecen los conectores disponibles, y ahí se prenden o se apagan. Conviene apagar los que no vengan al caso, para que Claude no busque en tu correo cuando le preguntaste algo público.
+**Se pueden encender y apagar por conversación.** En el signo + de la caja › "Plugins" aparece la lista de tus conectores, cada uno con su interruptor, y "Administrar plugins" lleva a la página completa. Conviene apagar los que no vengan al caso, para que Claude no busque en tu correo cuando le preguntaste algo público.
+
+**"Microsoft 365" en "Plugins" es un conector,** que llega a tu correo, tu calendario y tus archivos. No es el complemento que abre a Claude dentro de Word, Excel o PowerPoint: ese se instala aparte (Ficha 0).
 
 Algunos conectores, además, se reautorizan al empezar cada sesión nueva.
 
 ### Cómo se pide
 
-Un conector se autoriza una vez desde la configuración de tu cuenta. En algunos casos hay que encenderlo además en cada sesión nueva.
+Un conector se autoriza una vez, desde "Plugins". En algunos casos hay que encenderlo además en cada sesión nueva, con el signo + › "Plugins".
 
 Una vez puesto, el primer encargo conviene que sea de solo lectura:
 
@@ -206,7 +216,7 @@ De pago para la mayoría de los casos. En Team y Enterprise, además, un Owner d
 | Elemento | De dónde trae la información | Qué hay que verificar siempre |
 |---|---|---|
 | Búsqueda en la web | páginas públicas de internet | que la liga abra y contenga la cifra |
-| Research | decenas de páginas, en segundo plano | lo mismo, más los huecos declarados |
+| "Investigación" | decenas de páginas, en segundo plano | lo mismo, más los huecos declarados |
 | Conectores | sistemas privados de tu organización | que el registro quedó donde tú creías |
 
 Las dos vías tienen el mismo riesgo de fondo: **el material entró sin que tú lo vieras primero.** Por eso las dos plantillas de prompt de esta ficha piden fuente, fecha y liga, y por eso el primer encargo con un conector siempre es de solo lectura.

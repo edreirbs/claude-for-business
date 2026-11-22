@@ -2,7 +2,7 @@
 
 **Repaso · Claude for Business** — Universidad Panamericana
 
-> **Para qué sirve esta ficha.** La Ficha 4 trata de las reglas que tú escribes. Ésta trata del único elemento que Claude escribe por su cuenta: la memoria. Va sola porque la confusión entre las dos es la más costosa del ecosistema. Cuando alguien dice "es que Claude no se acuerda de lo que le dije", casi siempre está esperando de la memoria algo que le tocaba al `CLAUDE.md` o a las instrucciones de un Project.
+> **Para qué sirve esta ficha.** La Ficha 4 trata de las reglas que tú escribes. Ésta trata del único elemento que Claude escribe por su cuenta: la memoria. Va sola porque la confusión entre las dos es la más costosa del ecosistema. Cuando alguien dice "es que Claude no se acuerda de lo que le dije", casi siempre está esperando de la memoria algo que le tocaba al `CLAUDE.md` o a las instrucciones de un proyecto.
 
 **El elemento de esta ficha:** la memoria.
 
@@ -16,7 +16,7 @@ La memoria son notas que Claude escribe sobre ti mientras trabajan juntos, sin q
 
 Tres características que conviene tener claras:
 
-**La escribe Claude, no tú.** Tú puedes revisarla, corregirla y borrarla, pero no es un campo que llenes al empezar. Va apareciendo sola.
+**La escribe Claude, no tú.** Tú puedes revisarla, corregirla, borrarla y hasta agregarle una entrada, pero no es un campo que llenes al empezar. Va apareciendo sola.
 
 **Es acumulativa y desordenada por naturaleza.** No es un documento estructurado; son entradas sueltas que se van juntando.
 
@@ -34,8 +34,8 @@ La memoria no se "usa" en el sentido de que la invoques: opera sola. Lo que sí 
 
 | Componente | Funciona | Detalle |
 |---|---|---|
-| Chat | Sí | |
-| Cowork | Sí | La memoria opera entre el chat y Cowork en la nube. Además, cada proyecto de Cowork tiene su propia memoria acotada: lo que aprende en un proyecto no pasa a otro. |
+| Chat | Sí | Además de la memoria general, cada proyecto guarda la suya: a la derecha del proyecto, "Memoria" › "Ver". |
+| Cowork | Sí | Es la misma app que el chat, y la misma memoria. En un proyecto con carpeta, lo que aprende queda en la memoria de ese proyecto. |
 | Design | No documentado | La documentación oficial no menciona memoria en Claude Design. |
 | Office | No documentado | Lo que sí está documentado es lo contrario: el historial de conversación se guarda localmente en el navegador y no se sincroniza entre dispositivos. |
 | Chrome | No documentado | Lo documentado es que las conversaciones quedan en el historial, que es otra cosa. |
@@ -45,19 +45,22 @@ Ese cuadro explica un caso frecuente: alguien le explica su contexto en el chat,
 
 ### Los tres interruptores
 
-En la configuración de la cuenta la memoria no es un solo botón, son tres cosas distintas:
+En "Configuración" › "Tu Claude" › "Memoria" la memoria no es un solo botón, son tres interruptores distintos:
 
 | Interruptor | Qué hace |
 |---|---|
-| **Buscar y referenciar conversaciones** | Deja que Claude vaya a buscar detalles en tus conversaciones pasadas cuando le hace falta. |
-| **Generar memoria a partir de tus chats** | Deja que escriba y guarde notas sobre ti. |
-| **Importar memoria de otros proveedores** | Trae lo que otra herramienta de inteligencia artificial sabe de ti. Claude te da un texto que pegas en la otra herramienta, y con lo que devuelva arma tu memoria aquí. |
+| **"Buscar y consultar chats"** | Deja que Claude vaya a buscar detalles en tus chats anteriores cuando le hace falta. |
+| **"Generar memoria a partir de los chats"** | Deja que escriba y guarde notas sobre ti. |
+| **"Incluir temas sensibles en la memoria"** | Deja que guarde también temas delicados, como la salud o las creencias religiosas. Si está apagado, esos temas no se guardan. |
 
-Los dos primeros se pueden tener por separado. Debajo aparece la lista de lo que guardó, y cada entrada se puede borrar por su cuenta.
+Se pueden tener por separado. Debajo vienen dos cosas más:
 
-### La memoria en Cowork y en Claude Code
+- **"Memoria de Claude" › "Abrir"** muestra lo que guardó. Ahí cada entrada se consulta, se edita o se elimina por su cuenta, y también se puede agregar una.
+- **"Importar memoria de otros proveedores de IA"** trae lo que otra herramienta de inteligencia artificial sabe de ti. Claude te da un prompt que pegas en la otra herramienta, y con lo que devuelva arma tu memoria aquí.
 
-En Cowork la memoria funciona además **por proyecto**: lo que aprende trabajando en un proyecto no pasa a otro. Y se guarda como archivos de texto en tu computadora, dentro del directorio de Claude, con un archivo índice que resume los demás. Se pueden abrir con cualquier editor de texto, editar a mano y borrar.
+### La memoria de un proyecto y la de Claude Code
+
+Cada proyecto tiene además su **propia memoria**: lo que Claude aprende trabajando en un proyecto queda en ese proyecto. Se ve a la derecha del proyecto, en "Memoria" › "Ver", y ahí se puede leer y corregir. Si quieres que guarde algo a propósito, pídeselo dentro del proyecto: "Recuerda en este proyecto que...", y luego "Confírmame qué guardaste en la memoria".
 
 Claude Code tiene una memoria automática propia, distinta, que es local a esa computadora y no se comparte entre máquinas ni con las sesiones de nube.
 
@@ -74,7 +77,7 @@ Es memoria escrita por Claude, pero a petición tuya, en un archivo que tú pued
 
 ### Cómo se pide
 
-La memoria se administra desde la configuración de tu cuenta, donde se puede ver la lista de lo que guardó, borrar entradas una por una y apagarla por completo.
+La memoria se administra en "Configuración" › "Tu Claude" › "Memoria": "Memoria de Claude" › "Abrir" muestra la lista de lo que guardó y deja borrar entradas una por una, y los interruptores la apagan por completo.
 
 Dentro de la conversación se le puede pedir directamente:
 
@@ -93,7 +96,7 @@ Ya no trabajo en eso y no quiero que lo apliques.
 Después de borrarlo, dime qué quedó.
 ```
 
-Para trabajar sin ella en un caso puntual:
+Para trabajar sin ella en un caso puntual, antes del primer mensaje abre el signo + de la caja y quita la palomita de "Memoria". Ya enviado el primer mensaje, en ese chat no se puede cambiar. Si se te pasó, pídelo en el prompt:
 
 ```
 Para esta conversación, ignora lo que tengas en memoria sobre formatos
@@ -102,28 +105,30 @@ y preferencias. Trabaja únicamente con lo que te diga aquí.
 
 ### Cómo se verifica
 
-Abre una conversación nueva y pregunta qué recuerda de ti. Lo que enliste es lo que está guardado; lo que no aparezca, no está.
+Abre una conversación nueva y pregunta qué recuerda de ti. Lo que enliste es lo que está guardado; lo que no aparezca, no está. También puedes leerla tú en "Memoria de Claude" › "Abrir", o en "Memoria" › "Ver" si es la de un proyecto.
 
-Si acabas de borrar algo, esa misma pregunta confirma que se borró.
+Si acabas de borrar algo, la misma pregunta confirma que se borró.
+
+Si en un proyecto no recuerda lo que le pediste, revisa que el chat sea de ese proyecto (su nombre aparece arriba) y que "Generar memoria a partir de los chats" esté encendido.
 
 ### Lo que no hace
 
-**No sustituye a las instrucciones de un Project ni a un `CLAUDE.md`.** Esa es la distinción central de esta ficha:
+**No sustituye a las instrucciones de un proyecto ni a un `CLAUDE.md`.** Esa es la distinción central de esta ficha:
 
 | | Quién lo escribe | Se aplica |
 |---|---|---|
-| Instrucciones de Project, `CLAUDE.md`, instrucciones del complemento | tú | siempre, en su ámbito |
+| Instrucciones del proyecto, `CLAUDE.md`, instrucciones del complemento | tú | siempre, en su ámbito |
 | Memoria | Claude | cuando lo considera pertinente |
 
 Si algo tiene que cumplirse sin falta —"toda cifra dice de dónde salió", "los originales no se tocan"— eso se escribe en la Ficha 4, no se deja a la memoria.
 
 **No viaja a otra persona.** Es tuya, atada a tu cuenta.
 
-**No pasa entre proyectos de Cowork.** Lo que aprende trabajando en un proyecto queda en ese proyecto.
+**No pasa de un proyecto a otro.** Lo que aprende trabajando en un proyecto queda en la memoria de ese proyecto.
 
 ### Plan
 
-Gratuita, y viene encendida en los planes Free, Pro y Max. En Team y Enterprise la disponibilidad la controla un administrador, y hasta que él la habilita permanece apagada para las personas de la organización.
+Gratuita, y viene encendida en los planes Free, Pro, Max y Ultra. En Team y Enterprise la disponibilidad la controla un administrador, y hasta que él la habilita permanece apagada para las personas de la organización.
 
 ---
 
@@ -137,7 +142,7 @@ La prueba es sencilla: sal de la conversación, abre una nueva y pídele lo mism
 
 Lo único que sobrevive entre conversaciones es lo que está en las Fichas 4 y 5: la configuración que escribiste, y la memoria que él guardó. Todo lo demás se queda ahí.
 
-Y una cosa más, distinta de la memoria y que conviene no confundir: en la configuración de privacidad hay un interruptor sobre si tus conversaciones se usan para **mejorar los modelos**. Eso no es la memoria, y apagar uno no apaga el otro. Está en la Ficha 0.
+Y una cosa más, distinta de la memoria y que conviene no confundir: en "Configuración" › "Privacidad" está el interruptor "Ayuda a mejorar nuestros modelos de IA", que decide si tus conversaciones se usan para **mejorar los modelos**. Eso no es la memoria, y apagar uno no apaga el otro. Está en la Ficha 0.
 
 ---
 
@@ -147,4 +152,4 @@ La memoria es una comodidad, no un mecanismo de control.
 
 Sirve para que no tengas que repetir lo obvio cada vez. No sirve para garantizar que una regla se cumpla.
 
-La prueba práctica para decidir dónde escribir algo: **pregúntate qué pasa si esa regla no se aplica una vez.** Si la respuesta es "nada grave, la corrijo y sigo", puede vivir en la memoria. Si la respuesta es "se publica una cifra equivocada" o "se borra un archivo original", tiene que estar escrita en un `CLAUDE.md` o en las instrucciones de un Project.
+La prueba práctica para decidir dónde escribir algo: **pregúntate qué pasa si esa regla no se aplica una vez.** Si la respuesta es "nada grave, la corrijo y sigo", puede vivir en la memoria. Si la respuesta es "se publica una cifra equivocada" o "se borra un archivo original", tiene que estar escrita en un `CLAUDE.md` o en las instrucciones de un proyecto.

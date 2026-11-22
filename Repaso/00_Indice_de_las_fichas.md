@@ -8,7 +8,7 @@
 
 El ecosistema de Claude se puede describir con dos listas.
 
-La primera son los **componentes**: los seis lugares distintos donde se puede trabajar. Chat, Design, Cowork, Office, Chrome y Claude Code.
+La primera son los **componentes**: los seis lugares distintos donde se puede trabajar. Chat, Design (que hoy se abre desde "Artefactos"), Cowork, Office, Chrome y Claude Code.
 
 La segunda son los **elementos**: las piezas con las que se trabaja, agrupadas en tres familias. Los **inputs** son de dónde Claude toma la información. Las **configuraciones** son lo que conserva entre una sesión y otra. Los **outputs** son dónde queda el resultado.
 
@@ -67,7 +67,7 @@ Las **Fichas 7 y 8** separan las salidas según quién puede llegar a ellas. Es 
 | Carpeta o repositorio | input | 2 |
 | Documento abierto | input | 2 |
 | Pestaña del navegador | input | 2 |
-| Búsqueda en la web y Research | input | 3 |
+| Búsqueda en la web e "Investigación" | input | 3 |
 | Conector | input | 3 |
 | Conocimiento del Proyecto | input | 4, dentro de Proyecto del chat |
 | Proyecto del chat | configuración | 4 |
@@ -115,12 +115,13 @@ Todas siguen la misma estructura para cada elemento, de modo que se puedan compa
 ## Si algo no funciona, revisa en este orden
 
 1. **¿Estás en el componente correcto?** Ficha 1. La mitad de los problemas son éste.
-2. **¿Estás en la app de escritorio o en el navegador?** Cowork y las sesiones locales de Claude Code solo existen en la app.
-3. **¿El modelo o el esfuerzo están demasiado bajos?** Ficha 0.
-4. **¿El modo de permisos le impide actuar, o le permite demasiado?** Ficha 0.
-5. **¿Se acabó tu límite de uso?** La pantalla de Uso, en la esquina inferior izquierda, lo dice.
-6. **¿Tu administrador apagó esa función?** La señal es que la opción no aparece, en vez de dar error. No se resuelve desde tu cuenta.
-7. **¿La regla que escribiste está en la capa correcta?** Ficha 4.
+2. **¿Lo buscas donde estaba antes?** Varias cosas cambiaron de lugar. Design ahora se abre en "Artefactos" › "Crea algo nuevo" › "Diseño". Los conectores y las Skills están en "Plugins", que reemplazó a "Personalización".
+3. **¿Estás en la app de escritorio o en el navegador?** Las carpetas de tu computadora, en Cowork, y las sesiones locales de Claude Code solo existen en la app.
+4. **¿El modelo o el esfuerzo están demasiado bajos?** Ficha 0.
+5. **¿El modo de permisos le impide actuar, o le permite demasiado?** Ficha 0.
+6. **¿Se acabó tu límite de uso?** Tu nombre, abajo a la izquierda › "Configuración" › "Uso" lo dice: "Sesión actual" y "Esta semana", cada uno con la hora en que se restablece.
+7. **¿Tu administrador apagó esa función?** La señal es que la opción no aparece, en vez de dar error. No se resuelve desde tu cuenta.
+8. **¿La regla que escribiste está en la capa correcta?** Ficha 4.
 
 ---
 
@@ -136,6 +137,6 @@ Todas siguen la misma estructura para cada elemento, de modo que se puedan compa
 
 Algunas combinaciones de elemento y componente **no aparecen en la documentación oficial de Anthropic**. En esas fichas aparecen marcadas como "no documentado".
 
-Eso no quiere decir que no funcionen. Quiere decir que no hay fuente que lo respalde, y por lo tanto no conviene enseñarlo ni asumirlo como un hecho. Los casos principales: la memoria en Design, en Chrome, en los complementos de Office y en Claude Code; los Projects del chat en esas mismas superficies; y en el panel de Chrome, la búsqueda web y los archivos adjuntos.
+Eso no quiere decir que no funcionen. Quiere decir que no hay fuente que lo respalde, y por lo tanto no conviene enseñarlo ni asumirlo como un hecho. Los casos principales: la memoria en Design, en Chrome, en los complementos de Office y en Claude Code; los Proyectos del chat en esas mismas superficies; y en el panel de Chrome, la búsqueda web y los archivos adjuntos.
 
 Cuando algo aquí dice "sí" pero lleva una condición, la condición está escrita completa en la ficha correspondiente.
