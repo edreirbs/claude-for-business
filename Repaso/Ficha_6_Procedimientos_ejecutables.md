@@ -24,6 +24,8 @@ Cuando un Skill no se activa, lo que está mal es la descripción, no las instru
 
 Como se guarda en tu cuenta, el Skill te sigue: aparece en el chat, en Cowork, en los complementos de Office y en Claude Code, con la misma cuenta y sin volver a instalarlo.
 
+En pantalla, los Skills viven en "Plugins", en la barra lateral, junto con los conectores. El filtro "Skills" muestra solo esos, y los que hiciste tú dicen "Skill · Por ti".
+
 ### Cuándo se usa
 
 Cuando hay una tarea que haces con cierta frecuencia y que siempre debe salir igual.
@@ -38,12 +40,12 @@ La señal para crear un Skill es haber escrito el mismo prompt largo tres veces.
 
 | Componente | Funciona | Detalle |
 |---|---|---|
-| Chat | Sí, con condición | Requiere que la ejecución de código esté activada en tu cuenta. |
-| Design | Sí | No aparece en la documentación oficial de Claude Design; se verificó directamente en el producto. |
+| Chat | Sí, con condición | Requiere que esté encendido "Crear y editar archivos", en "Configuración" › "Capacidades". |
+| Design | Sí | Un diseño se empieza en "Artefactos" › "Diseño". El + de la caja del diseño trae "Plugins", donde están tus Skills. |
 | Cowork | Sí | |
 | Office | Sí | Se puede llamar directamente escribiendo `/` en el panel. |
 | Chrome | Sí | El panel corre como sesión de Cowork y hereda tus Skills. |
-| Claude Code | Sí | La documentación oficial los marca como beta en Claude Code. |
+| Claude Code | Sí | Se llama escribiendo `/` y su nombre, igual que en el chat. |
 
 Es, junto con los conectores, uno de los dos elementos que funcionan en los seis componentes.
 
@@ -65,6 +67,8 @@ Antes de guardarlo, enséñame la descripción para revisarla.
 
 Por qué está escrito así: pedir que la descripción use tus palabras es lo que hace que el Skill se active cuando lo necesitas. Si la descripción dice "análisis comparativo de instrumentos contractuales" y tú siempre escribes "revísame este contrato", el Skill nunca va a entrar. Revisar la descripción antes de guardar toma quince segundos y evita el problema entero.
 
+Cuando Claude termina, en el chat aparece la tarjeta "Guardar plugin". Trae el nombre del Skill ("/nombre"), su descripción y "Contenido". Lee ahí la descripción y da "Guardar". Si no te convence, da "Descartar": queda el aviso "Se descartó" con "Deshacer", por si te arrepientes.
+
 Cuando un Skill existe pero no se activa:
 
 ```
@@ -77,27 +81,31 @@ propón una descripción nueva. No cambies las instrucciones.
 
 Empieza una tarea del tipo que el Skill cubre, con tus palabras normales, y observa si entra solo. Si tienes que llamarlo a mano cada vez, la descripción no está funcionando.
 
+Llamarlo a mano es escribir `/` en la caja y elegirlo de la lista. Sirve para probarlo, no como costumbre.
+
 ### Dónde vive un Skill: dos ámbitos
 
 Hay dos lugares distintos donde puede vivir un Skill, y la diferencia importa:
 
-**Skill de la cuenta.** Se sube desde Personalizar, en la sección de habilidades, y aparece en todos tus componentes y todos tus proyectos. Es el caso normal.
+**Skill de la cuenta.** Se sube en "Plugins" › "Agregar" › "Subir plugin". La pantalla "Subir un plugin" acepta un .skill, un .zip o un .md: lo arrastras, revisas la "Vista previa" con su nombre y su descripción, y das "Subir". También es de la cuenta el que guardas desde la tarjeta "Guardar plugin". Aparece en todos tus componentes y todos tus proyectos. Es el caso normal.
 
 **Skill del proyecto.** En Claude Code, un Skill puede vivir dentro de la carpeta del proyecto, en `.claude/skills/`. Solo aplica ahí, y viaja con la carpeta.
 
-Los Skills de la cuenta se pueden **encender y apagar** sin borrarlos, igual que un conector. También se pueden reemplazar, editar, probar en una conversación de prueba y descargar como archivo.
+Los Skills de la cuenta se pueden **apagar** sin borrarlos, igual que un conector: en la página del Skill, los tres puntos traen "Deshabilitar" y "Eliminar". En esa misma página, "Probar en chat" abre una conversación para probarlo.
 
 ### El Skill que crea Skills
 
 Anthropic incluye de fábrica varios Skills, y uno de ellos sirve precisamente para crear otros: se le describe lo que quieres y arma la estructura. Es la vía más rápida cuando no sabes por dónde empezar.
 
+Si prefieres empezar desde la página "Plugins", el botón "Agregar" trae la opción "Crear con Claude".
+
 ### Lo que no hace
 
 No viaja con un repositorio ni con una carpeta, salvo el caso del Skill de proyecto en Claude Code. El Skill de cuenta es tuyo, así que te sigue a ti. Si un compañero abre tu carpeta, tus Skills no van adentro.
 
-Requiere que la ejecución de código esté activada.
+Requiere que "Crear y editar archivos" esté encendido, en "Configuración" › "Capacidades".
 
-**No se llama con el símbolo @.** En el chat se activa solo por su descripción, o se elige desde el menú del símbolo +. En los complementos de Office se llama escribiendo `/`.
+**No se llama con el símbolo @.** Se activa solo por su descripción, o se llama escribiendo `/` y su nombre: en el chat, en los complementos de Office y en Claude Code. En el menú + de la caja ya no hay "Skills" suelto: quedaron dentro de "Plugins".
 
 ### Plan
 
@@ -187,7 +195,7 @@ De pago, como Claude Code.
 
 Una instrucción que queda agendada y se ejecuta sola con la periodicidad que le indiques. En clase se describió como *"una mini automatización"*.
 
-No hay una sintaxis especial para crearla. Se le pide en lenguaje natural, dentro de la conversación, y Claude reconoce que se trata de algo recurrente. También se puede crear desde la pestaña de tareas programadas, sin conversación de por medio.
+No hay una sintaxis especial para crearla. Se le pide en lenguaje natural, dentro de la conversación, y Claude reconoce que se trata de algo recurrente. También se puede crear desde "Programadas", en la barra lateral, sin conversación de por medio: "Nueva tarea" › "Crear con Claude" o "Configurar manualmente".
 
 Una tarea programada puede hacer cualquier cosa que Claude sepa hacer en ese componente: leer archivos de la carpeta, actualizar un documento, consultar un sistema conectado, escribir en él, o simplemente avisarte algo.
 
@@ -206,9 +214,9 @@ La señal para crear una tarea programada es haber hecho el mismo encargo tres v
 
 | Componente | Funciona | Detalle |
 |---|---|---|
-| Chat | Sí | Aparecen en la sección de actividades programadas. |
-| Cowork | Sí, con condición | Si la tarea toca carpetas locales, la computadora tiene que estar encendida y conectada a internet a esa hora. La etiqueta del producto lo dice: la tarea "está en este equipo". |
-| Claude Code | Sí | En el menú aparecen como rutinas. |
+| Chat | Sí | Aparecen en "Programadas", en la barra lateral. Dentro de un proyecto, el panel de la derecha trae además "Programado" › "Agregar". |
+| Cowork | Sí, con condición | Si la tarea toca carpetas de tu computadora, la app de escritorio tiene que estar abierta y la computadora encendida y con internet a esa hora. |
+| Claude Code | Sí | Se arma en la misma ventana: en "Configuración avanzada" › "General", elegir un "Repositorio" la vuelve tarea de Claude Code. Antes se llamaban rutinas, y ese nombre todavía puede salir. |
 
 En Design, en Office y en Chrome no existen.
 
@@ -243,19 +251,23 @@ Por qué está escrito así, línea por línea:
 - **"Avísame solo si algo necesita mi decisión"** evita que la automatización se convierta en doce notificaciones inútiles al mes, que es como la gente termina apagándolas.
 - **La última pregunta** es la que te dice si la tarea va a funcionar de verdad. Una tarea que necesita tu laptop encendida a las nueve de la noche del jueves no va a correr el jueves que te la lleves apagada.
 
+Si prefieres armarla tú, sin conversación: "Programadas" › "Nueva tarea" › "Configurar manualmente". La ventana "Nueva tarea programada" pide el "Nombre" y las instrucciones; ahí van las reglas del prompt de arriba: dónde dejar el resultado, qué hacer si falta un dato, qué no hacer nunca y cuándo avisarte. En "Activador" eliges "Programación", la frecuencia ("Cada hora", "Diario", "Entre semana", "Semanal" o "Mensual") y la hora. "Configuración avanzada" trae "Proyecto", "Conectores" y "Notificaciones". Al final, "Crear".
+
+La misma ventana muestra el modo de permisos, "Automático": a la hora de la corrida nadie aprueba cada paso. Por eso la línea "Nunca [acción]" es el freno.
+
 ### Cómo se verifica
 
-Ejecútala una vez a mano desde la pestaña de tareas programadas —hay un botón para correrla en el momento— y revisa el resultado antes de dejarla suelta.
+Ejecútala una vez a mano desde "Programadas": los tres puntos de la tarea traen "Ejecutar ahora", que también es el triángulo sin texto. Revisa el resultado antes de dejarla suelta.
 
 Después de la primera corrida automática, abre el archivo que produjo y compáralo contra lo que habrías hecho tú. Si coincide, ya puedes dejar de revisarla; si no, corrige la instrucción y vuelve a probar a mano.
 
 ### Cómo se administra
 
-En la pestaña de tareas programadas aparecen todas, con la opción de ejecutarla ahora, pausarla, editarla o eliminarla. Las que dependen de tu computadora vienen marcadas con esa condición.
+En "Programadas", pestaña "Tuyos", aparecen todas. Los tres puntos de cada una traen "Ejecutar ahora", "Pausar", "Editar" y "Eliminar"; "Eliminar" pide confirmar y borra también su historial. En la app de escritorio, la tarjeta de cada tarea dice además cómo terminó su última corrida, por ejemplo si falló o si necesita algo de ti.
 
 ### Lo que no hace
 
-**No corre si la computadora está apagada**, cuando la tarea depende de carpetas locales. La frase de la sesión 5 fue clara: *"si a esa hora la laptop está apagada o dormida, pues no se podrá hacer."*
+**No corre si la computadora está apagada o la app de escritorio cerrada**, cuando la tarea depende de carpetas locales. La frase de la sesión 5 fue clara: *"si a esa hora la laptop está apagada o dormida, pues no se podrá hacer."*
 
 **Siempre necesita internet**, aunque los archivos sean locales, porque el modelo no vive en tu computadora.
 
@@ -278,7 +290,7 @@ De pago.
 | Para qué | que una tarea salga siempre igual | que una parte del trabajo ocurra aparte, con menos permisos |
 | Dónde vive | en tu cuenta | en el repositorio, en `.claude/agents/` |
 | A quién sigue | a ti, entre componentes | al repositorio, entre personas |
-| Cómo se activa | solo, por su descripción | con arroba y su nombre |
+| Cómo se activa | solo, por su descripción, o con `/` y su nombre | con arroba y su nombre |
 | Dónde funciona | en los seis componentes | solo en Claude Code |
 
 La regla corta: **Skill cuando quieres que salga siempre igual. Subagente cuando quieres que trabaje aparte, o con menos permisos que tú.**

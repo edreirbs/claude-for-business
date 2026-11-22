@@ -59,7 +59,7 @@
      "g": "lo que subes en la conversación",
      "c": {
       "chat": [
-       "Subes un PDF, una hoja de cálculo o una imagen y Claude la lee dentro de esa conversación. Al abrir otra, ya no está.",
+       "Subes un PDF, una hoja de cálculo o una imagen con + › \"Subir o agregar archivos\", y Claude la lee dentro de esa conversación. Al abrir otra, ya no está.",
        ""
       ],
       "design": [
@@ -94,7 +94,7 @@
       ],
       "code": [
        "El repositorio completo es el contexto: los archivos, las reglas y los subagentes que trae dentro.",
-       ""
+       "En la web (claude.ai/code) trabaja sobre un repositorio de GitHub. Tu carpeta local, solo con el entorno \"Local\" de la app de escritorio."
       ]
      }
     },
@@ -128,15 +128,15 @@
     },
     {
      "t": "Búsqueda en la web",
-     "g": "internet e informes de Research",
+     "g": "internet e informes de \"Investigación\"",
      "c": {
       "chat": [
-       "Busca en internet y cita las ligas. Research hace la versión larga, con informe y fuentes evaluadas.",
-       ""
+       "Busca en internet y cita las ligas. \"Investigación\", en el + de la caja, hace la versión larga, con informe y fuentes evaluadas.",
+       "\"Investigación\" no está en el plan gratuito y corre en Opus 5.5, elijas el modelo que elijas."
       ],
       "design": [
        "Trae datos de afuera cuando la pieza depende de información que no le diste.",
-       "Documentado en el blog de Anthropic de julio de 2026, no en el centro de ayuda."
+       "El + de la caja de un diseño trae \"Investigación\"."
       ],
       "cowork": [
        "Consulta internet dentro de una tarea, sin que tengas que pegarle los resultados.",
@@ -161,12 +161,12 @@
      "g": "Supabase, Drive, M365, Slack",
      "c": {
       "chat": [
-       "Le das acceso a otro sistema y lo consulta en tu nombre, sin que exportes nada.",
+       "Le das acceso a otro sistema y lo consulta en tu nombre, sin que exportes nada. Se agrega en \"Plugins\" y se enciende para cada chat en + › \"Plugins\".",
        "En Team y Enterprise, un Owner debe habilitar los conectores antes de que alguien de la organización pueda usarlos."
       ],
       "design": [
        "Puede traer material de un sistema conectado para la pieza que está armando.",
-       "Documentado en el blog de Anthropic de julio de 2026, no en el centro de ayuda."
+       "El + de la caja de un diseño trae \"Plugins\", con tus conectores."
       ],
       "cowork": [
        "Cruza lo que hay en tu carpeta con lo que hay en un sistema de tu organización.",
@@ -199,7 +199,7 @@
        "El conocimiento y la memoria no son de Design: llegan por el Proyecto que enlazaste."
       ],
       "cowork": [
-       "Un proyecto de Cowork puede enlazar un Proyecto del chat y usar su conocimiento.",
+       "Es el mismo proyecto: abierto en la app de escritorio, usa su contexto también al trabajar sobre carpetas.",
        ""
       ]
      }
@@ -224,7 +224,7 @@
        "El conocimiento y la memoria no son de Design: llegan por el Proyecto que enlazaste."
       ],
       "cowork": [
-       "Un proyecto de Cowork puede apuntar a uno del chat en lugar de repetir sus instrucciones.",
+       "Es el mismo proyecto: en la app de escritorio trabaja también sobre carpetas, con las mismas instrucciones.",
        ""
       ]
      }
@@ -255,14 +255,14 @@
      "c": {
       "chat": [
        "Claude guarda por su cuenta notas sobre ti y tu trabajo, y las aplica en conversaciones nuevas.",
-       ""
+       "Se administra en \"Configuración\" › \"Tu Claude\" › \"Memoria\"."
       ],
       "design": [
        "Lo que recuerda llega a través del Proyecto que enlazaste.",
        "El conocimiento y la memoria no son de Design: llegan por el Proyecto que enlazaste."
       ],
       "cowork": [
-       "Además de la memoria general, cada proyecto de Cowork guarda la suya, que no pasa a otro proyecto.",
+       "Además de la memoria general, cada proyecto guarda la suya (a la derecha del proyecto, \"Memoria\" › \"Ver\"), que no pasa a otro proyecto.",
        ""
       ],
       "code": [
@@ -290,12 +290,12 @@
      "g": "un procedimiento guardado en tu cuenta",
      "c": {
       "chat": [
-       "Un procedimiento guardado que entra solo cuando su descripción coincide con lo que pediste.",
-       "Requiere que la ejecución de código esté activada en tu cuenta."
+       "Un procedimiento guardado que entra solo cuando su descripción coincide con lo que pediste, o cuando lo llamas con una diagonal.",
+       "Requiere \"Crear y editar archivos\" encendido, en \"Configuración\" › \"Capacidades\". Se sube en \"Plugins\" › \"Agregar\" › \"Subir plugin\"."
       ],
       "design": [
        "Aplica los procedimientos que ya tienes guardados también al armar piezas visuales.",
-       "No aparece en la documentación oficial de Claude Design. Se verificó directamente en el producto."
+       "El + de la caja de un diseño trae \"Plugins\", donde están tus Skills."
       ],
       "cowork": [
        "Los mismos Skills de tu cuenta, disponibles al trabajar sobre carpetas.",
@@ -311,7 +311,7 @@
       ],
       "code": [
        "Disponibles en la sesión, y además se pueden guardar dentro del propio repositorio.",
-       "La documentación oficial marca los Skills en Claude Code como beta."
+       "Se llaman escribiendo una diagonal y su nombre, igual que en el chat."
       ]
      }
     },
@@ -319,13 +319,17 @@
      "t": "Sistema de diseño",
      "g": "colores, tipografías y componentes",
      "c": {
+      "chat": [
+       "El + de la caja trae \"Sistema de diseño\", para que lo que Claude arme en la conversación salga con tu marca.",
+       "Las diapositivas de \"Artefactos\" también dejan elegir sistema."
+      ],
       "design": [
        "Tu paleta, tus tipografías y tus componentes, aplicados a todo lo que produzca.",
-       ""
+       "Se crea en \"Configuración\" › \"Capacidades\" › \"Sistemas de diseño\" › \"Administrar\", y en el diseño se elige con el botón \"Sistema de diseño\"."
       ],
       "code": [
        "Lleva tu identidad visual al código del proyecto.",
-       "Llega con el comando /design-sync o con el servidor MCP de Claude Design."
+       "Un sistema se puede crear \"Con Claude Code\", que lee los colores y las tipografías de tu repositorio. Un diseño pasa a Claude Code con \"Transferir a Claude Code\"."
       ]
      }
     },
@@ -378,19 +382,19 @@
     },
     {
      "t": "Artifact",
-     "g": "una pieza con liga propia y versiones",
+     "g": "documento, diapositivas, diseño o página",
      "c": {
       "chat": [
-       "Una pieza aparte de la conversación, con versiones y liga propia. Aquí es donde nace uno que se va a compartir.",
-       ""
+       "Una pieza aparte de la conversación, con versiones y liga propia: una página, un documento de Claude Docs, unas diapositivas. Aquí es donde nace uno que se va a compartir.",
+       "Todos quedan en \"Artefactos\" y nacen en \"Solo tú\". Para que otro lo abra: \"Compartir\" › \"Acceso general\"."
       ],
       "design": [
-       "El diseño se puede publicar como artifact desde el menú de exportación.",
-       ""
+       "Cada diseño ya es un artefacto: vive en \"Artefactos\" y se comparte con \"Compartir\", arriba del lienzo.",
+       "Nace en \"Solo tú\". \"Copiar enlace privado\" lo abre solo quien invites; \"Copiar enlace público\", cualquiera."
       ],
       "cowork": [
        "Produce tableros que viven en la app de escritorio y que no se pueden compartir por liga.",
-       ""
+       "Lo que nace sobre carpetas de tu computadora puede no traer la opción de compartir por liga."
       ],
       "code": [
        "Puede producir artifacts a partir del repositorio.",
@@ -418,7 +422,7 @@
       ],
       "code": [
        "Crea y modifica archivos dentro del repositorio, con historial de cada cambio.",
-       ""
+       "En tu disco, solo con el entorno \"Local\" de la app de escritorio. En la web (claude.ai/code), los cambios quedan en el repositorio."
       ]
      }
     },
@@ -452,7 +456,7 @@
       ],
       "design": [
        "Puede mandar la pieza terminada a un servicio conectado.",
-       "Documentado en el blog de Anthropic de julio de 2026, no en el centro de ayuda."
+       "Desde \"Compartir\" › \"Exportación\" › \"Enviar a\", por ejemplo a \"Canva\"."
       ],
       "cowork": [
        "Escribe en un sistema conectado como parte de una tarea sobre archivos.",
@@ -492,11 +496,15 @@
     },
     {
      "t": "Exportación",
-     "g": "PDF, PPTX, HTML autónomo o MP4",
+     "g": "Word, PDF, PowerPoint, HTML o PNG",
      "c": {
+      "chat": [
+       "Un documento de Claude Docs se descarga en \"Compartir\" › \"Exportación\": \"Word\", \"PDF\" o \"Markdown\".",
+       "Pide la respuesta \"como documento\" para que salga en Claude Docs, a la derecha."
+      ],
       "design": [
-       "Descarga la pieza como PDF, PowerPoint editable, HTML autónomo, imagen o video.",
-       "La liga para compartir que genera Design es interna de tu organización, no una página abierta a internet."
+       "Descarga el diseño como \"HTML\", \"PDF\" o \"PNG\" desde \"Compartir\" › \"Exportación\". Unas diapositivas salen en \"PowerPoint\" desde \"Exportar\".",
+       "El video MP4 (Claude Motion) solo está en Team y Enterprise."
       ]
      }
     }

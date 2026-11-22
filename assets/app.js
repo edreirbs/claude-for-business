@@ -40,10 +40,8 @@
      prefiera escribirlas en su propia copia de las fichas. */
   var FIGURAS = 'assets/figuras.json';
 
-  // SHA-256 de la contraseña del curso: la contraseña no vive en el código.
-  var PASS_HASH = '5a5d14a76d3c8e7326bfc10545ee01170d06758d87f87aa96ac7193d065e696f';
 
-  var K_KEY = 'cfb.key', K_THEME = 'cfb.theme';
+  var K_THEME = 'cfb.theme';
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -432,7 +430,7 @@
 
   /* -------------------------------------------------------- estructura --- */
 
-  var gate = $('#gate'), app = $('#app'), sheet = $('#sheet'), veil = $('#turnVeil');
+  var app = $('#app'), sheet = $('#sheet'), veil = $('#turnVeil');
   var fichas = [], pages = [];
   var cur = 0, turning = false, io = null;
 
@@ -1150,53 +1148,12 @@
     });
   }
 
-  /* ------------------------------------------------------------ candado -- */
+  /* ---------------------------------------------------------- apertura -- */
 
-  function sha256(text) {
-    if (!(window.crypto && window.crypto.subtle)) return Promise.reject(new Error('insecure'));
-    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(function (buf) {
-      return Array.prototype.map.call(new Uint8Array(buf), function (b) {
-        return ('0' + b.toString(16)).slice(-2);
-      }).join('');
-    });
-  }
-
-  function openBooklet(animate) {
-    document.body.classList.remove('is-locked');
+  function openBooklet() {
     document.documentElement.classList.add('unlocked');
     app.hidden = false;
     load();
-    if (!animate) { gate.hidden = true; return; }
-    gate.classList.add('is-open');
-    setTimeout(function () { gate.hidden = true; }, reduceMotion() ? 0 : 950);
-  }
-
-  function initGate() {
-    var form = $('#gateForm'), input = $('#pw'), msg = $('#gateMsg');
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (!input.value) return;
-      sha256(input.value).then(function (hex) {
-        if (hex === PASS_HASH) {
-          msg.className = 'gate-msg ok';
-          msg.textContent = 'Abriendo…';
-          store.set(K_KEY, '1');
-          openBooklet(true);
-        } else {
-          msg.className = 'gate-msg';
-          msg.textContent = 'Esa no es la contraseña del curso.';
-          gate.classList.add('is-wrong');
-          setTimeout(function () { gate.classList.remove('is-wrong'); }, 520);
-          input.select();
-        }
-      })['catch'](function () {
-        msg.className = 'gate-msg';
-        msg.textContent = 'Abre el cuadernillo por https (o localhost) para poder desbloquearlo.';
-      });
-    });
-
-    setTimeout(function () { input.focus(); }, 420);
   }
 
   /* -------------------------------------------------------------- tema --- */
@@ -1219,12 +1176,6 @@
     $('#next').addEventListener('click', function () { goTo(cur + 1); });
     $('#btnToc').addEventListener('click', function () { toggleToc(); });
     $('#scrim').addEventListener('click', function () { toggleToc(false); });
-
-    $('#btnLock').addEventListener('click', function () {
-      store.del(K_KEY);
-      location.hash = '';
-      location.reload();
-    });
 
     document.addEventListener('click', function (e) {
       var t = e.target;
@@ -1355,10 +1306,5 @@
   initTheme();
   initEvents();
 
-  if (store.get(K_KEY) === '1') {
-    openBooklet(false);
-  } else {
-    document.body.classList.add('is-locked');
-    initGate();
-  }
+  openBooklet();
 })();

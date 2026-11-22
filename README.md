@@ -55,7 +55,7 @@ El contenido se cruzó además con las transcripciones de las siete sesiones del
 
 **https://edreirbs.github.io/claude-for-business/**
 
-Las mismas fichas, publicadas como GitHub Page: un cuadernillo que se hojea, con paso de página animado, buscador sobre las nueve fichas y botón para copiar cada prompt. Pide la contraseña del curso al abrirse.
+Las mismas fichas, publicadas como GitHub Page: un cuadernillo que se hojea, con paso de página animado, buscador sobre las nueve fichas y botón para copiar cada prompt. Abre sin contraseña desde el 21 de noviembre de 2026: la liga se puede mandar tal cual a los participantes.
 
 Abre en la **Matriz de componentes y elementos de Claude**: los veinticuatro elementos cruzados con los seis componentes. Cada barra dice hasta dónde llega una pieza, y cada punto abre —al pasar el mouse, al tocarlo o con el teclado— qué hace exactamente esa pieza en ese componente, con su salvedad cuando la tiene.
 
@@ -63,9 +63,9 @@ El sitio publica las Fichas 0 a 8. `00_Indice_de_las_fichas.md` se queda en el r
 
 | Archivo | Qué hace |
 |---|---|
-| `index.html` | La página. Portada con contraseña y el armazón del cuadernillo. |
+| `index.html` | La página: el armazón del cuadernillo. |
 | `assets/styles.css` | Todo el diseño: paleta de la UP, hoja, animaciones, modo claro y oscuro, tablas apiladas en móvil e impresión. |
-| `assets/app.js` | Lee los `.md` de `Repaso/`, los convierte a HTML y maneja navegación, índice, buscador y candado. |
+| `assets/app.js` | Lee los `.md` de `Repaso/`, los convierte a HTML y maneja navegación, índice y buscador. |
 | `assets/matriz.json` | Los datos de la matriz de inicio: columnas, renglones y qué hace cada pieza en cada componente. |
 | `assets/figuras.json` | Qué figura se muestra en qué hoja. Va fuera de `Repaso/` a propósito. |
 | `assets/img/` | Las imágenes. Su `LEEME.md` explica cómo se agrega una. |
@@ -93,17 +93,22 @@ python3 -m http.server 8000
 
 Y abrir `http://localhost:8000`.
 
-### La contraseña
+### Acceso
 
-El cuadernillo pide una contraseña antes de abrirse. En el código no está la contraseña sino su huella SHA-256, y la comprobación ocurre en el navegador de quien entra.
+Desde el 21 de noviembre de 2026 el cuadernillo abre sin contraseña. Antes pedía una, comprobada en el navegador con su huella SHA-256; se quitó para mandar la liga directo a los participantes. La página sigue con `noindex`, así que los buscadores no la listan, pero cualquiera con la liga la abre, y los `.md` de `Repaso/` son públicos en el repositorio.
 
-Eso conviene tenerlo claro: **es una cortesía, no una cerradura**. Sirve para que el material no quede a la vista de cualquiera que llegue a la liga, pero los `.md` de `Repaso/` siguen siendo públicos en el repositorio, igual que el resto del código. Para material que de verdad no pueda salir, hace falta un repositorio privado o un servidor que autentique.
+### Puesta al día con la interfaz de Claude
 
-Para cambiar la contraseña, calcular la huella nueva y sustituir `PASS_HASH` en `assets/app.js`:
+El 21 de noviembre de 2026 las fichas, la matriz y once capturas se cotejaron contra la interfaz de ese día:
+- "Plugins" en lugar de "Personalización";
+- Claude Design dentro de "Artefactos";
+- la "Configuración" con "Tu Claude" y "Capacidades";
+- los modelos 5.5;
+- las Skills que se suben como plugin;
+- las tareas programadas;
+- Claude Code en la web.
 
-```
-printf 'la-nueva-contrasena' | sha256sum
-```
+Las capturas de Cowork, Office y Chrome son de septiembre: muestran las apps de escritorio y de Microsoft, que no se pudieron volver a tomar desde el navegador.
 
 ### Cómo se agrega o quita una ficha
 
