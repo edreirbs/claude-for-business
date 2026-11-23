@@ -665,7 +665,61 @@
       /* El globo va fuera del contenedor con scroll: `overflow-x:auto` obliga
          a `overflow-y:auto`, y ahí dentro se le cortaría la parte de arriba. */
       '<div class="mx-canvas reveal"><div class="mx-scroll">' + matrixSVG(m) + '</div>' +
-        '<div class="mx-tip" role="status" aria-live="polite"></div></div>';
+        '<div class="mx-tip" role="status" aria-live="polite"></div></div>' +
+      matrixListHTML(m);
+  }
+
+  /** «CLAUDE CODE» → «Code»: el nombre corto cabe en un botón del celular. */
+  function mxShort(c) {
+    var w = c.t.split(' ').pop().toLowerCase();
+    return w.charAt(0).toUpperCase() + w.slice(1);
+  }
+
+  /**
+   * La matriz en el celular. El dibujo de 900 px obliga a deslizar de lado y
+   * se pierde el nombre del renglón; aquí cada elemento es una tarjeta con sus
+   * seis componentes como botones, y el que funciona se toca para leer qué
+   * hace ahí. Sale de los mismos datos que el dibujo, así que no se desfasan.
+   */
+  function matrixListHTML(m) {
+    var groups = m.groups.map(function (g) {
+      var items = g.rows.map(function (r) {
+        var chips = m.cols.map(function (c) {
+          var cell = r.c[c.k], name = mxShort(c);
+          if (!cell) {
+            return '<span class="mx-chip is-off"><span aria-hidden="true">' + esc(name) +
+              '</span><span class="vh">' + esc(c.t + ': no funciona aquí') + '</span></span>';
+          }
+          return '<button type="button" class="mx-chip" aria-expanded="false"' +
+            ' data-t="' + escA(r.t + '  ·  ' + c.t) + '"' +
+            ' data-d="' + escA(cell[0]) + '"' +
+            (cell[1] ? ' data-n="' + escA(cell[1]) + '"' : '') + '>' + esc(name) + '</button>';
+        }).join('');
+        return '<div class="mx-item"><p class="mx-it">' + esc(r.t) + '</p>' +
+          '<p class="mx-ig">' + esc(r.g) + '</p>' +
+          '<div class="mx-chips">' + chips + '</div>' +
+          '<div class="mx-idet" role="status" aria-live="polite" hidden></div></div>';
+      }).join('');
+      return '<section class="mx-lg mx-g-' + g.k + '"><h2 class="mx-lgh">' + esc(g.t) +
+        ' <span>· ' + esc(g.s) + '</span></h2>' + items + '</section>';
+    }).join('');
+    return '<div class="mx-list reveal"><p class="mx-hint">Toca un componente encendido para leer ' +
+      'qué hace ese elemento ahí. Los grises no funcionan en ese lugar.</p>' + groups + '</div>';
+  }
+
+  /** Abre o cierra la explicación de un botón de la matriz del celular. */
+  function mxChip(chip) {
+    var item = chip.closest('.mx-item'), det = item && $('.mx-idet', item);
+    if (!det) return;
+    var abierto = chip.getAttribute('aria-expanded') === 'true';
+    $$('.mx-chip[aria-expanded="true"]', item).forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+    if (abierto) { det.hidden = true; det.innerHTML = ''; return; }
+    chip.setAttribute('aria-expanded', 'true');
+    var nota = chip.getAttribute('data-n');
+    det.innerHTML = '<span class="mx-tt">' + esc(chip.getAttribute('data-t')) + '</span>' +
+      '<p class="mx-td">' + esc(chip.getAttribute('data-d')) + '</p>' +
+      (nota ? '<p class="mx-tn"><b>Salvedad</b>' + esc(nota) + '</p>' : '');
+    det.hidden = false;
   }
 
   /**
@@ -1063,7 +1117,15 @@
     }).join('');
 
     var titulo = 'Cuántos de los ' + total + ' elementos alcanza cada componente';
-    return '<div class="gen-scroll"><svg class="gen-svg" viewBox="0 0 ' + W + ' ' + H +
+    /* En el celular, la misma gráfica en HTML: el nombre arriba y la barra a
+       todo lo ancho, sin deslizar de lado y con la letra a su tamaño. */
+    var lista = '<div class="gen-list"><p class="gen-list-t">' + esc(titulo) + '</p>' +
+      datos.map(function (d) {
+        return '<div class="gl-row"><p class="gl-k"><b>' + esc(d.t) + '</b> ' + esc(d.s) + '</p>' +
+          '<div class="gl-bar"><span class="gl-track"><i style="width:' +
+            Math.round((d.n / tope) * 1000) / 10 + '%"></i></span><b class="gl-n">' + d.n + '</b></div></div>';
+      }).join('') + '</div>';
+    return lista + '<div class="gen-scroll"><svg class="gen-svg" viewBox="0 0 ' + W + ' ' + H +
       '" role="img" aria-label="' + escA('De los ' + total + ' elementos: ' +
         datos.map(function (d) { return d.t + ' ' + d.n; }).join(', ') + '.') + '">' +
       '<text class="ttl" x="' + G.x + '" y="34">' + esc(titulo) + '</text>' +
@@ -1192,6 +1254,8 @@
       }
       var hit = t.closest && t.closest('.mx-hit');
       if (hit) { mxShow(hit); e.stopPropagation(); return; }
+      var chip = t.closest && t.closest('.mx-chip[data-d]');
+      if (chip) { mxChip(chip); return; }
       if (!(t.closest && t.closest('.mx-tip'))) mxHide();
 
       var shot = t.closest && t.closest('.shot-open');

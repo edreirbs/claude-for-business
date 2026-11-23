@@ -191,6 +191,18 @@ El índice de la izquierda lista las nueve fichas y despliega los elementos de l
 
 Cada hoja tiene su propia liga para mandarla directa: `#matriz` es la de inicio, `#ficha-3` la portadilla de la Ficha 3 y `#ficha-3-conectores` su elemento «Conectores».
 
+### En el celular
+
+Revisado hoja por hoja el 22 de noviembre de 2026, en 320, 375, 768 y 1440 px: ninguna de las 66 hojas se sale de la pantalla ni obliga a deslizar de lado.
+- **La matriz** (900 px de dibujo) y **la gráfica de alcance** de la Ficha 1 (520 px) traen una segunda versión, hecha para pantalla angosta, que sale de los mismos datos.
+  - En 820 px o menos, la matriz es una tarjeta por elemento con sus seis componentes como botones: el que funciona se toca para leer qué hace ahí.
+  - En ese mismo ancho, la gráfica pasa a barras en HTML.
+  - En la computadora siguen los dibujos.
+- **El tablero de cada portadilla**, en 760 px o menos, pone el nombre del elemento a todo lo ancho y sus seis puntos debajo.
+- **Los resultados del buscador** ocupan el ancho de la pantalla, bajo la barra.
+- **Las tablas** parten sus encabezados en dos renglones en 980 px o menos, y en el celular se apilan como tarjetas.
+- **La versión de los archivos:** `index.html` pide `styles.css` y `app.js` con `?v=AAAAMMDD`. Si cambias alguno de los dos, sube ese número para que los celulares no se queden con la versión guardada.
+
 ### Cómo se publica una actualización
 
 `./sync.sh "mensaje"` espeja la carpeta `Repaso` del curso en el repositorio y sube los cambios. GitHub Pages republica el sitio solo; no hay compilación de por medio.
